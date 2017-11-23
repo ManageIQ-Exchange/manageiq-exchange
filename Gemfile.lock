@@ -45,8 +45,6 @@ GEM
     bcrypt (3.1.11)
     builder (3.2.3)
     byebug (9.1.0)
-    commonmarker (0.17.6)
-      ruby-enum (~> 0.5)
     concurrent-ruby (1.0.5)
     coveralls (0.8.21)
       json (>= 1.8, < 3)
@@ -188,8 +186,6 @@ GEM
       rainbow (>= 2.2.2, < 3.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (~> 1.0, >= 1.0.1)
-    ruby-enum (0.7.1)
-      i18n
     ruby-progressbar (1.9.0)
     ruby_dep (1.5.0)
     sawyer (0.8.1)
@@ -232,7 +228,6 @@ PLATFORMS
 
 DEPENDENCIES
   byebug
-  commonmarker
   coveralls
   database_cleaner
   devise (~> 4.0)
