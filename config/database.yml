@@ -23,6 +23,9 @@ development:
   database: galaxy_development
 
 test:
+  <<: *default
+  username: galaxy
+  password: galaxy
   database: galaxy_test
 
 production:
