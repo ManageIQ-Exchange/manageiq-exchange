@@ -56,5 +56,5 @@ gem 'octokit', '~> 4.0'
 gem 'omniauth'
 gem 'omniauth-github'
 gem 'github-markup'
-gem 'commonmarker'
+# gem 'commonmarker' # Needed to render markdown github style
 gem 'json-schema'
