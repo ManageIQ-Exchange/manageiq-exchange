@@ -48,13 +48,15 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 
 #
-# Devise
+# Devise authentication / including omniauth
 #
 gem 'devise', '~> 4.0'
-
-gem 'octokit', '~> 4.0'
 gem 'omniauth'
 gem 'omniauth-github'
+
+
+# Github tools
+gem 'octokit', '~> 4.0'
 gem 'github-markup'
 # gem 'commonmarker' # Needed to render markdown github style
 gem 'json-schema'

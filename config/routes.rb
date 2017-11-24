@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  VERSION = "v1"
   devise_for :users
 
 
@@ -15,5 +16,6 @@ Rails.application.routes.draw do
     concerns :api_base
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  root to: "v1/api#version"
+
+  root to: "#{VERSION}/api#version"
 end
