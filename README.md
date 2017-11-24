@@ -1,24 +1,34 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is the API only backend application for Galaxy. It is prepared to be deployed on OpenShift online using 3 pods (React frontend, this backend, database)
 
-Things you may want to cover:
+It has been developed using:
+* Ruby 2.4
+* Rails 5.1
+* Devise
+* Octokat
 
-* Ruby version
+## ENVIRONMENT VARIABLES
 
-* System dependencies
+### Oauth for connecting to github
+- GITHUB_OAUTH_ID
+- GITHUB_OAUTH_SECRET
 
-* Configuration
+### Base secret:
 
-* Database creation
+- SECRET_KEY_BASE
 
-* Database initialization
+### Rails config
 
-* How to run the test suite
+- RAILS_ENV
+- RAILS_LOG_TO_STDOUT
 
-* Services (job queues, cache servers, search engines, etc.)
+### Devise
+- GALAXY_MAILER_HOST
+- GALAXY_MAILER_PORT
+- GALAXY_EMAIL_SENDER
 
-* Deployment instructions
 
-* ...
+## Developer documentation
+Please review developers.md
+
