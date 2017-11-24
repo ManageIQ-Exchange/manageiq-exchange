@@ -15,5 +15,5 @@ Rails.application.routes.draw do
     concerns :api_base
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  root to: "v1#version", as: 'root'
+  root to: "v1/api#version"
 end

@@ -1,6 +1,18 @@
 class DeviseCreateUsers < ActiveRecord::Migration[5.1]
   def change
     create_table :users do |t|
+      ## User data
+      t.string :full_name,   null: false
+      t.string :short_name,  null: false
+      t.boolean :admin,      null: false, default: false
+      t.boolean :staff,      null: false, default: false
+
+      # Galaxy specific fields
+      t.integer :karma, default: 0
+      t.string  :github_avatar, null: true
+      t.string  :github_user, null: true
+      t.boolean :cache_refreshed, default: false
+
       ## Database authenticatable
       t.string :email,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
@@ -30,6 +42,9 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
       # t.string   :unlock_token # Only if unlock strategy is :email or :both
       # t.datetime :locked_at
 
+      ## Omniauthable
+      t.string :provider
+      t.string :uid
 
       t.timestamps null: false
     end
