@@ -3,10 +3,10 @@ Rails.application.routes.draw do
   devise_for :users
 
 
-  concern :api_base  do
+  concern :api_base do
     get 'api/version'
-    post 'api/github/token', to: 'github#access_token'
-    get 'api/github/user', to: 'github#user_info'
+    post 'github/token', to: 'github#access_token'
+    get 'github/user', to: 'github#user_info'
   end
 
 
