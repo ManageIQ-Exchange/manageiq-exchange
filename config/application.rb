@@ -32,9 +32,9 @@ module ManageiqGalaxy
 
     # Adding back session store in cookies, so that it is possible to create and destroy sessions
 
-    config.session_store :cookie_store, key: '_miq_galaxy_session'
-    config.middleware.use ActionDispatch::Cookies # Required for all session management
-    config.middleware.use ActionDispatch::Session::CookieStore, config.session_options
+    # config.session_store :cookie_store, key: '_miq_galaxy_session'
+    # config.middleware.use ActionDispatch::Cookies # Required for all session management
+    # config.middleware.use ActionDispatch::Session::CookieStore, config.session_options
     config.middleware.insert_before 0, Rack::Cors do
       allow do
         origins '*'
@@ -43,5 +43,9 @@ module ManageiqGalaxy
     end
     I18n.available_locales = [:en]
     config.i18n.default_locale = :en
+
+    config.generators do |g|
+      g.test_framework :rspec #=> or whatever
+    end
   end
 end
