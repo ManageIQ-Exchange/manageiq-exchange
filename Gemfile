@@ -23,7 +23,7 @@ gem 'puma', '~> 3.7'
 # gem 'capistrano-rails', group: :development
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-# gem 'rack-cors'
+gem 'rack-cors', :require => 'rack/cors'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -58,5 +58,6 @@ gem 'omniauth-github'
 # Github tools
 gem 'octokit', '~> 4.0'
 gem 'github-markup'
+
 # gem 'commonmarker' # Needed to render markdown github style
 gem 'json-schema'

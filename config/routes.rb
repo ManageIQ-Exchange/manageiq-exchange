@@ -5,6 +5,8 @@ Rails.application.routes.draw do
 
   concern :api_base  do
     get 'api/version'
+    post 'api/github/token', to: 'github#access_token'
+    get 'api/github/user', to: 'github#user_info'
   end
 
 
