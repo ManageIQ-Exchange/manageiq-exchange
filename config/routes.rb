@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  VERSION = "v1"
+  ROUTE_VERSION = "v1".freeze
   devise_for :users
 
 
@@ -19,5 +19,5 @@ Rails.application.routes.draw do
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
-  root to: "#{VERSION}/api#version"
+  root to: "#{ROUTE_VERSION}/api#version"
 end
