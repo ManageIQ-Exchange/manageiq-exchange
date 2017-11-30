@@ -59,5 +59,5 @@ gem 'tiddle'
 gem 'octokit', '~> 4.0'
 gem 'github-markup'
 
-gem 'commonmarker' # Needed to render markdown github style
+# gem 'commonmarker' # Needed to render markdown github style
 gem 'json-schema'
