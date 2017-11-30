@@ -4,8 +4,9 @@ This is the API only backend application for Galaxy. It is prepared to be deploy
 
 It has been developed using:
 * Ruby 2.4
-* Rails 5.1
+* Rails 5.1 (API MODE)
 * Devise
+* Tiddle
 * Octokat
 
 ## ENVIRONMENT VARIABLES
@@ -30,5 +31,5 @@ It has been developed using:
 
 
 ## Developer documentation
-Please review developers.md
+Please review Developers.md
 

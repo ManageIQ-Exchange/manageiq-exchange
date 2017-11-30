@@ -48,17 +48,16 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 
 #
-# Devise authentication / including omniauth
+# Devise authentication / including tiddle to be able to use tokens
 #
+
 gem 'devise', '~> 4.0'
-# gem 'omniauth'
-# gem 'omniauth-github'
-# gem 'devise_token_auth'
+gem 'tiddle'
 
 
 # Github tools
 gem 'octokit', '~> 4.0'
 gem 'github-markup'
 
-# gem 'commonmarker' # Needed to render markdown github style
+gem 'commonmarker' # Needed to render markdown github style
 gem 'json-schema'

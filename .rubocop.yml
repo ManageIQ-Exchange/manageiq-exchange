@@ -1,0 +1,35 @@
+AllCops:
+  TargetRubyVersion: 2.4
+  Include:
+    - '**/Rakefile'
+    - '**/config.ru'
+  Exclude:
+    - 'db/**/*'
+    - 'config/**/*'
+    - 'script/**/*'
+    - 'vendor/**/*'
+    - 'lib/**/*'
+    - 'bin/**/*'
+    - 'Gemfile'
+    - 'spec/spec_helper.rb'
+    - 'spec/rails_helper.rb'
+    - 'config.ru'
+    - 'test/test_helper.rb'
+Rails:
+  Enabled: true
+
+AbcSize:
+  Max: 30
+  Severity: refactor
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 160
+  Severity: refactor
+BlockLength:
+  Enabled: false
+MethodLength:
+  Max: 25
+  Severity: refactor
