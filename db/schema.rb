@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171130091259) do
+ActiveRecord::Schema.define(version: 20171201125527) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,43 @@ ActiveRecord::Schema.define(version: 20171130091259) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_authentication_tokens_on_user_id"
+  end
+
+  create_table "spins", force: :cascade do |t|
+    t.boolean "published", default: false
+    t.string "name"
+    t.text "full_name", default: ""
+    t.text "description", default: ""
+    t.string "clone_url"
+    t.string "html_url"
+    t.string "issues_url"
+    t.integer "forks_count", default: 0
+    t.integer "stargazers_count", default: 0
+    t.integer "watchers_count", default: 0
+    t.integer "open_issues_count", default: 0
+    t.integer "size", default: 0
+    t.string "gh_id"
+    t.datetime "gh_created_at"
+    t.datetime "gh_pushed_at"
+    t.datetime "gh_updated_at"
+    t.boolean "gh_archived", default: false
+    t.string "default_branch", default: "master"
+    t.text "readme"
+    t.string "license_key"
+    t.string "license_name"
+    t.string "license_html_url"
+    t.string "version", default: "0.0.0"
+    t.jsonb "metadata"
+    t.text "metadata_raw"
+    t.integer "min_miq_version", default: 0
+    t.datetime "first_import"
+    t.float "score", default: 0.0
+    t.bigint "user_id"
+    t.text "company"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["published"], name: "index_spins_on_published"
+    t.index ["user_id"], name: "index_spins_on_user_id"
   end
 
   create_table "tags", force: :cascade do |t|
@@ -62,4 +99,5 @@ ActiveRecord::Schema.define(version: 20171130091259) do
   end
 
   add_foreign_key "authentication_tokens", "users"
+  add_foreign_key "spins", "users"
 end
