@@ -18,6 +18,9 @@ Bundler.require(*Rails.groups)
 
 module ManageiqGalaxy
   class Application < Rails::Application
+    config.api_version = '1.0'
+    config.api_prefix  = 'v1'
+
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
 

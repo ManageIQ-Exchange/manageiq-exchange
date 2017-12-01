@@ -10,6 +10,7 @@ class User < ApplicationRecord
   # :omniauthable, :omniauth_providers => [:github]
 
   has_many :authentication_tokens, dependent: :destroy
+  has_many :spins, dependent: :destroy
 
   def self.first_or_create(github_user)
     return nil if github_user.id.nil?
