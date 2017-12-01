@@ -1,12 +1,12 @@
 module V1
-  VERSION = 1.0
+  @version ||= Rails.application.config.api_version
   ##
   # API Controller
   # Provides information about the API
   ##
   class ApiController < ApplicationController
     def version
-      render json: { data: { version: VERSION } }, status: :ok
+      render json: { data: { version: @version } }, status: :ok
     end
   end
 end
