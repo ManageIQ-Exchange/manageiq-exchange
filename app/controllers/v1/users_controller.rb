@@ -6,7 +6,7 @@ module V1
   class UsersController < ApplicationController
     def index
       @users = User.all
-      render json: @users, status: :ok
+      render json: { data: @users }, status: :ok
     end
   end
 end

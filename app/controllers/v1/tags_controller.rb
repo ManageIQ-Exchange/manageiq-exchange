@@ -8,12 +8,12 @@ module V1
 
     def index
       @tags = Tag.all
-      render json: @tags, status: :ok
+      render json: { data: @tags }, status: :ok
     end
 
     def show
       @tag = Tag.find_by(name: params[:id])
-      render json: @tag, status: :ok
+      render json: { data: @tag }, status: :ok
     end
   end
 end
