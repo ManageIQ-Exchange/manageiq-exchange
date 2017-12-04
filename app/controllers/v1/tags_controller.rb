@@ -7,11 +7,13 @@ module V1
     before_action :authenticate_user!, only: [:show]
 
     def index
+      logger.debug 'Returning tags index'
       @tags = Tag.all
       render json: { data: @tags }, status: :ok
     end
 
     def show
+      logger.debug 'Returning tag @tag.name'
       @tag = Tag.find_by(name: params[:id])
       render json: { data: @tag }, status: :ok
     end

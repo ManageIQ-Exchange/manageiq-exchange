@@ -1,6 +1,32 @@
 ##
 # User
 # Stores information about the user. It is created automatically when authenticated
+# Copied from Github data
+#
+# User(id: integer,
+#      name: string,
+#      admin: boolean,
+#      staff: boolean,
+#      karma: integer,
+#      github_avatar_url: string,
+#      github_html_url: string,
+#      github_id: string,
+#      github_login: string,
+#      github_company: string,
+#      github_type: string,
+#      github_blog: string,
+#      github_location: string,
+#      github_bio: string,
+#      github_created_at: datetime,
+#      github_updated_at: datetime,
+#      email: string,
+#      remember_created_at: datetime,
+#      sign_in_count: integer, current_sign_in_at: datetime,
+#      last_sign_in_at: datetime,
+#      current_sign_in_ip: inet,
+#      last_sign_in_ip: inet,
+#      created_at: datetime,
+#      updated_at: datetime)
 #
 class User < ApplicationRecord
   # Include default devise modules. Others available are:

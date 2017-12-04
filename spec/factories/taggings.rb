@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :tagging do
-    spin ""
-    tag ""
+    spin ''
+    tag ''
   end
 end

@@ -10,6 +10,15 @@ Rails.application.routes.draw do
     }
     resources :users, only: [:index]
     resources :tags, only: [:index, :show]
+    resources :spins
+
+    as :user do
+      resources :spins, only: [] do
+        collection do
+          post 'refresh'
+        end
+      end
+    end
   end
 
 
@@ -17,7 +26,7 @@ Rails.application.routes.draw do
     concerns :api_base
   end
 
-  scope module: 'v1', path: 'latest' do
+  scope module: 'v1', path: '' do
     concerns :api_base
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
