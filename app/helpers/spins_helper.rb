@@ -37,12 +37,14 @@ SCHEMA = { "title": 'spin_doctor',
 ###
 # Helper methods for Spins
 #
-#
+##
 module SpinsHelper
+  include GitHubHelper
   ####
   # spin_metadata (full name of repo to be analyzed)
   # Analizes the metadata and returns it
-  # When the format is correct
+  #   when the format is correct
+  ##
   def spin_metadata(full_name)
     mtd, mtd_json = gh_metadata(full_name)
     rdm = gh_readme(full_name)
@@ -52,10 +54,10 @@ module SpinsHelper
 
   ###
   # Access the metadata from a repo (looking for the file /metadata.yml)
-  #
+  ##
   def gh_metadata(full_name)
     begin
-      metadata_raw = gh_client.contents(full_name, path: '/metadata.yml', accept: 'application/vnd.github.raw')
+      metadata_raw = github_access.contents(full_name, path: '/metadata.yml', accept: 'application/vnd.github.raw')
     rescue Octokit::NotFound
       nil
     end
@@ -64,7 +66,7 @@ module SpinsHelper
       metadata_json = JSON.parse(JSON.dump(YAML.safe_load(metadata_raw)))
       JSON::Validator.validate!(SCHEMA, metadata_json)
       [metadata_raw, metadata_json]
-    rescue JSON::ParserError
+    rescue TypeError, JSON::ParserError
       nil
     end
   end
@@ -73,16 +75,8 @@ module SpinsHelper
   # Gets the readme of the repo
   #
   def gh_readme(full_name)
-    gh_client.readme(full_name, accept: 'application/vnd.github.raw')
+    github_access.readme(full_name, accept: 'application/vnd.github.raw')
   rescue Octokit::NotFound
     nil
-  end
-
-  ###
-  # Function to connect to github
-  #
-  private def gh_client
-    # Use session parameters to get access token
-    @client ||= Octokit::Client.new client_id: Rails.application.secrets.oauth_github_id, client_secret: Rails.application.secrets.oauth_github_secret
   end
 end
