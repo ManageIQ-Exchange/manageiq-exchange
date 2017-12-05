@@ -7,12 +7,15 @@ module V1
     # Authentication is done via tokens, using GitHub
     ##
     class SessionsController < Devise::SessionsController
+      include GitHubHelper
+
       # before_action :configure_sign_in_params, only: [:create]
       def create
-        logger.info 'Creating session, verifying code'
+        logger.info 'Creating session, verifying code sent'
         code = params[:code] || request.headers[:code] # Get code from headers or params
+        logger.warning 'Null code' if code.nil?
         begin
-          user = verify_user!(code)
+          token = verify_user!(code, request)
         rescue Octokit::NotFound
           logger.info 'User not found'
           render json: { error: { message: 'Invalid code' } }, status: :unauthorized # Code was invalid
@@ -22,13 +25,12 @@ module V1
           render json: { error: { message: 'Github auth error' } }, status: :unauthorized # Bad authentication
           return
         end
-
-        if code && user
-          logger.debug 'Creating user session token'
-          token = Tiddle.create_and_return_token(user, request)
+        # Return token
+        if token
+          logger.info 'Returning token'
           render json: { authentication_token: token }
         else
-          logger.info 'Authentcation error'
+          logger.info 'Authentication error'
           render json: { error: { message: 'Auth error' } }, status: :unauthorized
         end
       end
@@ -50,32 +52,18 @@ module V1
       # If the user does exist, it gets updated.
       # If the user does not exist, it gets created.
       #
-      def verify_user!(code)
+      def verify_user!(code, request)
         logger.debug 'Verifying that the user code is valid and authenticating user'
-        access_token = code ? github_access.exchange_code_for_token(code) : nil # Verify github code and get token with it
+        access_token = code ? github_access_exchange_code_for_token(code) : nil # Verify github code and get token with it
         raise Octokit::Unauthorized if access_token[:access_token].nil?
-        github_access_set_token(github_token: access_token[:access_token])
         github_user = github_access.user
         logger.debug 'Valid code, finding or creating user'
-        User.first_or_create(github_user)
-      end
-
-      ###
-      # github_access:
-      # Generates access credentials for the user (new or stored)
-      #
-      def github_access
-        @github_access ||= Octokit::Client.new client_id: Rails.application.secrets.oauth_github_id,
-                                               client_secret: Rails.application.secrets.oauth_github_secret,
-                                               scope: 'user:email'
-      end
-
-      ###
-      # github_access_set_token(github_token: string - mandatory)
-      # Associates a token to github_access for authentication
-      #
-      def github_access_set_token(github_token:)
-        @github_access.access_token = github_token
+        user = User.first_or_create(github_user)
+        logger.debug 'Creating user session token'
+        token = Tiddle.create_and_return_token(user, request)
+        authentication_token = Tiddle::TokenIssuer.build.find_token(user, token)
+        authentication_token.update_columns(github_token: access_token[:access_token])
+        token
       end
     end
   end

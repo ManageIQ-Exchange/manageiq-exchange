@@ -5,12 +5,14 @@
 #
 class RefreshSpinsJob < ApplicationJob
   include SpinsHelper
+  include GitHubHelper
+
   queue_as :default
 
-  def perform(user:)
+  def perform(user:, token:)
     logger.info "Refresh Spins Job with user: #{user.id}"
     # Get the client using the application id (only public information)
-    client = Octokit::Client.new client_id: Rails.application.secrets.oauth_github_id, client_secret: Rails.application.secrets.oauth_github_secret
+    client = github_access
     # Find the spins in the database, store them as an array
     user_spins = Spin.where('user_id = ?', user.id)
     user_spins_list = user_spins.map(&:id)
