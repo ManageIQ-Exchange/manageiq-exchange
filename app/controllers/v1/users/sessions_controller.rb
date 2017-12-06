@@ -15,7 +15,7 @@ module V1
         code = params[:code] || request.headers[:code] # Get code from headers or params
         logger.warning 'Null code' if code.nil?
         begin
-          token = verify_user!(code, request)
+          user, token = verify_user!(code, request)
         rescue Octokit::NotFound
           logger.info 'User not found'
           render json: { error: { message: 'Invalid code' } }, status: :unauthorized # Code was invalid
@@ -27,8 +27,8 @@ module V1
         end
         # Return token
         if token
-          logger.info 'Returning token'
-          render json: { authentication_token: token }
+          logger.info 'Returning user info and token'
+          render json: { data: { user: user, authentication_token: token } }
         else
           logger.info 'Authentication error'
           render json: { error: { message: 'Auth error' } }, status: :unauthorized
@@ -63,7 +63,7 @@ module V1
         token = Tiddle.create_and_return_token(user, request)
         authentication_token = Tiddle::TokenIssuer.build.find_token(user, token)
         authentication_token.update_columns(github_token: access_token[:access_token])
-        token
+        [ user, token]
       end
     end
   end
