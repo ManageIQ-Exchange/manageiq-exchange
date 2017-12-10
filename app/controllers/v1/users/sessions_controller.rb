@@ -9,6 +9,8 @@ module V1
     class SessionsController < Devise::SessionsController
       include GitHubHelper
 
+      respond_to :json
+
       # before_action :configure_sign_in_params, only: [:create]
       def create
         logger.info 'Creating session, verifying code sent'
@@ -36,9 +38,15 @@ module V1
       end
 
       def destroy
-        logger.info 'Destroying session'
-        Tiddle.expire_token(current_user, request) if current_user
-        render json: {}
+        current_user =  User.find(params[:user_id]||request.headers["X-USER-ID"])
+        token = current_user.authentication_tokens.first
+        Tiddle.purge_old_tokens(current_user)
+        if (token.body == request.headers["X-USER-TOKEN"] && token.body.bytesize == request.headers["X-USER-TOKEN"].bytesize)
+          token.try(:destroy)
+          render json: { message: 'Token Removed' }
+        else
+            render json: { error: { message: 'Token error' } }, status: :unauthorized
+        end
       end
 
       private
