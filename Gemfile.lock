@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/miq-consumption/tiddle.git
+  revision: b7b79ebcb4e2cfe3d3adccbae30a6d13679da483
+  specs:
+    tiddle (1.0.1)
+      activerecord (>= 4.2.0)
+      devise (>= 4.0.0.rc1, < 4.4)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -68,8 +76,8 @@ GEM
     factory_bot_rails (4.8.2)
       factory_bot (~> 4.8.2)
       railties (>= 3.0.0)
-    faker (1.8.4)
-      i18n (~> 0.5)
+    faker (1.8.5)
+      i18n (~> 0.9.1)
     faraday (0.13.1)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.18)
@@ -194,10 +202,7 @@ GEM
       tins (~> 1.0)
     thor (0.19.4)
     thread_safe (0.3.6)
-    tiddle (1.0.1)
-      activerecord (>= 4.2.0)
-      devise (>= 4.0.0.rc1, < 4.4)
-    tins (1.16.0)
+    tins (1.16.3)
     tzinfo (1.2.4)
       thread_safe (~> 0.1)
     unicode-display_width (1.3.0)
@@ -230,7 +235,7 @@ DEPENDENCIES
   rubocop
   spring
   spring-watcher-listen (~> 2.0.0)
-  tiddle
+  tiddle!
   tzinfo-data
 
 BUNDLED WITH
