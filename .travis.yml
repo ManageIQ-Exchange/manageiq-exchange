@@ -1,0 +1,18 @@
+language: ruby
+rvm:
+- '2.4.2'
+sudo: false
+cache: bundler
+env:
+  - RAILS_ENV = test
+addons:
+  postgresql: '9.5'
+install: bin/setup
+# after_script: bundle exec codeclimate-test-reporter
+
+before_install:
+  - cp config/database.yml.travis config/database.yml
+script:
+  - bundle exec rake db:schema:load
+  - bundle exec rake db:test:prepare
+  - bundle exec rake spec
