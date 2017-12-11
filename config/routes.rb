@@ -3,8 +3,6 @@ Rails.application.routes.draw do
 
   concern :api_base do
     get 'api/version'
-    post 'github/token', to: 'github#access_token'
-    get 'github/user', to: 'github#user_info'
     devise_for :users, controllers: {
         sessions: "#{@api_prefix}/users/sessions"
     }
