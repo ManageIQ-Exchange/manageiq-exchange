@@ -5,6 +5,7 @@ module V1
   ##
   class UsersController < ApplicationController
     # Get all Users function
+    # query param to find a user with STR include no sensitive
     #
     # Return Users with onky id, github_login and github_html_url with ok 200 code
     #     if param query expand is resources return all data with ok 200 code
@@ -13,12 +14,15 @@ module V1
     def index
       logger.debug 'Providing all users'
       @users = User.all
-      if @users.count.positive?
-        logger.debug { "Returning #{@users.count} Users" }
-        @users = @users.select(:id, :github_login, :github_html_url) unless params[:expand] == 'resources'
-        render json: @users, status: :ok
+      @users = @users.where('github_login like? or github_login like?', "%#{params[:query]}%", "%#{params[:query].downcase}%") if params[:query]
+
+      total_users = @users.count
+      if total_users.positive?
+        logger.debug { "Returning #{total_users} Users" }
+        # render json: @users, expand: params[:expand] == "resources",status: :ok
+        return_response json: @users, status: :ok
       else
-        render status: :no_content
+        return_response status: :no_content
       end
     end
 
@@ -31,9 +35,9 @@ module V1
       logger.debug "Looking for user with github_login #{params[:id]}"
       @user = User.find_by(id: params[:id]) || User.find_by(github_login: params[:id])
       if @user
-        render json: @user, status: :ok
+        return_response json: @user, status: :ok
       else
-        render json: { error: "Not user found with #{params[:id]}" }, status: :not_found
+        return_response json: { error: "Not user found with #{params[:id]}" }, status: :not_found
       end
     end
   end
