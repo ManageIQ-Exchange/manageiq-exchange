@@ -4,7 +4,6 @@ module V1
   # Provides information about the user
   ##
   class UsersController < ApplicationController
-
     # Get all Users function
     #
     # Return Users with onky id, github_login and github_html_url with ok 200 code
@@ -14,10 +13,10 @@ module V1
     def index
       logger.debug 'Providing all users'
       @users = User.all
-      if @users.count>0
+      if @users.count > 0
         logger.debug { "Returning #{@users.count} Users" }
-        @users = @users.select(:id, :github_login, :github_html_url) unless params[:expand] == "resources"
-        render json:  @users, status: :ok
+        @users = @users.select(:id, :github_login, :github_html_url) unless params[:expand] == 'resources'
+        render json: @users, status: :ok
       else
         render status: :no_content
       end
@@ -34,7 +33,7 @@ module V1
       if @user
         render json: @user, status: :ok
       else
-        render json: { error: "Not user found with #{params[:id]}"}, status: :not_found
+        render json: { error: "Not user found with #{params[:id]}" }, status: :not_found
       end
     end
   end

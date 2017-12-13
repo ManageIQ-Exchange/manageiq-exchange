@@ -1,18 +1,21 @@
 ###
-# Background Job to refresh user spins
-# Needs user: user
-# Will refresh all repos and analyze them
+# __Background Job to refresh user spins__
+# Will refresh all repos for a user and analyze them
+# It will update them if found adfads
+#
+# @param  user: User
+# @return boolean
 #
 class RefreshSpinsJob < ApplicationJob
   include SpinsHelper
-  include GitHubHelper
+  include SourceControlHelper
 
   queue_as :default
 
   def perform(user:, token:)
     logger.info "Refresh Spins Job with user: #{user.id}"
     # Get the client using the application id (only public information)
-    client = github_access
+    client = sc_connection
     # Find the spins in the database, store them as an array
     user_spins = Spin.where('user_id = ?', user.id)
     user_spins_list = user_spins.map(&:id)

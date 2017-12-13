@@ -39,7 +39,7 @@ SCHEMA = { "title": 'spin_doctor',
 #
 ##
 module SpinsHelper
-  include GitHubHelper
+  include SourceControlHelper
   ####
   # spin_metadata (full name of repo to be analyzed)
   # Analizes the metadata and returns it
@@ -57,7 +57,7 @@ module SpinsHelper
   ##
   def gh_metadata(full_name)
     begin
-      metadata_raw = github_access.contents(full_name, path: '/metadata.yml', accept: 'application/vnd.github.raw')
+      metadata_raw = sc_connection.contents(full_name, path: '/metadata.yml', accept: 'application/vnd.github.raw')
     rescue Octokit::NotFound
       nil
     end
@@ -75,7 +75,7 @@ module SpinsHelper
   # Gets the readme of the repo
   #
   def gh_readme(full_name)
-    github_access.readme(full_name, accept: 'application/vnd.github.raw')
+    sc_connection.readme(full_name, accept: 'application/vnd.github.raw')
   rescue Octokit::NotFound
     nil
   end

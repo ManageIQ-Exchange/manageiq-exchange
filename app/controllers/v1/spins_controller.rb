@@ -41,7 +41,7 @@ module V1
         render json: { error: 'No user found' }, status: :error
         return
       end
-      job = RefreshSpinsJob.perform_later(user: user, token: request.headers["HTTP_X_USER_TOKEN"])
+      job = RefreshSpinsJob.perform_later(user: user, token: request.headers['HTTP_X_USER_TOKEN'])
       render json: { data: job.job_id, metadata: { queue: job.queue_name, priority: job.priority } }, status: :ok
     end
   end

@@ -33,6 +33,8 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'rspec-rails', '~> 3.6'
+  gem 'webmock'
+  gem 'vcr'
 end
 
 group :development do
