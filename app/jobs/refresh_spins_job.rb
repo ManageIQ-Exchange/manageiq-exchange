@@ -15,12 +15,13 @@ class RefreshSpinsJob < ApplicationJob
   def perform(user:, token:)
     logger.info "Refresh Spins Job with user: #{user.id}"
     # Get the client using the application id (only public information)
-    client = sc_connection
+    client = source_control_server
     # Find the spins in the database, store them as an array
-    user_spins = Spin.where('user_id = ?', user.id)
+    user_spins = user.spins
+    app_token = Tiddle::TokenIssuer.build.find_token(user, token)
     user_spins_list = user_spins.map(&:id)
     # Get the list of repos in GitHub (they use the same id in github and local) for the user
-    repos = client.repos(user.id)
+    repos = client.repos(user: user, github_token: app_token.github_token)
     repos_list = repos.map(&:id)
     # List of deleted repos
     deleted_repos = user_spins_list - repos_list

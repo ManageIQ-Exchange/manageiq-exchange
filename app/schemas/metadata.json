@@ -1,0 +1,40 @@
+{
+  "title": "spin_doctor",
+  "description": "This is the schema for the spin metadata",
+  "type": "object",
+  "properties": {
+    "min_miq_version": {
+      "type": "string",
+      "pattern": "^[a-z]$"
+    },
+    "spin_version": {
+      "type": "string",
+      "pattern": "^[0-9]+.[0-9]+.[0-9]+$"
+    },
+    "author": {
+      "type": "string"
+    },
+    "company": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "license": {
+    "type": "string"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "min_miq_version",
+    "spin_version",
+    "author",
+    "license",
+    "tags"
+  ]
+}
