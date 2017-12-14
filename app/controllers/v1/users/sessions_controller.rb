@@ -14,8 +14,8 @@ module V1
         logger.info 'Creating session, verifying code sent'
         code = params[:code] || request.headers[:code] # Get code from headers or params
         if code.nil?
-          logger.warning 'Null code, impossible to authenticate'
-          render json: { error: { message: 'Invalid code' } }, status: :invalid
+          logger.warn 'Null code, impossible to authenticate'
+          render json: { error: { message: 'Invalid code' } }, status: :not_acceptable
           return
         end
         begin
