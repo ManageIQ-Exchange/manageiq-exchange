@@ -38,11 +38,11 @@ module V1
                current_user
              end
       if user.nil?
-        render json: { error: 'No user found' }, status: :error
+        render json: { error: 'No user found' }, status: :not_found
         return
       end
-      job = RefreshSpinsJob.perform_later(user: user, token: request.headers["HTTP_X_USER_TOKEN"])
-      render json: { data: job.job_id, metadata: { queue: job.queue_name, priority: job.priority } }, status: :ok
+      job = RefreshSpinsJob.perform_later(user: user, token: request.headers['HTTP_X_USER_TOKEN'])
+      render json: { data: job.job_id, metadata: { queue: job.queue_name, priority: job.priority } }, status: :accepted
     end
   end
 end

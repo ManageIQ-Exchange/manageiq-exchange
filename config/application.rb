@@ -50,5 +50,10 @@ module ManageiqGalaxy
     config.generators do |g|
       g.test_framework :rspec #=> or whatever
     end
+
+    #
+    # Loading JSON Schemas
+    #
+    config.spin_schema = JSON.load File.new("app/schemas/metadata.json")
   end
 end
