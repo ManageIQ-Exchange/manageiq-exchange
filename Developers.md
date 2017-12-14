@@ -35,3 +35,23 @@ Once the token has been created you can use it to authenticate:
 If a valid id and token are included, even when creating new session, authentication won't be done against GitHub.
  
  
+# Documentation
+
+Up to date documentation can be found on the following link:
+
+[Developers documentation](http://www.rubydoc.info/github/miq-consumption/manageiq-galaxy)
+
+For development, you will need a mean to gather a code and token from GitHub. Users are created automatically when they are authenticated
+
+For instance, you can use [manageiq-galaxy-web](https://github.com/miq-consumption/manageiq-galaxy)
+
+You will also need to define environment variables:
+```bash
+export GITHUB_OAUTH_ID=YOUR_GITHUB_CREATED_APP_ID
+export GITHUB_OAUTH_SECRET=YOUR_GITHUB_CREATED_APP_SECRET
+```
+
+If you store this in a file, you can load it doing:
+```bash
+ $ source my_file.sh
+ ```
