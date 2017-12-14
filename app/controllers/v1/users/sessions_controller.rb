@@ -64,7 +64,7 @@ module V1
       def verify_user!(code, request)
         logger.debug 'Verifying that the user code is valid and authenticating user'
         connection = source_control_server
-        access_token = code ? connection.exchange_token_for_code!(code) : nil # Verify github code and get token with it
+        access_token = code ? connection.exchange_code_for_token!(code) : nil # Verify github code and get token with it
         github_user = connection.user
         logger.debug "Valid code, finding or creating user #{github_user}"
         user = User.first_or_create(github_user)

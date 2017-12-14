@@ -26,10 +26,9 @@ module SourceControlHelper
     # @return [String]
     #
 
-    def exchange_token_for_code!(code)
+    def exchange_code_for_token!(code)
       github_token = @github_access.exchange_code_for_token(code)
-      raise Octokit::Unauthorized if github_token[:error] || github_token.nil?
-      @github_access.access_token = github_token[:access_token]
+      @github_access.access_token = github_token[:access_token] if github_token[:error] || github_token.nil?
       github_token
     end
 
