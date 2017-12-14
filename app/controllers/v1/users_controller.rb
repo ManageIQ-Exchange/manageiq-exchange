@@ -13,7 +13,7 @@ module V1
     def index
       logger.debug 'Providing all users'
       @users = User.all
-      if @users.count > 0
+      if @users.count.positive?
         logger.debug { "Returning #{@users.count} Users" }
         @users = @users.select(:id, :github_login, :github_html_url) unless params[:expand] == 'resources'
         render json: @users, status: :ok

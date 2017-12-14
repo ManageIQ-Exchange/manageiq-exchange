@@ -39,13 +39,13 @@ RSpec.describe SourceControlHelper, type: :helper do
     context 'code' do
       it 'gets error code when code is wrong or expired' do
         VCR.use_cassette('octokit-github-bad-code') do
-          token = sc_connection.exchange_code_for_token(code)
+          token = source_control_server.exchange_code_for_token!(code)
           expect(token[:error]).to eq('bad_verification_code')
         end
       end
       it 'gets error code when application id is wrong' do
         VCR.use_cassette('octokit-github-good') do
-          token = sc_connection.exchange_code_for_token(code_good)
+          token = source_control_server.exchange_code_for_token!(code_good)
           expect(token[:error]).to            be_nil
           expect(token[:token_type]).to       eq('bearer')
           expect(token[:access_token]).not_to be_nil
