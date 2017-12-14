@@ -25,5 +25,4 @@ module SpinsHelper
     return [mtd, mtd_json, rdm] if mtd && rdm
     false
   end
-
 end

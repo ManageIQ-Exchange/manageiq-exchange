@@ -15,7 +15,7 @@ module V1
         code = params[:code] || request.headers[:code] # Get code from headers or params
         if code.nil?
           logger.warning 'Null code, impossible to authenticate'
-          render json: { error: {Message: 'Invalid code' } }, status: :invalid
+          render json: { error: { message: 'Invalid code' } }, status: :invalid
           return
         end
         begin

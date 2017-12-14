@@ -3,7 +3,6 @@
 # Helper to address the need to isolate the connection from the actual API calls
 #
 #
-
 module SourceControlHelper
   #
   # Class that represents a Source Control Server upstream
@@ -32,7 +31,6 @@ module SourceControlHelper
       github_token
     end
 
-
     #
     # Returns the user
     # @return user [SourceControlUser]
@@ -40,7 +38,6 @@ module SourceControlHelper
     def user
       @github_access.user if @github_access.user_authenticated?
     end
-
 
     #
     # Returns metadata from the repo or nil
@@ -57,7 +54,6 @@ module SourceControlHelper
       begin
         metadata_json = JSON.parse(JSON.dump(YAML.safe_load(metadata_raw)))
         unless metadata_json.nil?
-          metadata_json
           JSON::Validator.validate!(SPIN_SCHEMA, metadata_json)
           return [metadata_raw, metadata_json]
         end
@@ -72,8 +68,8 @@ module SourceControlHelper
     # @param full_name [String] Full name of repo
     def readme(full_name)
       @github_access.readme(full_name, accept: 'application/vnd.github.raw')
-      rescue Octokit::NotFound
-        nil
+    rescue Octokit::NotFound
+      nil
     end
 
     def repos(user:, github_token:)
@@ -85,7 +81,6 @@ module SourceControlHelper
   # Creates an instance access_control_server to be reused by the application
   # @return [SourceControlServer]
   def source_control_server
-    @source_control_server ||= SourceControlServer.new()
+    @source_control_server ||= SourceControlServer.new
   end
-
 end
