@@ -38,6 +38,23 @@ class User < ApplicationRecord
   has_many :authentication_tokens, dependent: :destroy
   has_many :spins, dependent: :destroy
 
+  validates :name,              presence: true
+  validates :admin,             inclusion: { in: [true, false] }
+  validates :staff,             inclusion: { in: [true, false] }
+  validates :karma,             presence: true
+  validates :github_avatar_url, presence: true
+  validates :github_html_url,   presence: true
+  validates :github_id,         presence: true
+  validates :github_login,      presence: true
+  validates :github_company,    exclusion: { in: [nil]}
+  validates :github_type,       presence: true
+  validates :github_blog,       exclusion: { in: [nil]}
+  validates :github_html_url,   presence: true
+  validates :github_location,   presence: true
+  validates :github_bio,        exclusion: { in: [nil]}
+  validates :email,             presence: true
+  validates :sign_in_count,     numericality: true
+
   def self.first_or_create(github_user)
     return nil if github_user.id.nil?
     User.where(id: github_user.id).first_or_create do |user|

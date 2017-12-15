@@ -1,19 +1,23 @@
 FactoryBot.define do
-  factory :user do
 
-    name              'John'
-    github_avatar_url 'https://avatars2.githubusercontent.com/u/3019213?v=4'
-    github_html_url   'https://github.com/john'
-    github_id         '3019213'
-    github_login      'john'
-    github_company    ''
-    github_type       'User'
-    github_blog       ''
-    github_location   'Madrid, Spain'
+  factory :user do
+    id                { (@gh = Faker::Omniauth.github)[:uid] }
+    name              { @gh[:info][:name] }
+    admin             false
+    staff             false
+    karma             0
+    github_avatar_url { @gh[:extra][:raw_info][:avatar_url] || ''}
+    github_html_url   { @gh[:extra][:raw_info][:html_url] }
+    github_id         { @gh[:uid]} #Faker::Omniauth.github[:uid] }
+    github_login      { @gh[:info][:nickname] }
+    github_company    { @gh[:extra][:raw_info][:company] || '' }
+    github_type       { @gh[:extra][:raw_info][:type] }
+    github_blog       { @gh[:extra][:raw_info][:blog] || ''}
+    github_location   { @gh[:extra][:raw_info][:location] || 'Madrid(Spain)'}
+    github_bio        { @gh[:extra][:raw_info][:bio] || '' }
+    github_created_at { @gh[:extra][:raw_info][:created_at]}
+    github_updated_at { @gh[:extra][:raw_info][:updated_at] }
+    email             { @gh[:info][:email] }
     sign_in_count     0
-    email             'john@john.com'
-    github_bio        'The BIO of John'
-    github_created_at 2.months.ago
-    github_updated_at 1.hour.ago
   end
 end

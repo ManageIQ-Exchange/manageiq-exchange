@@ -21,7 +21,7 @@
       ]
     },
     "license": {
-    "type": "string"
+      "type": "string"
     },
     "tags": {
       "type": "array",
