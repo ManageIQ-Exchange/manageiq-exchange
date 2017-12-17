@@ -27,7 +27,7 @@ module SourceControlHelper
 
     def exchange_code_for_token!(code)
       github_token = @github_access.exchange_code_for_token(code)
-      @github_access.access_token = github_token[:access_token] if github_token[:error] || github_token.nil?
+      @github_access.access_token = github_token[:access_token] unless github_token[:error] || github_token.nil?
       github_token
     end
 

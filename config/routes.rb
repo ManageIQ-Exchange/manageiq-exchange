@@ -7,8 +7,8 @@ Rails.application.routes.draw do
         sessions: "#{@api_prefix}/users/sessions"
     }
     resources :users, only: [:index, :show]
-    resources :tags, only: [:index, :show]
-    resources :spins
+    resources :tags,  only: [:index, :show]
+    resources :spins, only: [:index, :show]
 
     as :user do
       resources :spins, only: [] do
