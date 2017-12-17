@@ -22,13 +22,15 @@ RSpec.describe 'V1::Users', type: :request do
     end
 
     describe 'GET existing users' do
-      let!(:user_john) { FactoryBot.create(:user) }
+      let!(:user_john) { FactoryBot.create(:user, :github_login => "John") }
+      let!(:user_tom) { FactoryBot.create(:user, :github_login => "Thomas") }
+      let!(:user_johny) { FactoryBot.create(:user, :github_login => "Johny") }
 
       it 'gets all users' do
         get "/#{prefix}/users"
         expect(response).to have_http_status(200)
         expect(json).to be_kind_of(Array)
-        expect(json.length).to eq(1)
+        expect(json.length).to eq(3)
         expect(json[0]['login']).to eq(user_john.github_login)
       end
 
@@ -44,6 +46,17 @@ RSpec.describe 'V1::Users', type: :request do
         expect(response).to have_http_status(200)
         expect(json).to be_kind_of(Hash)
         expect(json['login']).to eq(user_john.github_login)
+      end
+
+      it 'get users where login include query value' do
+        get "/#{prefix}/users?query=ohn"
+        expect(response).to have_http_status(200)
+        expect(json).to be_kind_of(Array)
+        expect(json.length).to eq(2)
+        get "/#{prefix}/users?query=ohny"
+        expect(response).to have_http_status(200)
+        expect(json).to be_kind_of(Array)
+        expect(json.length).to eq(1)
       end
     end
   end

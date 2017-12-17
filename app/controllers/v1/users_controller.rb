@@ -11,6 +11,7 @@ module V1
     #     if param query expand is resources return all data with ok 200 code
     # Return a no_content 204 if there isn't any record
     #
+    # users?query=<value> get users login include value
     def index
       logger.debug 'Providing all users'
       @users = User.all
