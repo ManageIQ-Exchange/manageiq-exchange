@@ -1,6 +1,6 @@
 users:
   attributes: ["github_id","github_login","github_html_url"]
-  expand: ["github_avatar_url","github_company","github_type","github_blog","github_location","github_bio","github_created_at","github_updated_at"]
+  expand: ["name", "github_avatar_url","github_company","github_type","github_blog","github_location","github_bio","github_created_at","github_updated_at"]
   staff: ["sign_in_count","current_sign_in_at","last_sign_in_at","current_sign_in_ip","last_sign_in_ip","created_at","updated_at"]
   admin: ["id","email"]
   columns:
@@ -8,3 +8,10 @@ users:
     github_html_url: "url_profile"
     github_avatar_url: "avatar"
     github_company: "company"
+spins:
+  attributes: ["id","name","description"]
+  expand: ["readme","license_name","license_html_url","license_key","default_branch","user_id"]
+  staff: ["created_at","updated_at"]
+  admin: []
+  columns:
+    id: "id"

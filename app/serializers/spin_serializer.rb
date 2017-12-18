@@ -1,0 +1,2 @@
+class SpinSerializer < ApplicationSerializer
+end

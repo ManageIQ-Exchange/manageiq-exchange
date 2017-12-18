@@ -11,18 +11,54 @@ module V1
     # Provides an index of all spins in the system
     # TODO If you provide a search team, it will return those spins mathing the search
     # TODO: Add paging
+    # users/<user_id>/spins Get all spins of a user
+    # spins?query=<value>  Look spins include value in the name
     def index
-      @spins = Spin.all
-      render json: { data: @spins }, status: :ok
+      if params[:user_id]
+        @user = User.find_by_github_login(params[:user_id])
+        unless @user
+          return_response status: :no_content
+          return
+        end
+        @spins = Spin.where(user_id: @user.id ) if @user
+      else
+        @spins = Spin.all
+      end
+      @spins = @spins.where('name like? or name like?', "%#{params[:query]}%", "%#{params[:query].downcase}%") if params[:query]
+      if @spins.count.positive?
+        return_response json: @spins, status: :ok
+      else
+        return_response status: :no_content
+      end
     end
 
     ###
     # Show (id: identification of the spin)
     # Provides a view of the spin
     # TODO: When authenticated, provide extended info
+    # users/<user_id>/spins/<spin_id_or_name> Get a specific spin of user
     def show
-      @spin = Spin.find_by(id: params[:id])
-      render json: { data: @spin }, status: :ok
+      if params[:user_id]
+        @user = User.find_by_github_login(params[:user_id])
+        return_response status: :not_found unless @user
+        @spin = Spin.where(user_id: @user.id)
+        if @spin.exists?(id: params[:id])
+          @spin = @spin.find(params[:id])
+        else
+          if @spin.exists?(name: params[:id])
+            @spin = @spin.find_by(name: params[:id])
+          else
+            @spin = nil
+          end
+        end
+      else
+        @spin = Spin.find_by(id: params[:id])
+      end
+      unless @spin
+        return_response status: :not_found
+        return
+      end
+      return_response json: @spin, status: :ok
     end
 
     ###

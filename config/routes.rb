@@ -6,7 +6,9 @@ Rails.application.routes.draw do
     devise_for :users, controllers: {
         sessions: "#{@api_prefix}/users/sessions"
     }
-    resources :users, only: [:index, :show]
+    resources :users, only: [:index, :show] do
+      resources :spins
+    end
     resources :tags,  only: [:index, :show]
     resources :spins, only: [:index, :show]
 
