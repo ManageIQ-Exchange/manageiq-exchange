@@ -65,9 +65,11 @@ module V1
         logger.debug 'Verifying that the user code is valid and authenticating user'
         connection = source_control_server
         access_token = code ? connection.exchange_code_for_token!(code) : nil # Verify github code and get token with it
+        raise Octokit::NotFound unless access_token[:error].nil?
         github_user = connection.user
-        logger.debug "Valid code, finding or creating user #{github_user}"
-        user = User.first_or_create(github_user)
+        raise Octokit::Unauthorized if github_user.nil?
+        logger.debug "Valid code, finding or creating user #{github_user.login}"
+        user = User.return_user(github_user)
         logger.debug 'Creating user session token'
         token = Tiddle.create_and_return_token(user, request)
         authentication_token = Tiddle::TokenIssuer.build.find_token(user, token)
