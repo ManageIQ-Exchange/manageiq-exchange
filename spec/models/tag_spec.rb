@@ -19,4 +19,12 @@ RSpec.describe Tag, type: :model do
     another_tag.valid?
     expect(another_tag.errors.details[:name]).to include(error: :taken, value: tag.name)
   end
+
+  it 'stores names in downcase' do
+    name = 'MixOfUpper and DOWNS and spaces'
+    tag.name = 'MixOfUpper and DOWNS and spaces'
+    tag.save
+    tag.reload
+    expect(tag.name).to eq(name.parameterize)
+  end
 end
