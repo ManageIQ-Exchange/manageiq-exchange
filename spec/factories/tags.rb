@@ -1,5 +1,7 @@
 FactoryBot.define do
   factory :tag do
-    name { Faker::StarWars.specie }
+    sequence :name do |n|
+       "#{Faker::StarWars.specie}_#{n}"
+    end
   end
 end

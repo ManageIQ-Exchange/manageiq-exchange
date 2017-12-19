@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'V1::Users', type: :request do
+RSpec.describe 'V1::Spins', type: :request do
   let(:prefix) { 'v1' }
 
   context 'v1' do

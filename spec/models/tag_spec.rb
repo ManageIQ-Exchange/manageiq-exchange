@@ -1,5 +1,30 @@
 require 'rails_helper'
 
 RSpec.describe Tag, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:tag) { FactoryBot.build(:tag) }
+
+  it 'has a valid factory' do
+    expect(tag).to be_valid
+  end
+
+  it 'is not valid without a name' do
+    tag.name = nil
+    tag.valid?
+    expect(tag.errors[:name]).to include("can't be blank")
+  end
+
+  it 'is not valid with a repeated name' do
+    tag.save
+    another_tag = FactoryBot.build(:tag, name: tag.name)
+    another_tag.valid?
+    expect(another_tag.errors.details[:name]).to include(error: :taken, value: tag.name)
+  end
+
+  it 'stores names in downcase' do
+    name = 'MixOfUpper and DOWNS and spaces'
+    tag.name = 'MixOfUpper and DOWNS and spaces'
+    tag.save
+    tag.reload
+    expect(tag.name).to eq(name.parameterize)
+  end
 end
