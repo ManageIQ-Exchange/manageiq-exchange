@@ -9,14 +9,21 @@ module V1
     def index
       logger.debug 'Returning tags index'
       @tags = Tag.where('name like ?', "%#{params[:query]}%" )
-
-      return_response json: @tags, status: :ok
+      if @tags.count.positive?
+        return_response json: @tags, status: :ok
+      else
+        return_response status: :no_content
+      end
     end
 
     def show
       logger.debug 'Returning tag @tag.name'
       @tag = Tag.find_by(name: params[:id])
-      return_response json: @tag, status: :ok
+      if @tag
+        return_response json: @tag, status: :ok
+      else
+        return_response status: :not_found
+      end
     end
   end
 end
