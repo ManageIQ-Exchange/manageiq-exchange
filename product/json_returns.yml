@@ -9,9 +9,10 @@ users:
     github_avatar_url: "avatar"
     github_company: "company"
 spins:
-  attributes: ["id","name","description"]
-  expand: ["readme","license_name","license_html_url","license_key","default_branch","user_id"]
+  attributes: ["id","user_login", "name", "description"]
+  expand: ["readme","license_name","license_html_url","license_key","default_branch","user_id", "clone_url"]
   staff: ["created_at","updated_at"]
   admin: []
   columns:
     id: "id"
+
