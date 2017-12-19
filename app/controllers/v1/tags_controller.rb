@@ -8,7 +8,7 @@ module V1
 
     def index
       logger.debug 'Returning tags index'
-      @tags = Tag.where('name like ?', "%#{params[:query]}%" )
+      @tags = Tag.where('name like ?', "%#{params[:query]&.parameterize}%" )
       if @tags.count.positive?
         return_response json: @tags, status: :ok
       else
