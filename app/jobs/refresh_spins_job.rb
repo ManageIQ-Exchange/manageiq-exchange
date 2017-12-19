@@ -61,7 +61,8 @@ class RefreshSpinsJob < ApplicationJob
                     metadata: metadata_json,
                     metadata_raw: metadata_raw,
                     min_miq_version: metadata_json['min_miq_version'].downcase.bytes[0] - 'a'.bytes[0],
-                    user: user)
+                    user: user,
+                    user_login: user.github_login)
       else
         spin.destroy unless spin.new_record?
       end
