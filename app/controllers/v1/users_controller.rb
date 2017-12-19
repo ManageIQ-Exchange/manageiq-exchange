@@ -7,14 +7,14 @@ module V1
     # Get all Users function
     # query param to find a user with STR include no sensitive
     #
-    # Return Users with onky id, github_login and github_html_url with ok 200 code
+    # Return Users with only id, github_login and github_html_url with ok 200 code
     #     if param query expand is resources return all data with ok 200 code
     # Return a no_content 204 if there isn't any record
     #
     # users?query=<value> get users login include value
     def index
       logger.debug 'Providing all users'
-      @users = User.all
+      @users = User.all   # TODO: Pagination
       @users = @users.where('github_login like? or github_login like?', "%#{params[:query]}%", "%#{params[:query].downcase}%") if params[:query]
 
       total_users = @users.count
