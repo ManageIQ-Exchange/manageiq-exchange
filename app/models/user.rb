@@ -49,14 +49,13 @@ class User < ApplicationRecord
   validates :github_company,    exclusion: { in: [nil]}
   validates :github_type,       presence: true
   validates :github_blog,       exclusion: { in: [nil]}
-  validates :github_html_url,   presence: true
   validates :github_location,   presence: true
   validates :github_bio,        exclusion: { in: [nil]}
   validates :email,             presence: true
   validates :sign_in_count,     numericality: true
 
-  def self.first_or_create(github_user)
-    return nil if github_user.id.nil?
+  def self.return_user(github_user)
+    return nil if github_user&.id.nil?
     User.where(id: github_user.id).first_or_create do |user|
       user.name              = github_user.name # assuming the user model has a name
       user.github_avatar_url = github_user.avatar_url || ''
