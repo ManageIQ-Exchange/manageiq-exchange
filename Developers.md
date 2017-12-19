@@ -43,7 +43,7 @@ Up to date documentation can be found on the following link:
 
 For development, you will need a mean to gather a code and token from GitHub. Users are created automatically when they are authenticated
 
-For instance, you can use [manageiq-galaxy-web](https://github.com/miq-consumption/manageiq-galaxy)
+For instance, you can use [manageiq-galaxy-web](https://github.com/miq-consumption/manageiq-galaxy-web)
 
 You will also need to define environment variables:
 ```bash
