@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171205113330) do
+ActiveRecord::Schema.define(version: 20171219101016) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,7 +46,6 @@ ActiveRecord::Schema.define(version: 20171205113330) do
     t.datetime "gh_updated_at"
     t.boolean "gh_archived", default: false
     t.string "default_branch", default: "master"
-    t.text "readme"
     t.string "license_key"
     t.string "license_name"
     t.string "license_html_url"
@@ -60,6 +59,8 @@ ActiveRecord::Schema.define(version: 20171205113330) do
     t.text "company"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "readme", default: ""
+    t.string "user_login"
     t.index ["published"], name: "index_spins_on_published"
     t.index ["user_id"], name: "index_spins_on_user_id"
   end
