@@ -19,6 +19,10 @@ Rails.application.routes.draw do
         end
       end
     end
+
+
+    post '/admin/users/refresh', to: 'admin#users_refresh'
+    post '/admin/users/:id/:role', to: 'admin#user_set_role'
   end
 
 
