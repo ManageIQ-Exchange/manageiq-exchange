@@ -55,17 +55,7 @@ RSpec.describe 'V1::Users::Sessions', type: :request do
       let(:user) { FactoryBot.create(id: user_id)}
 
       context '#create session' do
-        it 'fails with a code that is not current' do
-
-          headers = {
-              params: {
-                  "code": code
-              }
-          }
-          expect { post('/v1/users/sign_in',
-                        headers)
-          }.not_to change(User, :count).from(1)
-        end
+        pending 'fails with a code that is not current'
         pending 'allows the user to create a session when the code is right'
         pending 'reuses TOKEN and ID if present (no new authorization)'
       end
