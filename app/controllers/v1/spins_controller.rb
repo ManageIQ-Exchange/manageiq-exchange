@@ -78,7 +78,7 @@ module V1
         return
       end
       job = RefreshSpinsJob.perform_later(user: user, token: request.headers['HTTP_X_USER_TOKEN'])
-      return_response json: { data: job.job_id, metadata: { queue: job.queue_name, priority: job.priority } }, status: :accepted
+      render json: { data: job.job_id, metadata: { queue: job.queue_name, priority: job.priority } }, status: :accepted
     end
   end
 end

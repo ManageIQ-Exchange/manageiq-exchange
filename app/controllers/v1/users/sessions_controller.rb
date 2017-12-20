@@ -13,7 +13,7 @@ module V1
       def create
         user = User.find_by(id: request.headers["X-USER-ID"])
         token = request.headers["X-USER-CODE"]
-        if Tiddle::TokenIssuer.build.find_token(user, token)
+        if user && token && Tiddle::TokenIssuer.build.find_token(user, token)
           render json: { data: { user: user, authentication_token: token } }
           return
         end
@@ -22,14 +22,14 @@ module V1
         code = params[:code] || request.headers[:code] # Get code from headers or params
         if code.nil?
           logger.warn 'Null code, impossible to authenticate'
-          return_response json: { error: { message: 'Invalid code' } }, status: :not_acceptable
+          render json: { error: { message: 'Invalid code' } }, status: :not_acceptable
           return
         end
         begin
           user, token = verify_user!(code, request)
         rescue Octokit::NotFound
           logger.info 'User not found'
-          return_response json: { error: { message: 'Invalid code' } }, status: :not_found # Code was invalid
+          render json: { error: { message: 'Invalid code' } }, status: :unauthorized # Code was invalid
           return
         rescue Octokit::Unauthorized
           logger.info 'User is not authorized'
