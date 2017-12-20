@@ -11,18 +11,25 @@ module V1
 
       # before_action :configure_sign_in_params, only: [:create]
       def create
+        user = User.find_by(id: request.headers["X-USER-ID"])
+        token = request.headers["X-USER-CODE"]
+        if Tiddle::TokenIssuer.build.find_token(user, token)
+          render json: { data: { user: user, authentication_token: token } }
+          return
+        end
+
         logger.info 'Creating session, verifying code sent'
         code = params[:code] || request.headers[:code] # Get code from headers or params
         if code.nil?
           logger.warn 'Null code, impossible to authenticate'
-          render json: { error: { message: 'Invalid code' } }, status: :not_acceptable
+          return_response json: { error: { message: 'Invalid code' } }, status: :not_acceptable
           return
         end
         begin
           user, token = verify_user!(code, request)
         rescue Octokit::NotFound
           logger.info 'User not found'
-          render json: { error: { message: 'Invalid code' } }, status: :not_found # Code was invalid
+          return_response json: { error: { message: 'Invalid code' } }, status: :not_found # Code was invalid
           return
         rescue Octokit::Unauthorized
           logger.info 'User is not authorized'
@@ -42,7 +49,7 @@ module V1
       def destroy
         logger.info 'Destroying session'
         Tiddle.expire_token(current_user, request) if current_user
-        render json: {}
+        return_response json: {}
       end
 
       private
