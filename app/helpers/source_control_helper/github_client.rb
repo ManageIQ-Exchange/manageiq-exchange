@@ -6,14 +6,14 @@ module SourceControlHelper
     def initialize
       Rails.logger.info 'Generating new connection to Source Control'
 
-      github_url = URI::HTTPS.build(host: Rails.application.secrets.github_server, path: "/api_controller/#{Rails.application.secrets.github_version}")
+      github_url = URI::HTTPS.build(host: Rails.application.secrets.github_server, path: "/api/#{Rails.application.secrets.github_version}")
 
       opts = {
-          api_endpoint:       github_url.to_s,
-          connection_options: { ssl: { verify: Rails.application.secrets.github_verify } },
-          client_id:          Rails.application.secrets.oauth_github_id,
-          client_secret:      Rails.application.secrets.oauth_github_secret,
-          scope:              'user:email'
+        api_endpoint:       github_url.to_s,
+        connection_options: { ssl: { verify: Rails.application.secrets.github_verify } },
+        client_id:          Rails.application.secrets.oauth_github_id,
+        client_secret:      Rails.application.secrets.oauth_github_secret,
+        scope:              'user:email'
       }
 
       @github_access ||= Octokit::Client.new opts
@@ -79,4 +79,8 @@ module SourceControlHelper
       @github_access.repos(user)
     end
   end
+<<<<<<< HEAD
 end
+=======
+end
+>>>>>>> GitHub Enterprise Support
