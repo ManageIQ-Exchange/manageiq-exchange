@@ -10,6 +10,6 @@ class DeployTest < ActionDispatch::IntegrationTest
     get '/'
     assert_response :success
     assert_equal 'application/json', @response.content_type
-    assert_equal '{"data":{"version":1.0}}', @response.body
+    assert_equal '{"data":{"version":"1.0"}}', @response.body
   end
 end

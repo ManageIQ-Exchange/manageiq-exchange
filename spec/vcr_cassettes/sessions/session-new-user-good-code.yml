@@ -1,0 +1,159 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://github.com/login/oauth/access_token?client_id=CLIENT-ID&client_secret=CLIENT-SECRET
+    body:
+      encoding: UTF-8
+      string: '{"code":"b10f1847f4fef3dd2b1d","client_id":"CLIENT-ID","client_secret":"CLIENT-SECRET"}'
+    headers:
+      Accept:
+      - application/json
+      User-Agent:
+      - Octokit Ruby Gem 4.7.0
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Wed, 20 Dec 2017 11:21:01 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Status:
+      - 200 OK
+      Cache-Control:
+      - no-cache
+      Vary:
+      - X-PJAX
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      X-Request-Id:
+      - 25100fe70d513f945cb7fbbd71998c9c
+      X-Runtime:
+      - '0.032046'
+      Expect-Ct:
+      - max-age=2592000, report-uri="https://api.github.com/_private/browser/errors"
+      Content-Security-Policy:
+      - 'default-src ''none''; base-uri ''self''; block-all-mixed-content; child-src
+        render.githubusercontent.com; connect-src ''self'' uploads.github.com status.github.com
+        collector.githubapp.com api.github.com www.google-analytics.com github-cloud.s3.amazonaws.com
+        github-production-repository-file-5c1aeb.s3.amazonaws.com github-production-upload-manifest-file-7fdce7.s3.amazonaws.com
+        github-production-user-asset-6210df.s3.amazonaws.com wss://live.github.com;
+        font-src assets-cdn.github.com; form-action ''self'' github.com gist.github.com;
+        frame-ancestors ''none''; img-src ''self'' data: assets-cdn.github.com identicons.github.com
+        collector.githubapp.com github-cloud.s3.amazonaws.com *.githubusercontent.com;
+        media-src ''none''; script-src assets-cdn.github.com; style-src ''unsafe-inline''
+        assets-cdn.github.com'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      Public-Key-Pins:
+      - max-age=0; pin-sha256="WoiWRyIOVNa9ihaBciRSC7XHjliYS9VwUGOIud4PB18="; pin-sha256="RRM1dGqnDFsCJXBTHky16vi1obOlCgFFn/yOhI/y+ho=";
+        pin-sha256="k2v657xBsOVe1PQRwOsHsw3bsGT2VzIqz5K+59sNQws="; pin-sha256="K87oWBWM9UZfyddvDfoxL+8lpNyoUB2ptGtn0fv6G2Q=";
+        pin-sha256="IQBnNBEiFuhj+8x6X8XLgh01V9Ic5/V3IRQLNFFc7v4="; pin-sha256="iie1VXtL7HzAMF+/PVPR9xzT80kQxdZeJ+zduCB3uj0=";
+        pin-sha256="LvRiGEjRqfzurezaWuj8Wie2gyHMrW5Q06LspMnox7A="; includeSubDomains
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Runtime-Rack:
+      - '0.037666'
+      X-Github-Request-Id:
+      - C262:3704:62B5B6:AFDE16:5A3A479C
+    body:
+      encoding: UTF-8
+      string: '{"access_token":"GITHUB-TOKEN","token_type":"bearer","scope":""}'
+    http_version: 
+  recorded_at: Wed, 20 Dec 2017 11:21:01 GMT
+- request:
+    method: get
+    uri: https://api.github.com/user
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Octokit Ruby Gem 4.7.0
+      Content-Type:
+      - application/json
+      Authorization:
+      - token 52d0c0d018bc3f9d04524146390daef1b467337f
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Wed, 20 Dec 2017 11:21:01 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4981'
+      X-Ratelimit-Reset:
+      - '1513770042'
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Vary:
+      - Accept, Authorization, Cookie, X-GitHub-OTP
+      Etag:
+      - W/"bd8fc72322f1c93ace88ac78f53b1f15"
+      Last-Modified:
+      - Tue, 19 Dec 2017 19:11:45 GMT
+      X-Oauth-Scopes:
+      - ''
+      X-Accepted-Oauth-Scopes:
+      - ''
+      X-Oauth-Client-Id:
+      - 47b7f06ad76c082e5483
+      X-Github-Media-Type:
+      - github.v3; format=json
+      Access-Control-Expose-Headers:
+      - ETag, Link, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining,
+        X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      Content-Security-Policy:
+      - default-src 'none'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Runtime-Rack:
+      - '0.052063'
+      X-Github-Request-Id:
+      - C263:7F59:2E2A97:5C3DB8:5A3A479D
+    body:
+      encoding: UTF-8
+      string: '{"login":"chargio","id":7500590,"avatar_url":"https://avatars3.githubusercontent.com/u/7500590?v=4","gravatar_id":"","url":"https://api.github.com/users/chargio","html_url":"https://github.com/chargio","followers_url":"https://api.github.com/users/chargio/followers","following_url":"https://api.github.com/users/chargio/following{/other_user}","gists_url":"https://api.github.com/users/chargio/gists{/gist_id}","starred_url":"https://api.github.com/users/chargio/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/chargio/subscriptions","organizations_url":"https://api.github.com/users/chargio/orgs","repos_url":"https://api.github.com/users/chargio/repos","events_url":"https://api.github.com/users/chargio/events{/privacy}","received_events_url":"https://api.github.com/users/chargio/received_events","type":"User","site_admin":false,"name":"Sergio
+        Ocón","company":"@ManageIQ Red Hat","blog":"http://restoconstante.blogspot.com.es/","location":"Madrid
+        (Spain)","email":"sergio.ocon@redhat.com","hireable":null,"bio":"Telecomms
+        Engineer, open source supporter, working on the cloud","public_repos":34,"public_gists":2,"followers":13,"following":32,"created_at":"2014-05-06T13:19:37Z","updated_at":"2017-12-19T19:11:45Z"}'
+    http_version: 
+  recorded_at: Wed, 20 Dec 2017 11:21:01 GMT
+recorded_with: VCR 4.0.0

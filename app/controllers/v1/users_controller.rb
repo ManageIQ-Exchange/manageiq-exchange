@@ -38,7 +38,7 @@ module V1
       if @user
         return_response json: @user, status: :ok
       else
-        return_response json: { error: "Not user found with #{params[:id]}" }, status: :not_found
+        render json: { error: "Not user found with #{params[:id]}" }, status: :not_found
       end
     end
   end

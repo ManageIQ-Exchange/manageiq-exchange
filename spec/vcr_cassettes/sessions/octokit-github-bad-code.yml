@@ -5,7 +5,7 @@ http_interactions:
     uri: https://github.com/login/oauth/access_token?client_id=CLIENT-ID&client_secret=CLIENT-SECRET
     body:
       encoding: UTF-8
-      string: '{"code":"feffc25404113ebe619c","client_id":"CLIENT-ID","client_secret":"CLIENT-SECRET"}'
+      string: '{"code":"cae83aa5fb93c27e2a7f","client_id":"CLIENT-ID","client_secret":"CLIENT-SECRET"}'
     headers:
       Accept:
       - application/json
@@ -23,7 +23,7 @@ http_interactions:
       Server:
       - GitHub.com
       Date:
-      - Thu, 14 Dec 2017 09:58:59 GMT
+      - Wed, 20 Dec 2017 11:56:17 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -37,9 +37,9 @@ http_interactions:
       X-Ua-Compatible:
       - IE=Edge,chrome=1
       X-Request-Id:
-      - '0921cb7344081efcb0c199e83627cf54'
+      - a523f0f874c4ab01a4e919d58b434570
       X-Runtime:
-      - '0.082605'
+      - '0.009010'
       Expect-Ct:
       - max-age=2592000, report-uri="https://api.github.com/_private/browser/errors"
       Content-Security-Policy:
@@ -67,12 +67,13 @@ http_interactions:
       X-Xss-Protection:
       - 1; mode=block
       X-Runtime-Rack:
-      - '0.086878'
+      - '0.015270'
       X-Github-Request-Id:
-      - D1D3:433D:997AF1:10BC203:5A324B63
+      - C692:3716:55CDC6:9A8281:5A3A4FE1
     body:
       encoding: UTF-8
-      string: '{"access_token":"GITHUB-TOKEN","token_type":"bearer","scope":""}'
+      string: '{"error":"bad_verification_code","error_description":"The code passed
+        is incorrect or expired.","error_uri":"https://developer.github.com/v3/oauth/#bad-verification-code"}'
     http_version: 
-  recorded_at: Thu, 14 Dec 2017 09:58:59 GMT
+  recorded_at: Wed, 20 Dec 2017 11:56:18 GMT
 recorded_with: VCR 4.0.0

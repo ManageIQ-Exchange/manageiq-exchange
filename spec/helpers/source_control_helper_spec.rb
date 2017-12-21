@@ -35,7 +35,7 @@ end
 RSpec.describe SourceControlHelper, type: :helper do
   context 'GitHub' do
     let(:code) { 'cae83aa5fb93c27e2a7f' }
-    let(:code_good) { 'feffc25404113ebe619c' }
+    let(:code_good) { '7101201566bdec1aa9cd' }
     context 'code' do
       it 'gets error code when code is wrong or expired' do
         VCR.use_cassette('octokit-github-bad-code') do
@@ -43,7 +43,7 @@ RSpec.describe SourceControlHelper, type: :helper do
           expect(token[:error]).to eq('bad_verification_code')
         end
       end
-      it 'gets error code when application id is wrong' do
+      it 'gets good authentication token' do
         VCR.use_cassette('octokit-github-good') do
           token = source_control_server.exchange_code_for_token!(code_good)
           expect(token[:error]).to            be_nil

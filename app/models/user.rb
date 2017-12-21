@@ -56,7 +56,7 @@ class User < ApplicationRecord
 
   def self.return_user(github_user)
     return nil if github_user&.id.nil?
-    User.where(id: github_user.id).first_or_create do |user|
+    u = User.where(id: github_user.id).first_or_create do |user|
       user.name              = github_user.name # assuming the user model has a name
       user.github_avatar_url = github_user.avatar_url || ''
       user.github_html_url   = github_user.html_url || ''
@@ -71,6 +71,11 @@ class User < ApplicationRecord
       user.github_created_at = github_user.created_at
       user.github_updated_at = github_user.updated_at
     end
+    if u.errors.any?
+      logger.debug(pp u.errors)
+      return u.errors
+    end
+    u
     # TODO: It is possible that first_or_create with a block does not update the user
     # Verify and change to first_or_initialize + update
   end
