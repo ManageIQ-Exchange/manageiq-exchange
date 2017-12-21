@@ -33,6 +33,8 @@ module ManageiqGalaxy
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
 
+    config.autoload_paths << root.join('lib','v1').expand_path
+    config.autoload_paths << root.join('lib').expand_path
     # Adding back session store in cookies, so that it is possible to create and destroy sessions
 
     # config.session_store :cookie_store, key: '_miq_galaxy_session'

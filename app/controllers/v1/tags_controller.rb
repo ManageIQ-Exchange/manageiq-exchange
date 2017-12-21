@@ -3,7 +3,7 @@ module V1
   # Tags controller
   # Allows the API to show and modify tags
   #
-  class TagsController < ApplicationController
+  class TagsController < EngineController
     # before_action :authenticate_user!, only: [:create]
 
     def index
