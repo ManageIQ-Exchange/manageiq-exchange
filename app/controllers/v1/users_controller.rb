@@ -3,7 +3,7 @@ module V1
   # User controller
   # Provides information about the user
   ##
-  class UsersController < ApplicationController
+  class UsersController < EngineController
     # Get all Users function
     # query param to find a user with STR include no sensitive
     #
@@ -15,7 +15,6 @@ module V1
     def index
       logger.debug 'Providing all users'
       @result = User.all   # TODO: Pagination
-      query_options
       @result = @users.where('github_login like? or github_login like?', "%#{params[:query]}%", "%#{params[:query].downcase}%") if params[:query]
 
       total_users = @result.count

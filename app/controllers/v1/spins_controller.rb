@@ -4,7 +4,7 @@ module V1
   # Provides actions on the Spins
   #
   ##
-  class SpinsController < ApplicationController
+  class SpinsController < EngineController
     before_action :authenticate_user!, only: [:refresh]
     ###
     # Index (search: string - optional )
