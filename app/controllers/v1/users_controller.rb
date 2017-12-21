@@ -14,14 +14,15 @@ module V1
     # users?query=<value> get users login include value
     def index
       logger.debug 'Providing all users'
-      @users = User.all   # TODO: Pagination
-      @users = @users.where('github_login like? or github_login like?', "%#{params[:query]}%", "%#{params[:query].downcase}%") if params[:query]
+      @result = User.all   # TODO: Pagination
+      query_options
+      @result = @users.where('github_login like? or github_login like?', "%#{params[:query]}%", "%#{params[:query].downcase}%") if params[:query]
 
-      total_users = @users.count
+      total_users = @result.count
       if total_users.positive?
         logger.debug { "Returning #{total_users} Users" }
         # render json: @users, expand: params[:expand] == "resources",status: :ok
-        return_response json: @users, status: :ok
+        return_response json: @result, status: :ok
       else
         return_response status: :no_content
       end
