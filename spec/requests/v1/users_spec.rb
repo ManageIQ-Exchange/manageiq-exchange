@@ -29,34 +29,39 @@ RSpec.describe 'V1::Users', type: :request do
       it 'gets all users' do
         get "/#{prefix}/users"
         expect(response).to have_http_status(200)
-        expect(json).to be_kind_of(Array)
-        expect(json.length).to eq(3)
-        expect(json[0]['login']).to eq(user_john.github_login)
+        expect(json).to be_kind_of(Hash)
+        expect(json['data']).to be_kind_of(Array)
+        expect(json['data'].length).to eq(3)
+        expect(json['data'][0]['login']).to eq(user_john.github_login)
       end
 
       it 'get one exist user by login' do
         get "/#{prefix}/users/#{user_john.github_login}"
         expect(response).to have_http_status(200)
         expect(json).to be_kind_of(Hash)
-        expect(json['login']).to eq(user_john.github_login)
+        expect(json['data']).to be_kind_of(Hash)
+        expect(json['data']['login']).to eq(user_john.github_login)
       end
 
       it 'get one exist user by id' do
         get "/#{prefix}/users/#{user_john.id}"
         expect(response).to have_http_status(200)
         expect(json).to be_kind_of(Hash)
-        expect(json['login']).to eq(user_john.github_login)
+        expect(json['data']).to be_kind_of(Hash)
+        expect(json['data']['login']).to eq(user_john.github_login)
       end
 
       it 'get users where login include query value' do
         get "/#{prefix}/users?query=ohn"
         expect(response).to have_http_status(200)
-        expect(json).to be_kind_of(Array)
-        expect(json.length).to eq(2)
+        expect(json).to be_kind_of(Hash)
+        expect(json['data']).to be_kind_of(Array)
+        expect(json['data'].length).to eq(2)
         get "/#{prefix}/users?query=ohny"
         expect(response).to have_http_status(200)
-        expect(json).to be_kind_of(Array)
-        expect(json.length).to eq(1)
+        expect(json).to be_kind_of(Hash)
+        expect(json['data']).to be_kind_of(Array)
+        expect(json['data'].length).to eq(1)
       end
     end
   end

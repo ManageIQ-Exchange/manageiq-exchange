@@ -21,9 +21,9 @@ module V1
       if total_users.positive?
         logger.debug { "Returning #{total_users} Users" }
         # render json: @users, expand: params[:expand] == "resources",status: :ok
-        return_response json: @users, status: :ok
+        return_response @users, :ok
       else
-        return_response status: :no_content
+        render status: :no_content
       end
     end
 
@@ -36,7 +36,7 @@ module V1
       logger.debug "Looking for user with github_login #{params[:id]}"
       @user = User.find_by(id: params[:id]) || User.find_by(github_login: params[:id])
       if @user
-        return_response json: @user, status: :ok
+        return_response  @user,  :ok
       else
         render json: { error: "Not user found with #{params[:id]}" }, status: :not_found
       end

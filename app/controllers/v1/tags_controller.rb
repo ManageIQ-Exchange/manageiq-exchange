@@ -10,9 +10,9 @@ module V1
       logger.debug 'Returning tags index'
       @tags = Tag.where('name like ?', "%#{params[:query]&.parameterize}%" )
       if @tags.count.positive?
-        return_response json: @tags, status: :ok
+        return_response @tags, :ok, {}
       else
-        return_response status: :no_content
+        render  status: :no_content
       end
     end
 
@@ -20,9 +20,9 @@ module V1
       logger.debug 'Returning tag @tag.name'
       @tag = Tag.find_by(name: params[:id])
       if @tag
-        return_response json: @tag, status: :ok
+        return_response  @tag, :ok, {}
       else
-        return_response status: :not_found
+        render status: :not_found
       end
     end
   end
