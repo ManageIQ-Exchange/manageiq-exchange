@@ -28,30 +28,34 @@ RSpec.describe 'V1::Spins', type: :request do
       it 'all spins' do
         get "/#{prefix}/spins"
         expect(response).to have_http_status(200)
-        expect(json).to be_kind_of(Array)
-        expect(json.length).to eq(3)
-        expect(json[0]['name']).to eq(spin.name)
+        expect(json).to be_kind_of(Hash)
+        expect(json['data']).to be_kind_of(Array)
+        expect(json['data'].length).to eq(3)
+        expect(json['data'][0]['name']).to eq(spin.name)
       end
 
       it 'all spins of an existing user' do
         get "/#{prefix}/users/#{user.github_login}/spins"
         expect(response).to have_http_status(200)
-        expect(json).to be_kind_of(Array)
-        expect(json.length).to eq(2)
+        expect(json).to be_kind_of(Hash)
+        expect(json['data']).to be_kind_of(Array)
+        expect(json['data'].length).to eq(2)
       end
 
       it 'one spin of a user by name' do
         get "/#{prefix}/users/#{user.github_login}/spins/#{spin_galaxy.name}"
         expect(response).to have_http_status(200)
         expect(json).to be_kind_of(Hash)
-        expect(json['name']).to eq(spin_galaxy.name)
+        expect(json['data']).to be_kind_of(Hash)
+        expect(json['data']['name']).to eq(spin_galaxy.name)
       end
 
       it 'one spin of a user by id' do
         get "/#{prefix}/users/#{user.github_login}/spins/#{spin_content.id}"
         expect(response).to have_http_status(200)
         expect(json).to be_kind_of(Hash)
-        expect(json['name']).to eq(spin_content.name)
+        expect(json['data']).to be_kind_of(Hash)
+        expect(json['data']['name']).to eq(spin_content.name)
       end
 
       pending 'search for spins of a user'
@@ -60,8 +64,9 @@ RSpec.describe 'V1::Spins', type: :request do
       it 'spins with query' do
         get "/#{prefix}/spins?query=galaxy"
         expect(response).to have_http_status(200)
-        expect(json).to be_kind_of(Array)
-        expect(json.length).to eq(1)
+        expect(json).to be_kind_of(Hash)
+        expect(json['data']).to be_kind_of(Array)
+        expect(json['data'].length).to eq(1)
         get "/#{prefix}/spins?query=sample"
         expect(response).to have_http_status(204)
       end

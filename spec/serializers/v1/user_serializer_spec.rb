@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe UserSerializer, type: :serializer do
+RSpec.describe V1::UserSerializer, type: :serializer do
   let(:object_columns) { json_obj_columns }
 
   let(:tests) do
