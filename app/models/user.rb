@@ -54,6 +54,12 @@ class User < ApplicationRecord
   validates :email,             presence: true
   validates :sign_in_count,     numericality: true
 
+  def set_role(param)
+    hash = {admin: false, staff: false}
+    hash[param.to_sym] = true unless param == 'user'
+    update(hash)
+  end
+
   def self.return_user(github_user)
     return nil if github_user&.id.nil?
     u = User.where(id: github_user.id).first_or_create do |user|
@@ -66,6 +72,8 @@ class User < ApplicationRecord
       user.github_type       = github_user.type
       user.github_blog       = github_user.blog || ''
       user.github_location   = github_user.location || ''
+      user.followers         = github_user.followers
+      user.public_repos      = github_user.public_repos
       user.email             = github_user.email
       user.github_bio        = github_user.bio || ''
       user.github_created_at = github_user.created_at
