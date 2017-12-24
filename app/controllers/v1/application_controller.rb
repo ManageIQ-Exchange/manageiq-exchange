@@ -7,12 +7,13 @@ module V1
 
     def return_response(collection, state = :ok, metadata = {}, role = nil)
       if check_params
+        result = apply_filter(collection)
         result = select_page(collection) if collection.class.name.include?('ActiveRecord')
         args = {
-            json: result || collection,
+            json: result,
             namespace: self.class.to_s.split("::").first.constantize,
             status: state,
-            meta: meta_attributes(result || collection, metadata),
+            meta: meta_attributes(result, metadata),
             adapter: :json,
             root: 'data'
         }
@@ -38,6 +39,19 @@ module V1
         end
       end
       return true
+    end
+
+    def apply_filter(collection)
+      result = collection
+      filter = controller_name.classify.constantize.column_names & params.keys
+      sql = ""
+      values = params.select { |x| filter.include?(x.to_s) }.values
+      filter.each do |param_query|
+        sql+=" AND " unless sql.empty?
+        sql+="#{param_query} LIKE ?"
+      end
+      result = result.where(sql,*values) unless sql.empty?
+      result
     end
 
     def select_page(collection)
