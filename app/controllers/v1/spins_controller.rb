@@ -24,7 +24,6 @@ module V1
       else
         @spins = Spin.all
       end
-      @spins = @spins.where('name like? or name like?', "%#{params[:query]}%", "%#{params[:query].downcase}%") if params[:query]
       if @spins.count.positive?
         return_response @spins, :ok, {}
       else

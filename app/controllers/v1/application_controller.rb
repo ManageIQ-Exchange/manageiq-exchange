@@ -8,7 +8,8 @@ module V1
     def return_response(collection, state = :ok, metadata = {}, role = nil)
       if check_params
         result = apply_filter(collection)
-        result = select_page(collection) if collection.class.name.include?('ActiveRecord')
+        result = selector(result) if params["select"]
+        result = select_page(result) if result.class.name.include?('ActiveRecord')
         args = {
             json: result,
             namespace: self.class.to_s.split("::").first.constantize,
@@ -39,6 +40,12 @@ module V1
         end
       end
       return true
+    end
+
+    def selector(collection)
+      query = params["select"]
+      query+=",id" unless query.split(",").include?("id")
+      collection.select(query)
     end
 
     def apply_filter(collection)

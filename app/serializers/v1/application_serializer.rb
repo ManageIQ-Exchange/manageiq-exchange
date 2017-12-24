@@ -35,7 +35,7 @@ module V1
     def load_attributes(data)
       hash = {}
       data.each do |attribute|
-        hash[@serialization_columns[attribute] || attribute] = @object[attribute]
+        hash[@serialization_columns[attribute] || attribute] = @object[attribute] if @object.attributes.keys.include?(attribute)
       end
       hash
     end
