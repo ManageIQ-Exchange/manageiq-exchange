@@ -10,6 +10,30 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 
+VCR.configure do |config|
+  config.cassette_library_dir = File.join(Rails.root, 'spec/vcr_cassettes')
+  config.hook_into :webmock
+  config.filter_sensitive_data('CLIENT-ID') do |interaction|
+    (Rack::Utils.parse_query URI(interaction.request.uri).query)['client_id']
+  end
+  config.filter_sensitive_data('CLIENT-SECRET') do |interaction|
+    (Rack::Utils.parse_query URI(interaction.request.uri).query)['client_secret']
+  end
+  config.filter_sensitive_data('GITHUB-TOKEN') do |interaction|
+    JSON.parse(interaction.response.body)['access_token']
+  end
+  config.filter_sensitive_data('AUTHENTICATION-TOKEN') do |interaction|
+    data = JSON.parse(interaction.response.body)['data']
+    data['authentication_token'] if data
+  end
+
+  config.configure_rspec_metadata!
+  config.default_cassette_options = {
+      match_requests_on: [:method,
+                          VCR.request_matchers.uri_without_param(:client_id, :client_secret, :access_token)]
+  }
+  # config.debug_logger = File.open("log/github_connection.log", 'w')
+end
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end
