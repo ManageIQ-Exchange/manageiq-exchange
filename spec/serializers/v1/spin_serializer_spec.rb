@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe SpinSerializer, type: :serializer do
+RSpec.describe V1::SpinSerializer, type: :serializer do
   let(:object_columns) { json_obj_columns }
 
   let(:tests) do

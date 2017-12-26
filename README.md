@@ -9,6 +9,25 @@ It has been developed using:
 * Tiddle
 * Octokat
 
+
+## Getting Help
+
+If you find a bug, please report an [Issue](https://github.com/miq-consumption/manageiq-galaxy/issues/new)
+and see our [contributing guide](CONTRIBUTING.md).
+
+If you have a question, please [post to Stack Overflow](https://stackoverflow.com/questions/tagged/manageiq-galaxy).
+
+
+Thanks!
+
+## Documentation
+
+If you're reading this at https://github.com/miq-consumption/manageiq-galaxy you are
+reading documentation for our `master`, which is not yet released.
+
+- [0.1.0 (master) Documentation](https://github.com/miq-consumption/manageiq-galaxy/tree/master)
+  - [![API Docs](http://img.shields.io/badge/yard-docs-blue.svg)](http://www.rubydoc.info/github/miq-consumption/manageiq-galaxy/master)
+  - [Guides](docs)
 ## ENVIRONMENT VARIABLES
 
 ### Oauth for connecting to github
@@ -31,5 +50,5 @@ It has been developed using:
 
 
 ## Developer documentation
-Please review Developers.md
+Please review [Developers Guide](Developers.md)
 

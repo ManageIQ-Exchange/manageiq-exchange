@@ -61,5 +61,7 @@ gem 'tiddle', :git => 'https://github.com/miq-consumption/tiddle.git'
 gem 'octokit', '~> 4.0'
 gem 'github-markup'
 
+# Pagination
+gem 'kaminari'
 # gem 'commonmarker' # Needed to render markdown github style
 gem 'json-schema'
