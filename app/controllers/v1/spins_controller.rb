@@ -24,11 +24,10 @@ module V1
       else
         @spins = Spin.all
       end
-      @spins = @spins.where('name like? or name like?', "%#{params[:query]}%", "%#{params[:query].downcase}%") if params[:query]
       if @spins.count.positive?
-        return_response json: @spins, status: :ok
+        return_response @spins, :ok, {}
       else
-        return_response status: :no_content
+        render status: :no_content
       end
     end
 
@@ -55,10 +54,10 @@ module V1
         @spin = Spin.find_by(id: params[:id])
       end
       unless @spin
-        return_response status: :not_found
+        render status: :not_found
         return
       end
-      return_response json: @spin, status: :ok
+      return_response  @spin,  :ok, {}
     end
 
     ###

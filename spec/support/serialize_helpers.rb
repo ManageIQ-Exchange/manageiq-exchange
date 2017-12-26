@@ -13,7 +13,7 @@ module Serializers
     end
 
     def json_obj
-      @json_obj ||= json_returns_file[described_class.to_s.gsub('Serializer', '').downcase.pluralize]
+      @json_obj ||= json_returns_file[described_class.to_s.demodulize.gsub('Serializer', '').downcase.pluralize]
     end
 
     def json_obj_columns
@@ -21,7 +21,7 @@ module Serializers
     end
 
     def generate_serializer(options = {})
-      @obj = FactoryBot.build(described_class.to_s.gsub('Serializer', '').downcase.to_sym)
+      @obj = FactoryBot.build(described_class.to_s.demodulize.gsub('Serializer', '').downcase.to_sym)
       # Create a serializer instance
       serializer = described_class.new(@obj, @instance_options = options)
       # Create a serialization based on the configured adapter
