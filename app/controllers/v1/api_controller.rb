@@ -32,5 +32,11 @@ module V1
         render json: { errors: @error_object }
       end
     end
+
+    protected
+
+    def render_error_galaxy(identifier, status, extra_info = nil)
+      render json: ErrorGalaxy.new(identifier, status, extra_info), status: status
+    end
   end
 end

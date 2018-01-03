@@ -30,4 +30,34 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  errors:
+    auth_code_error:
+      title: Null code
+      detail: You need to set the code in request
+    auth_github_code_error:
+      title: Authentication error in GitHub with code
+      detail: The code is wrong or github error
+    auth_github_unauthorized_error:
+      title: Unauthorized error in GitHub
+      detail: The user is not authorized
+    auth_token_error:
+      title: Authentication Token error
+      detail: there is a problem in the authentication with token
+    spin_not_found:
+      title: This spin is not in the database
+      detail: Maybe the id of spin is wrong
+    spin_not_visible:
+      title: Spin is not visible
+      detail: Author hide this spin
+    spin_not_published:
+      title: You can't set this spin visible
+      detail: You need publish first this spin
+    spin_not_owner:
+      title: You don't have enough permits to do this action
+      detail: You are not the owner of this Spin
+    tag_not_found:
+      title: This tag is not in the database
+      detail: Maybe the id of tag is wrong
+    user_not_found:
+      title: This user is not in the database
+      detail: Maybe the id of user is wrong

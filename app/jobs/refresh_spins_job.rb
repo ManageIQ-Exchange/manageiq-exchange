@@ -7,7 +7,6 @@
 # @return boolean
 #
 class RefreshSpinsJob < ApplicationJob
-  include SpinsHelper
   include SourceControlHelper
 
   queue_as :default
@@ -34,8 +33,7 @@ class RefreshSpinsJob < ApplicationJob
     # If it is not in the database, add it to the database
     repos.each do |repo|
       spin = user_spins_list.include?(repo.id) ? Spin.find_by(id: repo.id) : Spin.new(id: repo.id, first_import: DateTime.current)
-
-      if (metadata_raw, metadata_json, readme_html = spin_metadata(repo.full_name))
+      if (candidate_spin?(repo.full_name))
         spin.update(name: repo.name,
                     full_name: repo.full_name,
                     description: repo.description,
@@ -53,13 +51,10 @@ class RefreshSpinsJob < ApplicationJob
                     gh_updated_at: repo.updated_at,
                     gh_archived: repo.archived,
                     default_branch: repo.default_branch || 'master',
-                    readme: readme_html,
                     license_key: repo.license&.key,
                     license_name: repo.license&.name,
                     license_html_url: repo.license&.url,
                     version: metadata_json['spin_version'],
-                    metadata: metadata_json,
-                    metadata_raw: metadata_raw,
                     min_miq_version: metadata_json['min_miq_version'].downcase.bytes[0] - 'a'.bytes[0],
                     user: user,
                     user_login: user.github_login)

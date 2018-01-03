@@ -6,7 +6,9 @@ RSpec.describe 'V1::Users::Sessions', type: :request do
       let(:code) { 'b10f1847f4fef3dd2b1d' }
 
       it 'creates a new user when it does not exist' do
-        VCR.use_cassette('sessions/session-new-user-good-code') do
+        VCR.use_cassette('sessions/session-new-user-good-code',
+                         :decode_compressed_response => true,
+                         :record                     => :none) do
           headers = {
               params: {
                 "code": code

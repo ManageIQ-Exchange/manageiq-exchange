@@ -40,26 +40,27 @@ module SourceControlHelper
     end
 
     #
-    # Returns metadata from the repo or nil
-    # @param full_name [String] Full name of repo
-    # @return [metadata_raw, metadata_json]
+    # Check if a spin is a candidate
+    # @return boolean
+    #
 
-    def metadata(full_name)
+    def candidate_spin?(full_name)
       begin
-        metadata_raw = @github_access.contents(full_name, path: '/metadata.yml', accept: 'application/vnd.github.raw')
+        @github_access.contents(full_name, path: '/.manageiq-spin', accept: 'application/vnd.github.raw')
       rescue Octokit::NotFound
         nil
       end
+    end
 
+    #
+    # Returns metadata from the repo or nil
+    # @param full_name [String] Full name of repo
+    # @return [metadata_raw, metadata_json]
+    def metadata(full_name)
       begin
-        metadata_json = JSON.parse(JSON.dump(YAML.safe_load(metadata_raw)))
-        unless metadata_json.nil?
-          JSON::Validator.validate!(SPIN_SCHEMA, metadata_json)
-          return [metadata_raw, metadata_json]
-        end
+        @github_access.contents(full_name, path: '/metadata.yml', accept: 'application/vnd.github.raw')
+      rescue Octokit::NotFound
         nil
-      rescue TypeError, JSON::ParserError, JSON::Schema::ValidationError
-        nil # There has been some kind of error while parsing, so it is not valid
       end
     end
 
