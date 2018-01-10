@@ -17,13 +17,17 @@ RSpec.describe SourceControlHelper, type: :helper do
     let(:code_good) { '7101201566bdec1aa9cd' }
     context 'code' do
       it 'gets error code when code is wrong or expired' do
-        VCR.use_cassette('sessions/octokit-github-bad-code') do
+        VCR.use_cassette('sessions/octokit-github-bad-code',
+                         :decode_compressed_response => true,
+                         :record                     => :none) do
           token = source_control_server.exchange_code_for_token!(code)
           expect(token[:error]).to eq('bad_verification_code')
         end
       end
       it 'gets good authentication token' do
-        VCR.use_cassette('sessions/octokit-github-good') do
+        VCR.use_cassette('sessions/octokit-github-good',
+                         :decode_compressed_response => true,
+                         :record                     => :none) do
           token = source_control_server.exchange_code_for_token!(code_good)
           expect(token[:error]).to            be_nil
           expect(token[:token_type]).to       eq('bearer')

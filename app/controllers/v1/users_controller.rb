@@ -38,7 +38,7 @@ module V1
       if @user
         return_response  @user,  :ok
       else
-        render json: { error: "Not user found with #{params[:id]}" }, status: :not_found
+        render_error_galaxy(:user_not_found, :not_found, { username: params[:id]})
       end
     end
   end

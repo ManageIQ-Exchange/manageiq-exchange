@@ -1,0 +1,81 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.github.com/repos/miq-galaxy/galaxy_demo_repos/readme
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.raw
+      User-Agent:
+      - Octokit Ruby Gem 4.7.0
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Tue, 09 Jan 2018 19:56:12 GMT
+      Content-Type:
+      - application/vnd.github.raw; charset=utf-8
+      Content-Length:
+      - '72'
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '60'
+      X-Ratelimit-Remaining:
+      - '48'
+      X-Ratelimit-Reset:
+      - '1515529857'
+      Cache-Control:
+      - public, max-age=60, s-maxage=60
+      Vary:
+      - Accept
+      Etag:
+      - '"5ab7c518f9affa98412547d5342e0208"'
+      Last-Modified:
+      - Fri, 29 Dec 2017 10:46:06 GMT
+      X-Github-Media-Type:
+      - github.v3; param=raw
+      Access-Control-Expose-Headers:
+      - ETag, Link, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining,
+        X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      Content-Security-Policy:
+      - default-src 'none'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Runtime-Rack:
+      - '0.024870'
+      X-Github-Request-Id:
+      - D9D1:5D4A:45C79C8:D1DBC09:5A551E5C
+    body:
+      encoding: UTF-8
+      string: |+
+        # Test repo for content in ManageIQ Galaxy
+
+
+        ```ruby
+        puts "hello"
+        ```
+
+
+    http_version: 
+  recorded_at: Tue, 09 Jan 2018 19:56:12 GMT
+recorded_with: VCR 4.0.0

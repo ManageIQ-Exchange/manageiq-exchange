@@ -20,11 +20,15 @@ VCR.configure do |config|
     (Rack::Utils.parse_query URI(interaction.request.uri).query)['client_secret']
   end
   config.filter_sensitive_data('GITHUB-TOKEN') do |interaction|
-    JSON.parse(interaction.response.body)['access_token']
+    if interaction.response.body.is_a?(Hash)
+      JSON.parse(interaction.response.body)['access_token'] if interaction.response.body.has_key? 'access_token'
+    end
   end
   config.filter_sensitive_data('AUTHENTICATION-TOKEN') do |interaction|
-    data = JSON.parse(interaction.response.body)['data']
-    data['authentication_token'] if data
+    if interaction.response.body.is_a?(Hash)
+      data = JSON.parse(interaction.response.body)['data']
+      data['authentication_token'] if data
+    end
   end
 
   config.configure_rspec_metadata!
@@ -78,7 +82,8 @@ RSpec.configure do |config|
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
 
-  config.include Requests::JsonHelpers,         type: :request
+  config.include Spec::Support::Api::Helpers, :type => :request
+  config.include Spec::Support::Api::RequestHelpers, :type => :request
   config.include Serializers::SerializeHelpers, type: :serializer
   # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!

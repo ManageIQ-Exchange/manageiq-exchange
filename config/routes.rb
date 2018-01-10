@@ -18,6 +18,9 @@ Rails.application.routes.draw do
           post 'refresh'
         end
       end
+
+      post '/spins/:spin_id/publish/:flag', to: 'spins#publish'
+      post '/spins/:spin_id/visible/:flag', to: 'spins#visible'
     end
   end
 

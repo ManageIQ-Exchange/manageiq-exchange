@@ -5,7 +5,7 @@ module V1
   #
   ##
   class SpinsController < ApiController
-    before_action :authenticate_user!, only: [:refresh]
+    before_action :authenticate_user!, only: [:refresh, :visible, :publish]
     ###
     # Index (search: string - optional )
     # Provides an index of all spins in the system
@@ -20,9 +20,9 @@ module V1
           return_response status: :no_content
           return
         end
-        @spins = Spin.where(user_id: @user.id ) if @user
+        @spins = Spin.where(user_id: @user.id, visible: true ) if @user
       else
-        @spins = Spin.all
+        @spins = Spin.where(visible:true)
       end
       @spins = @spins.where('name like? or name like?', "%#{params[:query]}%", "%#{params[:query].downcase}%") if params[:query]
       if @spins.count.positive?
@@ -41,18 +41,20 @@ module V1
       if params[:user_id]
         @user = User.find_by_github_login(params[:user_id])
         return_response status: :not_found unless @user
-        @spin = Spin.where(user_id: @user.id)
+        @spin = Spin.where(user_id: @user.id, visible: true)
         if @spin.exists?(id: params[:id])
           @spin = @spin.find(params[:id])
+          render_error_galaxy(:spin_not_visible, :method_not_allowed) unless @spin.visible?
         else
           if @spin.exists?(name: params[:id])
             @spin = @spin.find_by(name: params[:id])
+            render_error_galaxy(:spin_not_visible, :method_not_allowed) unless @spin.visible?
           else
             @spin = nil
           end
         end
       else
-        @spin = Spin.find_by(id: params[:id])
+        @spin = Spin.find_by(id: params[:id], visible: true)
       end
       unless @spin
         render status: :not_found
@@ -79,6 +81,40 @@ module V1
       end
       job = RefreshSpinsJob.perform_later(user: user, token: request.headers['HTTP_X_USER_TOKEN'])
       render json: { data: job.job_id, metadata: { queue: job.queue_name, priority: job.priority } }, status: :accepted
+    end
+
+    def visible
+      if Spin.exists?(params[:spin_id])
+        spin = Spin.find(params[:spin_id])
+        if spin.spin_of?(current_user)
+          if spin.visible_to(true?(params[:flag]))
+            return_response spin, :accepted, {}
+          else
+            render_error_galaxy(:spin_not_published, :method_not_allowed)
+          end
+        else
+          render_error_galaxy(:spin_not_owner, :unauthorized)
+        end
+      else
+        render_error_galaxy(:spin_not_found, :not_found)
+      end
+    end
+
+    def publish
+      if Spin.exists?(params[:spin_id])
+        spin = Spin.find(params[:spin_id])
+        if spin.spin_of?(current_user)
+          if spin.publish_to(true?(params[:flag]))
+            return_response spin, :accepted, {}
+          else
+            render_error_galaxy(:spin_not_published, :method_not_allowed, spin.log)
+          end
+        else
+          render_error_galaxy(:spin_not_owner, :unauthorized)
+        end
+      else
+        render_error_galaxy(:spin_not_found, :not_found)
+      end
     end
   end
 end

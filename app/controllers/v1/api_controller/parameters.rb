@@ -40,6 +40,10 @@ module V1
       def numeric?(obj)
         obj.to_s.match(/\A[+-]?\d+?(\.\d+)?\Z/).nil? ? false : true
       end
+
+      def true?(obj)
+        obj.to_s == "true"
+      end
     end
   end
 end

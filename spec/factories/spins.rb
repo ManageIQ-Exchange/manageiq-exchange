@@ -2,6 +2,7 @@ FactoryBot.define do
   factory :spin do
     id                { Faker::Number.number(10) }
     published         false
+    visible           false
     user
     name              { Faker::App.name.parameterize }
     full_name         { "#{user.github_login}/#{name}" }
@@ -18,6 +19,7 @@ FactoryBot.define do
     gh_updated_at     { Faker::Time.between(gh_created_at, Date.today) }
     gh_archived       false
     default_branch    'master'
+    log               ''
     license_key       "MIT"
     license_name      "MIT License"
     license_html_url  "https://api.github.com/licenses/mit"

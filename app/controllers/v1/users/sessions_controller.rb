@@ -22,18 +22,18 @@ module V1
         code = params[:code] || request.headers[:code] # Get code from headers or params
         if code.nil?
           logger.warn 'Null code, impossible to authenticate'
-          render json: { error: { message: 'Invalid code' } }, status: :not_acceptable
+          render_error_galaxy(:auth_code_error, :not_acceptable)
           return
         end
         begin
           user, token = verify_user!(code, request)
         rescue Octokit::NotFound
           logger.info 'User not found'
-          render json: { error: { message: 'Invalid code' } }, status: :unauthorized # Code was invalid
+          render_error_galaxy(:auth_github_code_error, :unauthorized)
           return
         rescue Octokit::Unauthorized
           logger.info 'User is not authorized'
-          render json: { error: { message: 'Github auth error' } }, status: :unauthorized # Bad authentication
+          render_error_galaxy(:auth_github_unauthorized_error, :unauthorized)
           return
         end
         # Return token
@@ -41,8 +41,8 @@ module V1
           logger.info 'Returning user info and token'
           render json: { data: { user: user, authentication_token: token } }
         else
-          logger.info 'Authentication error'
-          render json: { error: { message: 'Auth error' } }, status: :unauthorized
+          logger.info 'Authentication token error'
+          render_error_galaxy(:auth_token_error, :unauthorized)
         end
       end
 
