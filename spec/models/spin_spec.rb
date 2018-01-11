@@ -92,4 +92,39 @@ RSpec.describe Spin, type: :model do
        expect(spin_galaxy.releases).not_to be_empty
     end
   end
+
+  it 'refresh_tags' do
+    VCR.use_cassette('github/get_metadata',
+                     :decode_compressed_response => true,
+                     :record => :none) do
+      expect(spin_galaxy.validate_metadata?).to be_truthy
+      spin_galaxy.refresh_tags
+      expect(spin_galaxy.tags.count).to eq 2
+    end
+  end
+
+  it 'generate a log by a tag' do
+    VCR.use_cassette('github/get_metadata',
+                     :decode_compressed_response => true,
+                     :record => :none) do
+      expect(spin_galaxy.validate_metadata?).to be_truthy
+      spin_galaxy.metadata['tags'] = ['semo']
+      spin_galaxy.refresh_tags
+      expect(spin_galaxy.log).to eq 'Maybe the tag semo is wrong. Did you mean demo?. '
+    end
+  end
+
+  it 'remove all relation tags without delete the tag' do
+    tag_a = FactoryBot.create(:tag)
+    tag_b = FactoryBot.create(:tag)
+    spin_a = FactoryBot.create(:spin, metadata: {'tags':[tag_a.name,tag_b.name]})
+    spin_b = FactoryBot.create(:spin, metadata: {'tags':[tag_a.name,tag_b.name]})
+    spin_a.tags << tag_a
+    spin_a.tags << tag_b
+    expect(spin_a.tags.count).to eq 2
+    spin_b.tags << tag_a
+    spin_b.tags << tag_b
+    spin_b.refresh_tags
+    expect(spin_a.tags.count).to eq 2
+  end
 end

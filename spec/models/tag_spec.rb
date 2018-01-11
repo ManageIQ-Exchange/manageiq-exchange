@@ -27,4 +27,14 @@ RSpec.describe Tag, type: :model do
     tag.reload
     expect(tag.name).to eq(name.parameterize)
   end
+
+  it 'validate a wrong tag' do
+    wrong_tag =  FactoryBot.build(:tag, name: 'zemo')
+    expect(wrong_tag.validate?). to eq 'Maybe the tag zemo is wrong. Did you mean demo?. '
+  end
+
+  it 'validate a correct tag' do
+    correct_tag =  FactoryBot.build(:tag, name: 'demo')
+    expect(correct_tag.validate?).to be_nil
+  end
 end

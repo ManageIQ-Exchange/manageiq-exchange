@@ -42,12 +42,28 @@ RSpec.describe 'V1::Spins', type: :request do
         expect(json['data'].length).to eq(2)
       end
 
+      it 'one spin  by name' do
+        get "/#{prefix}/spins/#{spin_galaxy.name}"
+        expect(response).to have_http_status(200)
+        expect(json).to be_kind_of(Hash)
+        expect(json['data']).to be_kind_of(Hash)
+        expect(json['data']['name']).to eq(spin_galaxy.name)
+      end
+
       it 'one spin of a user by name' do
         get "/#{prefix}/users/#{user.github_login}/spins/#{spin_galaxy.name}"
         expect(response).to have_http_status(200)
         expect(json).to be_kind_of(Hash)
         expect(json['data']).to be_kind_of(Hash)
         expect(json['data']['name']).to eq(spin_galaxy.name)
+      end
+
+      it 'one spin by id' do
+        get "/#{prefix}/spins/#{spin_content.id}"
+        expect(response).to have_http_status(200)
+        expect(json).to be_kind_of(Hash)
+        expect(json['data']).to be_kind_of(Hash)
+        expect(json['data']['name']).to eq(spin_content.name)
       end
 
       it 'one spin of a user by id' do

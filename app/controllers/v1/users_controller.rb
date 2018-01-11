@@ -33,6 +33,7 @@ module V1
     # Return a error message with a not_found 404 code
     #
     def show
+      return unless  check_params_required(:id)
       logger.debug "Looking for user with github_login #{params[:id]}"
       @user = User.find_by(id: params[:id]) || User.find_by(github_login: params[:id])
       if @user
