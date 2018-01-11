@@ -3,14 +3,6 @@
   "description": "This is the schema for the spin metadata",
   "type": "object",
   "properties": {
-    "min_miq_version": {
-      "type": "string",
-      "pattern": "^[a-z]$"
-    },
-    "spin_version": {
-      "type": "string",
-      "pattern": "^[0-9]+.[0-9]+.[0-9]+$"
-    },
     "author": {
       "type": "string"
     },
@@ -20,8 +12,22 @@
         "null"
       ]
     },
-    "license": {
-      "type": "string"
+    "description": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "metadata_version": {
+      "type": "integer"
+    },
+    "min_miq_version": {
+      "type": "string",
+      "pattern": "^[a-z]$"
+    },
+    "max_miq_version": {
+      "type": "string",
+      "pattern": "^[a-z]$"
     },
     "tags": {
       "type": "array",
@@ -31,10 +37,9 @@
     }
   },
   "required": [
-    "min_miq_version",
-    "spin_version",
     "author",
-    "license",
+    "metadata_version",
+    "min_miq_version",
     "tags"
   ]
 }

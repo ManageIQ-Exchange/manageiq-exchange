@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.github.com/repos/miq-galaxy/galaxy_demo_repos/contents/metadata.yml
+    uri: https://api.github.com/repos/miq-consumption/galaxy_demo_repos/contents/metadata.yml
     body:
       encoding: US-ASCII
       string: ''
@@ -23,27 +23,27 @@ http_interactions:
       Server:
       - GitHub.com
       Date:
-      - Tue, 09 Jan 2018 19:58:06 GMT
+      - Thu, 11 Jan 2018 09:08:19 GMT
       Content-Type:
       - application/vnd.github.raw; charset=utf-8
       Content-Length:
-      - '695'
+      - '859'
       Status:
       - 200 OK
       X-Ratelimit-Limit:
       - '60'
       X-Ratelimit-Remaining:
-      - '47'
+      - '58'
       X-Ratelimit-Reset:
-      - '1515529857'
+      - '1515665298'
       Cache-Control:
       - public, max-age=60, s-maxage=60
       Vary:
       - Accept
       Etag:
-      - '"4dadbc5132ce3109ad82395fc22be9e251a2b6d8"'
+      - '"7d942e485d68fcaa99770655be36a55602450521"'
       Last-Modified:
-      - Fri, 29 Dec 2017 10:46:06 GMT
+      - Thu, 21 Dec 2017 16:23:47 GMT
       X-Github-Media-Type:
       - github.v3; param=raw
       Access-Control-Expose-Headers:
@@ -62,28 +62,23 @@ http_interactions:
       X-Xss-Protection:
       - 1; mode=block
       X-Runtime-Rack:
-      - '0.045114'
+      - '0.036462'
       X-Github-Request-Id:
-      - D9E2:5D4A:45CCAEB:D1E993E:5A551ECE
+      - 66EA:2FDA:DE3A70:1AAC300:5A572982
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        bWluX21pcV92ZXJzaW9uOiAiaCIgIyBNYW5hZ2VJUS1BUEkgdmVyc2lvbiBu
-        dW1iZXIKc3Bpbl92ZXJzaW9uOiAiMC4wLjEiCmF1dGhvcjogIlNlcmdpbyBP
-        Y8OzbiIKY29tcGFueTogI09wdGlvbmFsCmxpY2Vuc2U6IE1JVAojIFNvbWUg
-        c3VnZ2VzdGVkIGxpY2Vuc2VzOgojIC0gQlNEIChkZWZhdWx0KQojIC0gTUlU
-        CiMgLSBHUEx2MgojIC0gR1BMdjMKIyAtIEFwYWNoZQojIC0gQ0MtQlkKCnRh
-        Z3M6IFtdCiMgTGlzdCB0YWdzIGZvciB5b3VyIHNwaW4gaGVyZSwgb25lIHBl
-        ciBsaW5lLiBBIHRhZyBpcyBhIGtleXdvcmQgdGhhdCBkZXNjcmliZXMKIyBh
-        bmQgY2F0ZWdvcml6ZXMgdGhlIHNwaW4uIFVzZXJzIGZpbmQgc3BpbnMgYnkg
-        c2VhcmNoaW5nIGZvciB0YWdzLiBCZSBzdXJlIHRvCiMgcmVtb3ZlIHRoZSAn
-        W10nIGFib3ZlLCBpZiB5b3UgYWRkIHRhZ3MgdG8gdGhpcyBsaXN0LgojCiMg
-        Tk9URTogQSB0YWcgaXMgbGltaXRlZCB0byBhIHNpbmdsZSB3b3JkIGNvbXBy
-        aXNlZCBvZiBhbHBoYW51bWVyaWMgY2hhcmFjdGVycy4KIyBNYXhpbXVtIDIw
-        IHRhZ3MgcGVyIHNwaW4uCgpkZXBlbmRlbmNpZXM6IAojIExpc3QgeW91ciBy
-        b2xlIGRlcGVuZGVuY2llcyBoZXJlLCBvbmUgcGVyIGxpbmUuIEJlIHN1cmUg
-        dG8gcmVtb3ZlIHRoZSAnW10nIGFib3ZlLAojIGlmIHlvdSBhZGQgZGVwZW5k
-        ZW5jaWVzIHRvIHRoaXMgbGlzdAo=
+      encoding: UTF-8
+      string: "metadata_version: 1 # It must be 1\ndescription: \"Description\"\nauthor:
+        \"Author Name\"\ncompany: #Optional\n\nmin_miq_version: \"h\" \n# A letter
+        with the manageiq_version:\n# For Hammer, use \"h\"\n# For Gaprishdanvili,
+        use \"g\"\n# Etc.\n\ntags: []\n# List tags for your spin here, one per line.
+        A tag is a keyword that describes\n# and categorizes the spin. Users find
+        spins by searching for tags. Be sure to\n# remove the '[]' above, if you add
+        tags to this list.\n#\n# NOTE: A tag is limited to a single word comprised
+        of alphanumeric characters.\n# Maximum 20 tags per spin.\n\n# Spin version\n#
+        The spin version will be gathered from the releases tag in GitHub\n\n# Many
+        licenses need an actual file to work. We use the License API from GitHub\n#
+        Some suggested licenses to configure in the repo:\n# - BSD (default)\n# -
+        MIT\n# - GPLv2\n# - GPLv3\n# - Apache\n# - CC-BY\n# - The Unlicense\n"
     http_version: 
-  recorded_at: Tue, 09 Jan 2018 19:58:06 GMT
+  recorded_at: Thu, 11 Jan 2018 09:08:19 GMT
 recorded_with: VCR 4.0.0
