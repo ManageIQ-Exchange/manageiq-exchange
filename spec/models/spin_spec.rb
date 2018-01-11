@@ -54,11 +54,42 @@ RSpec.describe Spin, type: :model do
     end
   end
 
-  it 'validate_spin?' do
-    VCR.use_cassette("github/get_readme",:decode_compressed_response => true) do
+  it 'validate_spin? without releases' do
+    VCR.use_cassette("github/get_readme",:decode_compressed_response => true,:record => :none) do
       VCR.use_cassette("github/get_metadata",:decode_compressed_response => true,:record => :none) do
-        expect(spin_galaxy.validate_spin?).to be_truthy
+        expect(spin_galaxy.validate_spin?).to be_falsey
       end
+    end
+  end
+
+  it 'validate_releases?' do
+    VCR.use_cassette("github/get_releases",:decode_compressed_response => true,:record => :none) do
+      expect(spin_galaxy.validate_releases?).to be_falsey
+      expect(spin_galaxy.log).to eq 'Error in releases, you need  a release in your spin, if you have one refresh the spin'
+      expect(spin_galaxy.releases).to eq []
+      expect(spin_galaxy.update_releases). to be_truthy
+      expect(spin_galaxy.releases).not_to be_empty
+      expect(spin_galaxy.validate_releases?).to be_truthy
+    end
+  end
+
+  it 'validate_spin? with releases' do
+    VCR.use_cassette("github/get_readme",:decode_compressed_response => true,:record => :none) do
+      VCR.use_cassette("github/get_metadata",:decode_compressed_response => true,:record => :none) do
+        VCR.use_cassette("github/get_releases",:decode_compressed_response => true,:record => :none) do
+          expect(spin_galaxy.update_releases). to be_truthy
+          expect(spin_galaxy.validate_spin?).to be_truthy
+        end
+      end
+    end
+  end
+
+  it 'update_releases' do
+    VCR.use_cassette("github/get_releases",:decode_compressed_response => true,:record => :none) do
+       spin_galaxy.releases = []
+       spin_galaxy.save
+       expect(spin_galaxy.update_releases).to be_truthy
+       expect(spin_galaxy.releases).not_to be_empty
     end
   end
 end
