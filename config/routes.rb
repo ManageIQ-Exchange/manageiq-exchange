@@ -17,10 +17,9 @@ Rails.application.routes.draw do
         collection do
           post 'refresh'
         end
+        post 'publish/:flag', to: 'spins#publish'
+        post 'visible/:flag', to: 'spins#visible'
       end
-
-      post '/spins/:spin_id/publish/:flag', to: 'spins#publish'
-      post '/spins/:spin_id/visible/:flag', to: 'spins#visible'
     end
   end
 

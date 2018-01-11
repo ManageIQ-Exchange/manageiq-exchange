@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Spin, type: :model do
   let!(:spin) { FactoryBot.create(:spin) }
   let!(:user) { FactoryBot.create(:user) }
-  let!(:spin_galaxy) { FactoryBot.create(:spin, name: "galaxy", full_name: 'miq-galaxy/galaxy_demo_repos',user: user, published: true, visible:true) }
+  let!(:spin_galaxy) { FactoryBot.create(:spin, name: "galaxy", full_name: 'miq-consumption/galaxy_demo_repos',user: user, published: true, visible:true) }
   let!(:spin_content) { FactoryBot.create(:spin, name: "content",user: user) }
 
   it 'visible?' do
@@ -41,7 +41,7 @@ RSpec.describe Spin, type: :model do
   it 'validate_readme?' do
     VCR.use_cassette('github/get_readme',
                      :decode_compressed_response => true,
-                     :record                     => :none) do
+                      :record => :none) do
       expect(spin_galaxy.validate_readme?).to be_truthy
     end
   end
@@ -49,13 +49,13 @@ RSpec.describe Spin, type: :model do
   it 'validate_metadata?' do
     VCR.use_cassette('github/get_metadata',
                      :decode_compressed_response => true,
-                     :record                     => :none) do
+                     :record => :none) do
       expect(spin_galaxy.validate_metadata?).to be_truthy
     end
   end
 
   it 'validate_spin?' do
-    VCR.use_cassette("github/get_readme",:decode_compressed_response => true,:record => :none) do
+    VCR.use_cassette("github/get_readme",:decode_compressed_response => true) do
       VCR.use_cassette("github/get_metadata",:decode_compressed_response => true,:record => :none) do
         expect(spin_galaxy.validate_spin?).to be_truthy
       end

@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.github.com/repos/miq-galaxy/galaxy_demo_repos/readme
+    uri: https://api.github.com/repos/miq-consumption/galaxy_demo_repos/readme
     body:
       encoding: US-ASCII
       string: ''
@@ -23,27 +23,27 @@ http_interactions:
       Server:
       - GitHub.com
       Date:
-      - Tue, 09 Jan 2018 19:56:12 GMT
+      - Thu, 11 Jan 2018 09:08:18 GMT
       Content-Type:
       - application/vnd.github.raw; charset=utf-8
       Content-Length:
-      - '72'
+      - '89'
       Status:
       - 200 OK
       X-Ratelimit-Limit:
       - '60'
       X-Ratelimit-Remaining:
-      - '48'
+      - '59'
       X-Ratelimit-Reset:
-      - '1515529857'
+      - '1515665298'
       Cache-Control:
       - public, max-age=60, s-maxage=60
       Vary:
       - Accept
       Etag:
-      - '"5ab7c518f9affa98412547d5342e0208"'
+      - '"014f299f9c2542385e881ecdf08a26e3"'
       Last-Modified:
-      - Fri, 29 Dec 2017 10:46:06 GMT
+      - Thu, 21 Dec 2017 16:23:47 GMT
       X-Github-Media-Type:
       - github.v3; param=raw
       Access-Control-Expose-Headers:
@@ -62,20 +62,15 @@ http_interactions:
       X-Xss-Protection:
       - 1; mode=block
       X-Runtime-Rack:
-      - '0.024870'
+      - '0.031358'
       X-Github-Request-Id:
-      - D9D1:5D4A:45C79C8:D1DBC09:5A551E5C
+      - 1AD2:2FDA:DE3A37:1AAC298:5A572982
     body:
       encoding: UTF-8
-      string: |+
-        # Test repo for content in ManageIQ Galaxy
+      string: |
+        Test repo for content in ManageIQ Galaxy
 
-
-        ```ruby
-        puts "hello"
-        ```
-
-
+        Please clone this repo and update metadata.yml
     http_version: 
-  recorded_at: Tue, 09 Jan 2018 19:56:12 GMT
+  recorded_at: Thu, 11 Jan 2018 09:08:18 GMT
 recorded_with: VCR 4.0.0

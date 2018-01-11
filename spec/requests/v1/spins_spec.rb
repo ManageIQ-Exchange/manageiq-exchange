@@ -123,7 +123,7 @@ RSpec.describe 'V1::Spins', type: :request do
 
       describe '#POST Published operation' do
         let!(:spin) { FactoryBot.create(:spin) }
-        let!(:spin_galaxy) { FactoryBot.create(:spin, name: "galaxy", full_name: 'miq-galaxy/galaxy_demo_repos', user: user, published: false) }
+        let!(:spin_galaxy) { FactoryBot.create(:spin, name: "galaxy", full_name: 'miq-consumption/galaxy_demo_repos', user: user, published: false) }
 
         it 'Publish a not found spin without authenticated' do
           post("/#{prefix}/spins/000323/publish/true")
