@@ -127,7 +127,18 @@ class Spin < ApplicationRecord
   # A boolean representing if the spin is validated or not
   #
   def validate_spin?
-    validate_readme? && validate_metadata?
+    validate_readme? && validate_metadata? && validate_releases?
+  end
+
+  # Validate release
+  #
+  # == Returns:
+  # A boolean representing if the spin has releases
+  #
+  def validate_releases?
+    (return true) unless releases.empty?
+    spin_log("Error in releases, you need  a release in your spin, if you have one refresh the spin")
+    false
   end
 
   # Validate readme
@@ -141,7 +152,7 @@ class Spin < ApplicationRecord
       update(readme: rdm)
       return true
     else
-      spin_log("Error getting README from GitHub")
+      spin_log('[ERROR] No release found in GitHub. We need a release in the spin so it can be downloaded. Please refresh the spin if you have added one')
     end
     false
   end
@@ -169,5 +180,17 @@ class Spin < ApplicationRecord
       spin_log("Error getting metadata from GitHub")
     end
     false
+  end
+
+  # Update releases
+  #
+  # == Returns:
+  # A boolean representing if the spin releases are updated
+  #
+  def update_releases
+    releases = source_control_server.releases(full_name)
+    return false unless releases
+    update(releases: releases)
+    true
   end
 end

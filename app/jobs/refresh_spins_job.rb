@@ -34,6 +34,7 @@ class RefreshSpinsJob < ApplicationJob
     repos.each do |repo|
       spin = user_spins_list.include?(repo.id) ? Spin.find_by(id: repo.id) : Spin.new(id: repo.id, first_import: DateTime.current)
       if (candidate_spin?(repo.full_name))
+        releases = client.releases(repo.full_name) || []
         spin.update(name: repo.name,
                     full_name: repo.full_name,
                     description: repo.description,
@@ -56,6 +57,7 @@ class RefreshSpinsJob < ApplicationJob
                     license_html_url: repo.license&.url,
                     version: metadata_json['spin_version'],
                     min_miq_version: metadata_json['min_miq_version'].downcase.bytes[0] - 'a'.bytes[0],
+                    releases: releases,
                     user: user,
                     user_login: user.github_login)
       else

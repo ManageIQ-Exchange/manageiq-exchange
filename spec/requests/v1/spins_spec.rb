@@ -148,6 +148,23 @@ RSpec.describe 'V1::Spins', type: :request do
           expect_error
         end
 
+        it 'Publish a spin with no releases' do
+          spin_galaxy.published = true
+          spin_galaxy.save
+          @user = user
+          api_basic_authorize
+          VCR.use_cassette("github/get_readme",:decode_compressed_response => true,:record => :none) do
+            VCR.use_cassette("github/get_metadata",:decode_compressed_response => true,:record => :none) do
+              VCR.use_cassette("github/get_releases",:decode_compressed_response => true,:record => :none) do
+                post("/#{prefix}/spins/#{spin_galaxy.id}/publish/true")
+                expect(response).to have_http_status(:method_not_allowed)
+                spin_galaxy.reload
+                expect(spin_galaxy.log).to eq 'Error in releases, you need  a release in your spin, if you have one refresh the spin'
+              end
+            end
+          end
+        end
+
         it 'Publish a spin' do
           spin_galaxy.published = true
           spin_galaxy.save
@@ -155,8 +172,11 @@ RSpec.describe 'V1::Spins', type: :request do
           api_basic_authorize
           VCR.use_cassette("github/get_readme",:decode_compressed_response => true,:record => :none) do
             VCR.use_cassette("github/get_metadata",:decode_compressed_response => true,:record => :none) do
-              post("/#{prefix}/spins/#{spin_galaxy.id}/publish/true")
-              expect(response).to have_http_status(:accepted)
+              VCR.use_cassette("github/get_releases",:decode_compressed_response => true,:record => :none) do
+                spin_galaxy.update_releases
+                post("/#{prefix}/spins/#{spin_galaxy.id}/publish/true")
+                expect(response).to have_http_status(:accepted)
+              end
             end
           end
         end

@@ -65,12 +65,26 @@ module SourceControlHelper
     end
 
     #
+    # Returns releases from the repo or nil
+    # @param full_name [String] Full name of repo
+    # @return [metadata_raw, metadata_json]
+    def releases(full_name)
+      begin
+        @github_access.releases(full_name)
+      rescue Octokit::NotFound
+        nil
+      end
+    end
+
+    #
     # Returns readme decoded
     # @param full_name [String] Full name of repo
     def readme(full_name)
-      @github_access.readme(full_name, accept: 'application/vnd.github.raw')
-    rescue Octokit::NotFound
-      nil
+      begin
+        @github_access.readme(full_name, accept: 'application/vnd.github.raw')
+      rescue Octokit::NotFound
+        nil
+      end
     end
 
     def repos(user:, github_token:)
