@@ -82,8 +82,11 @@ RSpec.configure do |config|
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
 
-  config.include Spec::Support::Api::Helpers, :type => :request
-  config.include Spec::Support::Api::RequestHelpers, :type => :request
+  %i(job request).each do |type|
+    config.include Spec::Support::Api::Helpers, :type => type
+    config.include Spec::Support::Api::RequestHelpers, :type => type
+  end
+
   config.include Serializers::SerializeHelpers, type: :serializer
   # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!

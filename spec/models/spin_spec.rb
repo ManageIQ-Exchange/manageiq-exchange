@@ -125,6 +125,7 @@ RSpec.describe Spin, type: :model do
     spin_b.tags << tag_a
     spin_b.tags << tag_b
     spin_b.refresh_tags
+    byebug
     expect(spin_a.tags.count).to eq 2
   end
 end
