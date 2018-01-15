@@ -17,6 +17,7 @@ module V1
     end
 
     def show
+      return unless  check_params_required(:id)
       logger.debug 'Returning tag @tag.name'
       @tag = Tag.find_by(name: params[:id])
       if @tag

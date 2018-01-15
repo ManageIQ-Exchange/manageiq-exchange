@@ -193,4 +193,16 @@ class Spin < ApplicationRecord
     update(releases: releases)
     true
   end
+
+  # Refresh tags of spin
+  #
+  def refresh_tags
+    tags.delete_all
+    metadata['tags'].each do |tag|
+      new_tag = Tag.find_or_create_by(name: tag)
+      tags << new_tag
+      validation = new_tag.validate?
+      spin_log(log + validation) unless validation.nil?
+    end
+  end
 end

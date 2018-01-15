@@ -38,26 +38,16 @@ module V1
     # TODO: When authenticated, provide extended info
     # users/<user_id>/spins/<spin_id_or_name> Get a specific spin of user
     def show
+      return unless  check_params_required(:id)
       if params[:user_id]
         @user = User.find_by_github_login(params[:user_id])
         return_response status: :not_found unless @user
-        @spin = Spin.where(user_id: @user.id, visible: true)
-        if @spin.exists?(id: params[:id])
-          @spin = @spin.find(params[:id])
-          render_error_galaxy(:spin_not_visible, :method_not_allowed) unless @spin.visible?
-        else
-          if @spin.exists?(name: params[:id])
-            @spin = @spin.find_by(name: params[:id])
-            render_error_galaxy(:spin_not_visible, :method_not_allowed) unless @spin.visible?
-          else
-            @spin = nil
-          end
-        end
+        @spin = Spin.find_by(user_id: @user.id, visible: true, id: params[:id]) || Spin.find_by(user_id: @user.id, visible: true, name: params[:id])
       else
-        @spin = Spin.find_by(id: params[:id], visible: true)
+        @spin = Spin.find_by(id: params[:id], visible: true) || Spin.find_by(name: params[:id], visible: true)
       end
       unless @spin
-        render status: :not_found
+        render_error_galaxy(:spin_not_found, :not_found)
         return
       end
       return_response  @spin,  :ok, {}
@@ -70,6 +60,7 @@ module V1
     # Connects to github, gets all repos of the user, and search for spins
     #
     def refresh
+      return unless  check_params_required(:user_id)
       user = if current_user.admin?
                User.find(params[:user_id]) || current_user
              else
@@ -84,8 +75,9 @@ module V1
     end
 
     def visible
-      if Spin.exists?(params[:spin_id])
-        spin = Spin.find(params[:spin_id])
+      return unless  check_params_required(:spin_id, :flag)
+      spin = Spin.find_by(id:params[:spin_id])
+      if spin
         if spin.spin_of?(current_user)
           if spin.visible_to(true?(params[:flag]))
             return_response spin, :accepted, {}
@@ -101,8 +93,9 @@ module V1
     end
 
     def publish
-      if Spin.exists?(params[:spin_id])
-        spin = Spin.find(params[:spin_id])
+      return unless  check_params_required(:spin_id, :flag)
+      spin = Spin.find_by(id:params[:spin_id])
+      if spin
         if spin.spin_of?(current_user)
           if spin.publish_to(true?(params[:flag]))
             return_response spin, :accepted, {}

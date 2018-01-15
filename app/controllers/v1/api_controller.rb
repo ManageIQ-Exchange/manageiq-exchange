@@ -33,6 +33,16 @@ module V1
       end
     end
 
+    def check_params_required(*values)
+      values.each do |param|
+        unless params.has_key? param.to_s
+          render_error_galaxy(:param_not_found, :bad_request, {param_required: "You need to set param #{param.to_s}"})
+          return false
+        end
+      end
+      true
+    end
+
     protected
 
     def render_error_galaxy(identifier, status, extra_info = nil)

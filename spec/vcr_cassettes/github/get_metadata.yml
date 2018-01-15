@@ -23,27 +23,27 @@ http_interactions:
       Server:
       - GitHub.com
       Date:
-      - Thu, 11 Jan 2018 09:08:19 GMT
+      - Thu, 11 Jan 2018 19:33:52 GMT
       Content-Type:
       - application/vnd.github.raw; charset=utf-8
       Content-Length:
-      - '859'
+      - '902'
       Status:
       - 200 OK
       X-Ratelimit-Limit:
       - '60'
       X-Ratelimit-Remaining:
-      - '58'
+      - '59'
       X-Ratelimit-Reset:
-      - '1515665298'
+      - '1515702832'
       Cache-Control:
       - public, max-age=60, s-maxage=60
       Vary:
       - Accept
       Etag:
-      - '"7d942e485d68fcaa99770655be36a55602450521"'
+      - '"c5f9a790061e95cbb8079e223f6f1038caa56d32"'
       Last-Modified:
-      - Thu, 21 Dec 2017 16:23:47 GMT
+      - Thu, 11 Jan 2018 19:30:19 GMT
       X-Github-Media-Type:
       - github.v3; param=raw
       Access-Control-Expose-Headers:
@@ -62,23 +62,45 @@ http_interactions:
       X-Xss-Protection:
       - 1; mode=block
       X-Runtime-Rack:
-      - '0.036462'
+      - '0.045615'
       X-Github-Request-Id:
-      - 66EA:2FDA:DE3A70:1AAC300:5A572982
+      - D578:7E1C:1CBE4BA:50D5A0C:5A57BC1F
     body:
       encoding: UTF-8
-      string: "metadata_version: 1 # It must be 1\ndescription: \"Description\"\nauthor:
-        \"Author Name\"\ncompany: #Optional\n\nmin_miq_version: \"h\" \n# A letter
-        with the manageiq_version:\n# For Hammer, use \"h\"\n# For Gaprishdanvili,
-        use \"g\"\n# Etc.\n\ntags: []\n# List tags for your spin here, one per line.
-        A tag is a keyword that describes\n# and categorizes the spin. Users find
-        spins by searching for tags. Be sure to\n# remove the '[]' above, if you add
-        tags to this list.\n#\n# NOTE: A tag is limited to a single word comprised
-        of alphanumeric characters.\n# Maximum 20 tags per spin.\n\n# Spin version\n#
-        The spin version will be gathered from the releases tag in GitHub\n\n# Many
-        licenses need an actual file to work. We use the License API from GitHub\n#
-        Some suggested licenses to configure in the repo:\n# - BSD (default)\n# -
-        MIT\n# - GPLv2\n# - GPLv3\n# - Apache\n# - CC-BY\n# - The Unlicense\n"
+      string: |
+        metadata_version: 1 # It must be 1
+        description: "Description"
+        author: "Author Name"
+        company: #Optional
+
+        min_miq_version: "h"
+        # A letter with the manageiq_version:
+        # For Hammer, use "h"
+        # For Gaprishdanvili, use "g"
+        # Etc.
+
+        # max_miq_version: "h"
+
+        tags: ['demo','open source']
+        # List tags for your spin here, one per line. A tag is a keyword that describes
+        # and categorizes the spin. Users find spins by searching for tags. Be sure to
+        # remove the '[]' above, if you add tags to this list.
+        #
+        # NOTE: A tag is limited to a single word comprised of alphanumeric characters.
+        # Maximum 20 tags per spin.
+
+        # Spin version
+        # The spin version will be gathered from the releases tag in GitHub
+
+        # Many licenses need an actual file to work. We use the License API from GitHub
+        # Some suggested licenses to configure in the repo:
+        # - BSD (default)
+        # - MIT
+        # - GPLv2
+        # - GPLv3
+        # - Apache
+        # - CC-BY
+        # - The Unlicense
     http_version: 
-  recorded_at: Thu, 11 Jan 2018 09:08:19 GMT
+  recorded_at: Thu, 11 Jan 2018 19:33:53 GMT
 recorded_with: VCR 4.0.0
