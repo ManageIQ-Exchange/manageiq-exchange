@@ -1,0 +1,36 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:9.4.5
+    environment:
+      POSTGRES_USER: exchange
+      POSTGRES_PASSWORD: exchange
+    volumes:
+      # Mounts a persistable volume inside the postgres data folder, so we
+      # don't lose the created databases when this container is removed.
+      - ./postgres-exchange-data:/var/lib/postgresql/data
+    ports:
+      - '5432'
+
+  exchange:
+    build: .
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    volumes:
+      - .:/exchange
+    entrypoint: /exchange/development-entrypoint
+    environment:
+      GITHUB_OAUTH_ID:
+      GITHUB_OAUTH_SECRET:
+      SECRET_KEY_BASE:
+      DATABASE_SERVICE_NAME: docker
+      DOCKER_SERVICE_HOST: db
+      DOCKER_SERVICE_PORT: 5432
+      RAILS_ENV: development
+      RAILS_LOG_TO_STDOUT: "true"
+      DATABASE_URL: postgres://exchange:exchange@db:5432/exchange_development
+    ports:
+      - "3000:3000"
+    links:
+      # Makes the postgres service a dependency for our app, and also makes it
+      # visible at the 'db' hostname from this container:
+      - postgres:db

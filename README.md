@@ -48,6 +48,37 @@ reading documentation for our `master`, which is not yet released.
 - GALAXY_MAILER_PORT
 - GALAXY_EMAIL_SENDER
 
+## Docker configuration to test ManageIq-Exchange
+
+First you need to create the directory ``postgres-exchange-data``  on the same level of the docker-compose file. In this directory we'll store all database information from our postgres docker.
+
+Remember set `GITHUB_OAUTH_ID`,`GITHUB_OAUTH_SECRET` in docker-compose file
+
+```bash
+docker-compose build
+docker-compose up
+```
+
+In your first build you will need to create the database so...
+```bash
+docker-compose run --rm exchange bash
+
+rails db:create db:migrate
+```
+
+You will see a prompt like root@64bfb5e14bb5:/app#`, this means that you are inside the docker. Execute:
+```bash
+bundle
+rails db:create db:migrate
+exit
+```
+You will see some querys, after that you can go to `http://localhost:3000/` and test ManageIQ-Exchange
+
+To stop environment you can use `CTRL+C` and `docker-compose down`
+
+You can restore the environment with `docker-compose up` next time without recreate database.
+
+If you wanna remove the database and start again you only need to remove all content in `/docker-compose down/*`
 
 ## Developer documentation
 Please review [Developers Guide](Developers.md)
