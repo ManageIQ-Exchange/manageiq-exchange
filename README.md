@@ -1,6 +1,6 @@
 # README
 
-This is the API only backend application for Galaxy. It is prepared to be deployed on OpenShift online using 3 pods (React frontend, this backend, database)
+This is the API only backend application for Exchange. It is prepared to be deployed on OpenShift online using 3 pods (React frontend, this backend, database)
 
 It has been developed using:
 * Ruby 2.4
@@ -12,21 +12,21 @@ It has been developed using:
 
 ## Getting Help
 
-If you find a bug, please report an [Issue](https://github.com/miq-consumption/manageiq-galaxy/issues/new)
+If you find a bug, please report an [Issue](https://github.com/miq-consumption/manageiq-exchange/issues/new)
 and see our [contributing guide](CONTRIBUTING.md).
 
-If you have a question, please [post to Stack Overflow](https://stackoverflow.com/questions/tagged/manageiq-galaxy).
+If you have a question, please [post to Stack Overflow](https://stackoverflow.com/questions/tagged/manageiq-exchange).
 
 
 Thanks!
 
 ## Documentation
 
-If you're reading this at https://github.com/miq-consumption/manageiq-galaxy you are
+If you're reading this at https://github.com/miq-consumption/manageiq-exchange you are
 reading documentation for our `master`, which is not yet released.
 
-- [0.1.0 (master) Documentation](https://github.com/miq-consumption/manageiq-galaxy/tree/master)
-  - [![API Docs](http://img.shields.io/badge/yard-docs-blue.svg)](http://www.rubydoc.info/github/miq-consumption/manageiq-galaxy/master)
+- [0.1.0 (master) Documentation](https://github.com/miq-consumption/manageiq-exchange/tree/master)
+  - [![API Docs](http://img.shields.io/badge/yard-docs-blue.svg)](http://www.rubydoc.info/github/miq-consumption/manageiq-exchange/master)
   - [Guides](docs)
 ## ENVIRONMENT VARIABLES
 
@@ -44,9 +44,9 @@ reading documentation for our `master`, which is not yet released.
 - RAILS_LOG_TO_STDOUT
 
 ### Devise
-- GALAXY_MAILER_HOST
-- GALAXY_MAILER_PORT
-- GALAXY_EMAIL_SENDER
+- EXCHANGE_MAILER_HOST
+- EXCHANGE_MAILER_PORT
+- EXCHANGE_EMAIL_SENDER
 
 
 ## Developer documentation

@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.github.com/repos/miq-consumption/galaxy_demo_repos/readme
+    uri: https://api.github.com/repos/miq-consumption/miq_exchange_demo_repos/readme
     body:
       encoding: US-ASCII
       string: ''
@@ -67,8 +67,8 @@ http_interactions:
       - 25CE:2FDA:EB099B:1C36AB6:5A574568
     body:
       encoding: UTF-8
-      string: "# Test repo for content in ManageIQ Galaxy\n\nIn order to publish a
-        Spin in ManageIQ Galaxy you will need:\n\n - A file that identifies the repo
+      string: "# Test repo for content in ManageIQ Exchange\n\nIn order to publish a
+        Spin in ManageIQ Exchange you will need:\n\n - A file that identifies the repo
         as a manageiq-spin\n ```.manageiq-spin```\n - A metadata file with the right
         format (please see example in \n ```metadata.yml```\n - At least a release
         in the GitHub Repo. Please use x.y.z as the release tag, except for betas

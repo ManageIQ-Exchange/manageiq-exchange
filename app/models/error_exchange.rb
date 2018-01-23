@@ -1,4 +1,4 @@
-class ErrorGalaxy
+class ErrorExchange
 
   attr_reader :identifier, :status
 

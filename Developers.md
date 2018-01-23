@@ -1,6 +1,6 @@
 # DEVELOPERS GUIDE
 
-This is the API only backend application for Galaxy. It is prepared to be deployed on OpenShift online using 3 pods (React frontend, this backend, database)
+This is the API only backend application for Exchange. It is prepared to be deployed on OpenShift online using 3 pods (React frontend, this backend, database)
 
 It has been developed using:
 * Ruby 2.4
@@ -39,11 +39,11 @@ If a valid id and token are included, even when creating new session, authentica
 
 Up to date documentation can be found on the following link:
 
-[Developers documentation](http://www.rubydoc.info/github/miq-consumption/manageiq-galaxy)
+[Developers documentation](http://www.rubydoc.info/github/miq-consumption/manageiq-exchange)
 
 For development, you will need a mean to gather a code and token from GitHub. Users are created automatically when they are authenticated
 
-For instance, you can use [manageiq-galaxy-web](https://github.com/miq-consumption/manageiq-galaxy-web)
+For instance, you can use [manageiq-exchange-web](https://github.com/miq-consumption/manageiq-exchange-web)
 
 You will also need to define environment variables:
 ```bash

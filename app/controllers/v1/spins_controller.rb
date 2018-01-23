@@ -47,7 +47,7 @@ module V1
         @spin = Spin.find_by(id: params[:id], visible: true) || Spin.find_by(name: params[:id], visible: true)
       end
       unless @spin
-        render_error_galaxy(:spin_not_found, :not_found)
+        render_error_exchange(:spin_not_found, :not_found)
         return
       end
       return_response  @spin,  :ok, {}
@@ -82,13 +82,13 @@ module V1
           if spin.visible_to(true?(params[:flag]))
             return_response spin, :accepted, {}
           else
-            render_error_galaxy(:spin_not_published, :method_not_allowed)
+            render_error_exchange(:spin_not_published, :method_not_allowed)
           end
         else
-          render_error_galaxy(:spin_not_owner, :unauthorized)
+          render_error_exchange(:spin_not_owner, :unauthorized)
         end
       else
-        render_error_galaxy(:spin_not_found, :not_found)
+        render_error_exchange(:spin_not_found, :not_found)
       end
     end
 
@@ -100,13 +100,13 @@ module V1
           if spin.publish_to(true?(params[:flag]))
             return_response spin, :accepted, {}
           else
-            render_error_galaxy(:spin_not_published, :method_not_allowed, spin.log)
+            render_error_exchange(:spin_not_published, :method_not_allowed, spin.log)
           end
         else
-          render_error_galaxy(:spin_not_owner, :unauthorized)
+          render_error_exchange(:spin_not_owner, :unauthorized)
         end
       else
-        render_error_galaxy(:spin_not_found, :not_found)
+        render_error_exchange(:spin_not_found, :not_found)
       end
     end
   end

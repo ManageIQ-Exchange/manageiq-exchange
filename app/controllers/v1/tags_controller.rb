@@ -23,7 +23,7 @@ module V1
       if @tag
         return_response  @tag, :ok, {}
       else
-        render_error_galaxy(:tag_not_found, :not_found, { tag_id: parans[:id]})
+        render_error_exchange(:tag_not_found, :not_found, { tag_id: parans[:id]})
       end
     end
   end

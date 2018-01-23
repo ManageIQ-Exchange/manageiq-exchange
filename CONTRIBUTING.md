@@ -1,15 +1,15 @@
-## How to contribute to ManageIQ Galaxy
+## How to contribute to ManageIQ Exchange
 
-Please notice: ManageIQ Galaxy consists on several repos, including one for the front end and another for the backend.
+Please notice: ManageIQ Exchange consists on several repos, including one for the front end and another for the backend.
 
 #### **Did you find a bug?**
 
 * **Do not open up a GitHub issue if the bug is a security vulnerability
-  in ManageIQ Galaxy**, and instead to refer to our [ManageIQ talk](http://talk.manageiq.org/). If you contact us there we will quickly respond.
+  in ManageIQ Exchange**, and instead to refer to our [ManageIQ talk](http://talk.manageiq.org/). If you contact us there we will quickly respond.
 
-* **Ensure the bug was not already reported** by searching on GitHub under [Issues](https://github.com/miq-consumption/manageiq-galaxy/issues).
+* **Ensure the bug was not already reported** by searching on GitHub under [Issues](https://github.com/miq-consumption/manageiq-exchange/issues).
 
-* If you're unable to find an open issue addressing the problem, [open a new one](https://github.com/miq-consumption/manageiq-galaxy/issues/new). Be sure to include a **title and clear description**, as much relevant information as possible, and a **code sample** or an **executable test case** demonstrating the expected behavior that is not occurring.
+* If you're unable to find an open issue addressing the problem, [open a new one](https://github.com/miq-consumption/manageiq-exchange/issues/new). Be sure to include a **title and clear description**, as much relevant information as possible, and a **code sample** or an **executable test case** demonstrating the expected behavior that is not occurring.
 
 * If possible, use the relevant bug report templates to create the issue, although right now we don't have any (so you can create one)
 
@@ -19,7 +19,7 @@ Please notice: ManageIQ Galaxy consists on several repos, including one for the 
 
 * Ensure the PR description clearly describes the problem and solution. Include the relevant issue number if applicable.
 
-* Before submitting, please read the [Contributing to ManageIQ Galaxy](https://github.com/miq-consumption/manageiq-galaxy/contributing.md) guide to know more about coding conventions and benchmarks.
+* Before submitting, please read the [Contributing to ManageIQ Exchange](https://github.com/miq-consumption/manageiq-exchange/contributing.md) guide to know more about coding conventions and benchmarks.
 
 #### **Do you intend to add a new feature or change an existing one?**
 
@@ -31,7 +31,7 @@ Please notice: ManageIQ Galaxy consists on several repos, including one for the 
 
 * Ask any question about how to use the code in the [ManageIQ Talk](http://talk.manageiq.org).
 
-#### **Do you want to contribute to the ManageIQ Galaxy documentation?**
+#### **Do you want to contribute to the ManageIQ Exchange documentation?**
 
 * Please do it, documentation is in the wiki. We would love to have the best documentation possible.
 

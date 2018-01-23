@@ -17,14 +17,14 @@ default: &default
 
 development:
   <<: *default
-  username: galaxy
-  password: galaxy
-  database: galaxy_development
+  username: exchange
+  password: exchange
+  database: exchange_development
 
 test:
   <<: *default
   username: postgres
-  database: galaxy_test
+  database: exchange_test
 
 production:
   <<: *default

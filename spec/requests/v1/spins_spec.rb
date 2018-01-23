@@ -22,7 +22,7 @@ RSpec.describe 'V1::Spins', type: :request do
     describe '#GET existing spins' do
       let!(:spin) { FactoryBot.create(:spin, published: true, visible: true) }
       let!(:user) { FactoryBot.create(:user) }
-      let!(:spin_galaxy) { FactoryBot.create(:spin, name: "galaxy",user: user, published: true, visible: true) }
+      let!(:spin_exchange) { FactoryBot.create(:spin, name: "exchange",user: user, published: true, visible: true) }
       let!(:spin_content) { FactoryBot.create(:spin, name: "content",user: user, published: true, visible: true) }
 
       it 'all spins' do
@@ -43,19 +43,19 @@ RSpec.describe 'V1::Spins', type: :request do
       end
 
       it 'one spin  by name' do
-        get "/#{prefix}/spins/#{spin_galaxy.name}"
+        get "/#{prefix}/spins/#{spin_exchange.name}"
         expect(response).to have_http_status(200)
         expect(json).to be_kind_of(Hash)
         expect(json['data']).to be_kind_of(Hash)
-        expect(json['data']['name']).to eq(spin_galaxy.name)
+        expect(json['data']['name']).to eq(spin_exchange.name)
       end
 
       it 'one spin of a user by name' do
-        get "/#{prefix}/users/#{user.github_login}/spins/#{spin_galaxy.name}"
+        get "/#{prefix}/users/#{user.github_login}/spins/#{spin_exchange.name}"
         expect(response).to have_http_status(200)
         expect(json).to be_kind_of(Hash)
         expect(json['data']).to be_kind_of(Hash)
-        expect(json['data']['name']).to eq(spin_galaxy.name)
+        expect(json['data']['name']).to eq(spin_exchange.name)
       end
 
       it 'one spin by id' do
@@ -78,7 +78,7 @@ RSpec.describe 'V1::Spins', type: :request do
       pending 'search when there is no user'
 
       it 'spins with query' do
-        get "/#{prefix}/spins?query=galaxy"
+        get "/#{prefix}/spins?query=exchange"
         expect(response).to have_http_status(200)
         expect(json).to be_kind_of(Hash)
         expect(json['data']).to be_kind_of(Array)
@@ -93,7 +93,7 @@ RSpec.describe 'V1::Spins', type: :request do
 
       describe '#POST Visible operation' do
         let!(:spin) { FactoryBot.create(:spin) }
-        let!(:spin_galaxy) { FactoryBot.create(:spin, name: "galaxy",user: user, published: false) }
+        let!(:spin_exchange) { FactoryBot.create(:spin, name: "exchange",user: user, published: false) }
 
         it 'Set visible of a not found spin without authenticated' do
           post("/#{prefix}/spins/000323/visible/true")
@@ -122,24 +122,24 @@ RSpec.describe 'V1::Spins', type: :request do
           @user = user
           @identifier = :spin_not_published
           api_basic_authorize
-          post("/#{prefix}/spins/#{spin_galaxy.id}/visible/true")
+          post("/#{prefix}/spins/#{spin_exchange.id}/visible/true")
           expect(response).to have_http_status(:method_not_allowed)
           expect_error
         end
 
         it 'Set visible of a spin published' do
-          spin_galaxy.published = true
-          spin_galaxy.save
+          spin_exchange.published = true
+          spin_exchange.save
           @user = user
           api_basic_authorize
-          post("/#{prefix}/spins/#{spin_galaxy.id}/visible/true")
+          post("/#{prefix}/spins/#{spin_exchange.id}/visible/true")
           expect(response).to have_http_status(:accepted)
         end
       end
 
       describe '#POST Published operation' do
         let!(:spin) { FactoryBot.create(:spin) }
-        let!(:spin_galaxy) { FactoryBot.create(:spin, name: "galaxy", full_name: 'miq-consumption/galaxy_demo_repos', user: user, published: false) }
+        let!(:spin_exchange) { FactoryBot.create(:spin, name: "exchange", full_name: 'miq-consumption/miq_exchange_demo_repos', user: user, published: false) }
 
         it 'Publish a not found spin without authenticated' do
           post("/#{prefix}/spins/000323/publish/true")
@@ -165,32 +165,32 @@ RSpec.describe 'V1::Spins', type: :request do
         end
 
         it 'Publish a spin with no releases' do
-          spin_galaxy.published = true
-          spin_galaxy.save
+          spin_exchange.published = true
+          spin_exchange.save
           @user = user
           api_basic_authorize
           VCR.use_cassette("github/get_readme",:decode_compressed_response => true,:record => :none) do
             VCR.use_cassette("github/get_metadata",:decode_compressed_response => true,:record => :none) do
               VCR.use_cassette("github/get_releases",:decode_compressed_response => true,:record => :none) do
-                post("/#{prefix}/spins/#{spin_galaxy.id}/publish/true")
+                post("/#{prefix}/spins/#{spin_exchange.id}/publish/true")
                 expect(response).to have_http_status(:method_not_allowed)
-                spin_galaxy.reload
-                expect(spin_galaxy.log).to eq 'Error in releases, you need  a release in your spin, if you have one refresh the spin'
+                spin_exchange.reload
+                expect(spin_exchange.log).to eq 'Error in releases, you need  a release in your spin, if you have one refresh the spin'
               end
             end
           end
         end
 
         it 'Publish a spin' do
-          spin_galaxy.published = true
-          spin_galaxy.save
+          spin_exchange.published = true
+          spin_exchange.save
           @user = user
           api_basic_authorize
           VCR.use_cassette("github/get_readme",:decode_compressed_response => true,:record => :none) do
             VCR.use_cassette("github/get_metadata",:decode_compressed_response => true,:record => :none) do
               VCR.use_cassette("github/get_releases",:decode_compressed_response => true,:record => :none) do
-                spin_galaxy.update_releases
-                post("/#{prefix}/spins/#{spin_galaxy.id}/publish/true")
+                spin_exchange.update_releases
+                post("/#{prefix}/spins/#{spin_exchange.id}/publish/true")
                 expect(response).to have_http_status(:accepted)
               end
             end

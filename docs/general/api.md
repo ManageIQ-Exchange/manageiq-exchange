@@ -45,7 +45,7 @@ http://localhost:3000/users?expand=resources
   "url_profile":       "https://github.com/john",
   "name":              "John",
   "avatar":            "https://avatars2.githubusercontent.com/u/345?v=4",
-  "company":           "Galaxy Company",
+  "company":           "Exchange Company",
   "github_type":       "User",
   "github_blog":       "",
   "github_location":   "Madrid,Spain",
@@ -55,7 +55,7 @@ http://localhost:3000/users?expand=resources
 }
 ```
 
-For more information about how this is working you can see the [produc/json_returns.yml](https://github.com/miq-consumption/manageiq-galaxy/blob/master/product/json_returns.yml) file
+For more information about how this is working you can see the [produc/json_returns.yml](https://github.com/miq-consumption/manageiq-exchange/blob/master/product/json_returns.yml) file
 
 ```yaml
 users:

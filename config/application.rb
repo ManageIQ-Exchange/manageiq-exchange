@@ -16,7 +16,7 @@ require "rails/test_unit/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module ManageiqGalaxy
+module ManageiqExchange
   class Application < Rails::Application
     config.api_version = '1.0'
     config.api_prefix  = 'v1'
@@ -35,7 +35,7 @@ module ManageiqGalaxy
 
     # Adding back session store in cookies, so that it is possible to create and destroy sessions
     config.active_support.escape_html_entities_in_json = false
-    # config.session_store :cookie_store, key: '_miq_galaxy_session'
+    # config.session_store :cookie_store, key: '_miq_exchange_session'
     # config.middleware.use ActionDispatch::Cookies # Required for all session management
     # config.middleware.use ActionDispatch::Session::CookieStore, config.session_options
     config.middleware.insert_before 0, Rack::Cors do

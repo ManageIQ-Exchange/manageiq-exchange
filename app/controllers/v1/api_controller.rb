@@ -36,7 +36,7 @@ module V1
     def check_params_required(*values)
       values.each do |param|
         unless params.has_key? param.to_s
-          render_error_galaxy(:param_not_found, :bad_request, {param_required: "You need to set param #{param.to_s}"})
+          render_error_exchange(:param_not_found, :bad_request, {param_required: "You need to set param #{param.to_s}"})
           return false
         end
       end
@@ -45,8 +45,8 @@ module V1
 
     protected
 
-    def render_error_galaxy(identifier, status, extra_info = nil)
-      render json: ErrorGalaxy.new(identifier, status, extra_info), status: status
+    def render_error_exchange(identifier, status, extra_info = nil)
+      render json: ErrorExchange.new(identifier, status, extra_info), status: status
     end
   end
 end

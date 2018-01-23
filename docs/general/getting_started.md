@@ -26,9 +26,9 @@ First you need create a Application [here](https://github.com/settings/applicati
 - RAILS_LOG_TO_STDOUT
 
 ### Devise
-- GALAXY_MAILER_HOST
-- GALAXY_MAILER_PORT
-- GALAXY_EMAIL_SENDER
+- EXCHANGE_MAILER_HOST
+- EXCHANGE_MAILER_PORT
+- EXCHANGE_EMAIL_SENDER
 
 The easiest way to set the encironments is with a bash script or by CLI.
 
@@ -60,7 +60,7 @@ $bin/rails s
 
 ```
 
-If you wanna use manageiq-galaxy in another PORT you can use -p argument
+If you wanna use manageiq-exchange in another PORT you can use -p argument
 
 ```bash
 $bin/rails s -p <PORT NUMBER>

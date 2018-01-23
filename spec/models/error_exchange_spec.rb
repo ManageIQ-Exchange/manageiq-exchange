@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe ErrorGalaxy, type: :model do
-  subject { ErrorGalaxy.new(:spin_not_found, :not_found, { try: 3 }) }
-  it 'Generate a ErrorGalaxy Model' do
-    expect(subject).to be_kind_of ErrorGalaxy
+RSpec.describe ErrorExchange, type: :model do
+  subject { ErrorExchange.new(:spin_not_found, :not_found, { try: 3 }) }
+  it 'Generate a ErrorExchange Model' do
+    expect(subject).to be_kind_of ErrorExchange
   end
 
   it 'Returns the correct translation' do
