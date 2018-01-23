@@ -1,6 +1,6 @@
-# Docs - ManageIQ-Galaxy 0.1.x
+# Docs - ManageIQ-Exchange 0.1.x
 
-This is the documentation of manageIQ-Galaxy, it's focused on the **0.1.x version.**
+This is the documentation of manageIQ-Exchange, it's focused on the **0.1.x version.**
 
 -----
 

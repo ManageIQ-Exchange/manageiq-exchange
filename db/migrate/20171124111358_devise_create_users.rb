@@ -8,7 +8,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
       t.boolean :admin,      null: false, default: false
       t.boolean :staff,      null: false, default: false
 
-      ##  Galaxy specific fields and github fields
+      ##  Exchange specific fields and github fields
       t.integer :karma,             null: false, default: 0
       t.string  :github_avatar_url, null: false, default: ''
       t.string  :github_html_url,   null: false, default: ''

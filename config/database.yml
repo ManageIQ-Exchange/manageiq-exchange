@@ -18,15 +18,15 @@ default: &default
 
 development:
   <<: *default
-  username: galaxy
-  password: galaxy
-  database: galaxy_development
+  username: exchange
+  password: exchange
+  database: exchange_development
 
 test:
   <<: *default
-  username: galaxy
-  password: galaxy
-  database: galaxy_test
+  username: exchange
+  password: exchange
+  database: exchange_test
 
 production:
   <<: *default

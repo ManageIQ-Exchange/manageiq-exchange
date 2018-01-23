@@ -12,4 +12,4 @@ You can configure options in **config/secrets.yml**
 | `oauth_gitlab_secret` | SECRET of GITLAB application |
 | `devise_mailer_host` | host for mailer (localhost) |
 | `devise_mailer_port` | port for mailer(3000) |
-| `devise_mailer_address` | mailer address (galaxy@manageiq.org)  |
+| `devise_mailer_address` | mailer address (exchange@manageiq.org)  |

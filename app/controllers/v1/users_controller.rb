@@ -39,7 +39,7 @@ module V1
       if @user
         return_response  @user,  :ok
       else
-        render_error_galaxy(:user_not_found, :not_found, { username: params[:id]})
+        render_error_exchange(:user_not_found, :not_found, { username: params[:id]})
       end
     end
   end
