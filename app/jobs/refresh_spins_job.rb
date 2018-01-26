@@ -7,14 +7,13 @@
 # @return boolean
 #
 class RefreshSpinsJob < ApplicationJob
-  include SourceControlHelper
 
   queue_as :default
 
   def perform(user:, token:)
     logger.info "Refresh Spins Job with user: #{user.id}"
     # Get the client using the application id (only public information)
-    client = source_control_server
+    client = Provider.new('github_manager').get_connector
     # Find the spins in the database, store them as an array
     user_spins = user.spins
     app_token = Tiddle::TokenIssuer.build.find_token(user, token)

@@ -40,8 +40,6 @@ class Spin < ApplicationRecord
   has_many :taggings, dependent: :destroy
   has_many :tags, through: :taggings
 
-  include SourceControlHelper
-
   SPIN_SCHEMA = Rails.application.config.spin_schema.freeze
 
   # Show if the spin is visible or not
@@ -147,7 +145,7 @@ class Spin < ApplicationRecord
   # A boolean representing if the spin readme is ok
   #
   def validate_readme?
-    rdm = source_control_server.readme(full_name)
+    rdm = Providers::BaseManager.new('github.com').get_connector.readme(full_name)
     if rdm
       update(readme: rdm)
       return true
@@ -163,21 +161,12 @@ class Spin < ApplicationRecord
   # A boolean representing if the spin metadata is ok
   #
   def validate_metadata?
-    metadata_raw = source_control_server.metadata(full_name)
-    if metadata_raw
-      begin
-        metadata_json = JSON.parse(JSON.dump(YAML.safe_load(metadata_raw)))
-        unless metadata_json.nil?
-          JSON::Validator.validate!(SPIN_SCHEMA, metadata_json)
-          update(metadata: metadata_json, metadata_raw: metadata_raw)
-          return true
-        end
-        spin_log("Error parsing metadata to JSON, result is nil")
-      rescue TypeError, JSON::ParserError, JSON::Schema::ValidationError => e
-        spin_log("Error in metadata when #{e.class} error: #{e.to_string}")
-      end
+    metadata = Providers::BaseManager.new('github.com').get_connector.metadata(full_name)
+    if metadata.kind_of? ErrorExchange
+      spin_log("#{metadata.as_json["title"]} \n #{metadata.as_json["detail"]}")
     else
-      spin_log("Error getting metadata from GitHub")
+      update(metadata: metadata.second, metadata_raw: metadata.first)
+      return true
     end
     false
   end
@@ -188,7 +177,7 @@ class Spin < ApplicationRecord
   # A boolean representing if the spin releases are updated
   #
   def update_releases
-    releases = source_control_server.releases(full_name)
+    releases = Providers::BaseManager.new('github.com').get_connector.releases(full_name)
     return false unless releases
     update(releases: releases)
     true

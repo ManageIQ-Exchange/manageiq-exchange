@@ -34,6 +34,23 @@ Once the token has been created you can use it to authenticate:
  
 If a valid id and token are included, even when creating new session, authentication won't be done against GitHub.
  
+
+# Test
+
+## VCR
+
+ To set a new VCR use environment variable 
+ ```bash
+    VCR_RECORD_NEW = 1 bundle exec rspec spec/* 
+
+```
+ 
+ To run specs with live version and record all VCR
+ ```bash
+    VCR_RECORD_ALL = 1 bundle exec rspec spec/* 
+
+```
+
  
 # Documentation
 

@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Spin, type: :model do
   let!(:spin) { FactoryBot.create(:spin) }
   let!(:user) { FactoryBot.create(:user) }
-  let!(:spin_exchange) { FactoryBot.create(:spin, name: "exchange", full_name: 'miq-consumption/miq_exchange_demo_repos',user: user, published: true, visible:true) }
+  let!(:spin_exchange) { FactoryBot.create(:spin, name: "exchange", full_name: 'miq-consumption/miq_exchange_demo_repo',user: user, published: true, visible:true) }
   let!(:spin_content) { FactoryBot.create(:spin, name: "content",user: user) }
 
   it 'visible?' do

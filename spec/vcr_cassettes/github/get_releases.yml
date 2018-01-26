@@ -2,15 +2,15 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.github.com/repos/miq-consumption/miq_exchange_demo_repos/releases
+    uri: https://api.github.com/repos/miq-consumption/miq_exchange_demo_repo/releases?client_id=CLIENT-ID&client_secret=CLIENT-SECRET
     body:
       encoding: US-ASCII
       string: ''
     headers:
+      User-Agent:
+      - Octokit Ruby Gem 4.8.0
       Accept:
       - application/vnd.github.v3+json
-      User-Agent:
-      - Octokit Ruby Gem 4.7.0
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -23,7 +23,7 @@ http_interactions:
       Server:
       - GitHub.com
       Date:
-      - Thu, 11 Jan 2018 10:31:16 GMT
+      - Tue, 23 Jan 2018 15:11:33 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -31,17 +31,17 @@ http_interactions:
       Status:
       - 200 OK
       X-Ratelimit-Limit:
-      - '60'
+      - '5000'
       X-Ratelimit-Remaining:
-      - '57'
+      - '4998'
       X-Ratelimit-Reset:
-      - '1515669489'
+      - '1516723864'
       Cache-Control:
       - public, max-age=60, s-maxage=60
       Vary:
       - Accept
       Etag:
-      - W/"cf296a95acb4609d70e5725e55af6add"
+      - W/"7864a32b40937c3a82d4ea5931d7c73d"
       X-Github-Media-Type:
       - github.v3; format=json
       Access-Control-Expose-Headers:
@@ -60,159 +60,17 @@ http_interactions:
       X-Xss-Protection:
       - 1; mode=block
       X-Runtime-Rack:
-      - '0.036796'
+      - '0.029751'
       X-Github-Request-Id:
-      - 70B0:2FDB:AF89FA:1D7BB53:5A573CF3
+      - 2F93:1DEA:4934BB:9970C2:5A6750A5
     body:
       encoding: ASCII-8BIT
-      string: '[{"url":"https://api.github.com/repos/miq-consumption/miq_exchange_demo_repos/releases/9193048","assets_url":"https://api.github.com/repos/miq-consumption/miq_exchange_demo_repos/releases/9193048/assets","upload_url":"https://uploads.github.com/repos/miq-consumption/miq_exchange_demo_repos/releases/9193048/assets{?name,label}","html_url":"https://github.com/miq-consumption/miq_exchange_demo_repos/releases/tag/1.0.0","id":9193048,"tag_name":"1.0.0","target_commitish":"master","name":"Release
-        1","draft":false,"author":{"login":"aljesusg","id":3019213,"avatar_url":"https://avatars2.githubusercontent.com/u/3019213?v=4","gravatar_id":"","url":"https://api.github.com/users/aljesusg","html_url":"https://github.com/aljesusg","followers_url":"https://api.github.com/users/aljesusg/followers","following_url":"https://api.github.com/users/aljesusg/following{/other_user}","gists_url":"https://api.github.com/users/aljesusg/gists{/gist_id}","starred_url":"https://api.github.com/users/aljesusg/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/aljesusg/subscriptions","organizations_url":"https://api.github.com/users/aljesusg/orgs","repos_url":"https://api.github.com/users/aljesusg/repos","events_url":"https://api.github.com/users/aljesusg/events{/privacy}","received_events_url":"https://api.github.com/users/aljesusg/received_events","type":"User","site_admin":false},"prerelease":false,"created_at":"2018-01-11T09:17:01Z","published_at":"2018-01-11T10:23:14Z","assets":[],"tarball_url":"https://api.github.com/repos/miq-consumption/miq_exchange_demo_repos/tarball/1.0.0","zipball_url":"https://api.github.com/repos/miq-consumption/miq_exchange_demo_repos/zipball/1.0.0","body":"This
-        is the release_1"},{"url":"https://api.github.com/repos/miq-consumption/miq_exchange_demo_repos/releases/9192636","assets_url":"https://api.github.com/repos/miq-consumption/miq_exchange_demo_repos/releases/9192636/assets","upload_url":"https://uploads.github.com/repos/miq-consumption/miq_exchange_demo_repos/releases/9192636/assets{?name,label}","html_url":"https://github.com/miq-consumption/miq_exchange_demo_repos/releases/tag/prerelease_1","id":9192636,"tag_name":"prerelease_1","target_commitish":"master","name":"Prerelease
-        Version 1 of miq_exchange_demo_repos","draft":false,"author":{"login":"aljesusg","id":3019213,"avatar_url":"https://avatars2.githubusercontent.com/u/3019213?v=4","gravatar_id":"","url":"https://api.github.com/users/aljesusg","html_url":"https://github.com/aljesusg","followers_url":"https://api.github.com/users/aljesusg/followers","following_url":"https://api.github.com/users/aljesusg/following{/other_user}","gists_url":"https://api.github.com/users/aljesusg/gists{/gist_id}","starred_url":"https://api.github.com/users/aljesusg/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/aljesusg/subscriptions","organizations_url":"https://api.github.com/users/aljesusg/orgs","repos_url":"https://api.github.com/users/aljesusg/repos","events_url":"https://api.github.com/users/aljesusg/events{/privacy}","received_events_url":"https://api.github.com/users/aljesusg/received_events","type":"User","site_admin":false},"prerelease":true,"created_at":"2018-01-11T09:17:01Z","published_at":"2018-01-11T09:55:34Z","assets":[],"tarball_url":"https://api.github.com/repos/miq-consumption/miq_exchange_demo_repos/tarball/prerelease_1","zipball_url":"https://api.github.com/repos/miq-consumption/miq_exchange_demo_repos/zipball/prerelease_1","body":""}]'
+      string: '[{"url":"https://api.github.com/repos/miq-consumption/miq_exchange_demo_repo/releases/9193300","assets_url":"https://api.github.com/repos/miq-consumption/miq_exchange_demo_repo/releases/9193300/assets","upload_url":"https://uploads.github.com/repos/miq-consumption/miq_exchange_demo_repo/releases/9193300/assets{?name,label}","html_url":"https://github.com/miq-consumption/miq_exchange_demo_repo/releases/tag/1.0.1","id":9193300,"tag_name":"1.0.1","target_commitish":"master","name":"Release
+        1 update 1","draft":false,"author":{"login":"chargio","id":7500590,"avatar_url":"https://avatars3.githubusercontent.com/u/7500590?v=4","gravatar_id":"","url":"https://api.github.com/users/chargio","html_url":"https://github.com/chargio","followers_url":"https://api.github.com/users/chargio/followers","following_url":"https://api.github.com/users/chargio/following{/other_user}","gists_url":"https://api.github.com/users/chargio/gists{/gist_id}","starred_url":"https://api.github.com/users/chargio/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/chargio/subscriptions","organizations_url":"https://api.github.com/users/chargio/orgs","repos_url":"https://api.github.com/users/chargio/repos","events_url":"https://api.github.com/users/chargio/events{/privacy}","received_events_url":"https://api.github.com/users/chargio/received_events","type":"User","site_admin":false},"prerelease":false,"created_at":"2018-01-11T10:29:56Z","published_at":"2018-01-11T10:37:29Z","assets":[],"tarball_url":"https://api.github.com/repos/miq-consumption/miq_exchange_demo_repo/tarball/1.0.1","zipball_url":"https://api.github.com/repos/miq-consumption/miq_exchange_demo_repo/zipball/1.0.1","body":"Update
+        on README"},{"url":"https://api.github.com/repos/miq-consumption/miq_exchange_demo_repo/releases/9193048","assets_url":"https://api.github.com/repos/miq-consumption/miq_exchange_demo_repo/releases/9193048/assets","upload_url":"https://uploads.github.com/repos/miq-consumption/miq_exchange_demo_repo/releases/9193048/assets{?name,label}","html_url":"https://github.com/miq-consumption/miq_exchange_demo_repo/releases/tag/v1.0.0","id":9193048,"tag_name":"v1.0.0","target_commitish":"master","name":"Release
+        1","draft":false,"author":{"login":"aljesusg","id":3019213,"avatar_url":"https://avatars2.githubusercontent.com/u/3019213?v=4","gravatar_id":"","url":"https://api.github.com/users/aljesusg","html_url":"https://github.com/aljesusg","followers_url":"https://api.github.com/users/aljesusg/followers","following_url":"https://api.github.com/users/aljesusg/following{/other_user}","gists_url":"https://api.github.com/users/aljesusg/gists{/gist_id}","starred_url":"https://api.github.com/users/aljesusg/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/aljesusg/subscriptions","organizations_url":"https://api.github.com/users/aljesusg/orgs","repos_url":"https://api.github.com/users/aljesusg/repos","events_url":"https://api.github.com/users/aljesusg/events{/privacy}","received_events_url":"https://api.github.com/users/aljesusg/received_events","type":"User","site_admin":false},"prerelease":false,"created_at":"2018-01-11T10:29:56Z","published_at":"2018-01-11T10:23:14Z","assets":[],"tarball_url":"https://api.github.com/repos/miq-consumption/miq_exchange_demo_repo/tarball/v1.0.0","zipball_url":"https://api.github.com/repos/miq-consumption/miq_exchange_demo_repo/zipball/v1.0.0","body":"This
+        is the release_1"},{"url":"https://api.github.com/repos/miq-consumption/miq_exchange_demo_repo/releases/9192636","assets_url":"https://api.github.com/repos/miq-consumption/miq_exchange_demo_repo/releases/9192636/assets","upload_url":"https://uploads.github.com/repos/miq-consumption/miq_exchange_demo_repo/releases/9192636/assets{?name,label}","html_url":"https://github.com/miq-consumption/miq_exchange_demo_repo/releases/tag/prerelease_1","id":9192636,"tag_name":"prerelease_1","target_commitish":"master","name":"Prerelease
+        Version 1 of galaxy_demo_repos","draft":false,"author":{"login":"aljesusg","id":3019213,"avatar_url":"https://avatars2.githubusercontent.com/u/3019213?v=4","gravatar_id":"","url":"https://api.github.com/users/aljesusg","html_url":"https://github.com/aljesusg","followers_url":"https://api.github.com/users/aljesusg/followers","following_url":"https://api.github.com/users/aljesusg/following{/other_user}","gists_url":"https://api.github.com/users/aljesusg/gists{/gist_id}","starred_url":"https://api.github.com/users/aljesusg/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/aljesusg/subscriptions","organizations_url":"https://api.github.com/users/aljesusg/orgs","repos_url":"https://api.github.com/users/aljesusg/repos","events_url":"https://api.github.com/users/aljesusg/events{/privacy}","received_events_url":"https://api.github.com/users/aljesusg/received_events","type":"User","site_admin":false},"prerelease":true,"created_at":"2018-01-11T09:17:01Z","published_at":"2018-01-11T09:55:34Z","assets":[],"tarball_url":"https://api.github.com/repos/miq-consumption/miq_exchange_demo_repo/tarball/prerelease_1","zipball_url":"https://api.github.com/repos/miq-consumption/miq_exchange_demo_repo/zipball/prerelease_1","body":""}]'
     http_version: 
-  recorded_at: Thu, 11 Jan 2018 10:31:16 GMT
-- request:
-    method: get
-    uri: https://api.github.com/repos/miq-consumption/miq_exchange_demo_repos/releases
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept:
-      - application/vnd.github.v3+json
-      User-Agent:
-      - Octokit Ruby Gem 4.7.0
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Server:
-      - GitHub.com
-      Date:
-      - Thu, 11 Jan 2018 10:34:04 GMT
-      Content-Type:
-      - application/json; charset=utf-8
-      Transfer-Encoding:
-      - chunked
-      Status:
-      - 200 OK
-      X-Ratelimit-Limit:
-      - '60'
-      X-Ratelimit-Remaining:
-      - '56'
-      X-Ratelimit-Reset:
-      - '1515669489'
-      Cache-Control:
-      - public, max-age=60, s-maxage=60
-      Vary:
-      - Accept
-      Etag:
-      - W/"cf296a95acb4609d70e5725e55af6add"
-      X-Github-Media-Type:
-      - github.v3; format=json
-      Access-Control-Expose-Headers:
-      - ETag, Link, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining,
-        X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
-      Access-Control-Allow-Origin:
-      - "*"
-      Content-Security-Policy:
-      - default-src 'none'
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubdomains; preload
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - deny
-      X-Xss-Protection:
-      - 1; mode=block
-      X-Runtime-Rack:
-      - '0.045748'
-      X-Github-Request-Id:
-      - 05CC:2FDA:E716C8:1BBF29C:5A573D9C
-    body:
-      encoding: ASCII-8BIT
-      string: '[{"url":"https://api.github.com/repos/miq-consumption/miq_exchange_demo_repos/releases/9193048","assets_url":"https://api.github.com/repos/miq-consumption/miq_exchange_demo_repos/releases/9193048/assets","upload_url":"https://uploads.github.com/repos/miq-consumption/miq_exchange_demo_repos/releases/9193048/assets{?name,label}","html_url":"https://github.com/miq-consumption/miq_exchange_demo_repos/releases/tag/1.0.0","id":9193048,"tag_name":"1.0.0","target_commitish":"master","name":"Release
-        1","draft":false,"author":{"login":"aljesusg","id":3019213,"avatar_url":"https://avatars2.githubusercontent.com/u/3019213?v=4","gravatar_id":"","url":"https://api.github.com/users/aljesusg","html_url":"https://github.com/aljesusg","followers_url":"https://api.github.com/users/aljesusg/followers","following_url":"https://api.github.com/users/aljesusg/following{/other_user}","gists_url":"https://api.github.com/users/aljesusg/gists{/gist_id}","starred_url":"https://api.github.com/users/aljesusg/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/aljesusg/subscriptions","organizations_url":"https://api.github.com/users/aljesusg/orgs","repos_url":"https://api.github.com/users/aljesusg/repos","events_url":"https://api.github.com/users/aljesusg/events{/privacy}","received_events_url":"https://api.github.com/users/aljesusg/received_events","type":"User","site_admin":false},"prerelease":false,"created_at":"2018-01-11T09:17:01Z","published_at":"2018-01-11T10:23:14Z","assets":[],"tarball_url":"https://api.github.com/repos/miq-consumption/miq_exchange_demo_repos/tarball/1.0.0","zipball_url":"https://api.github.com/repos/miq-consumption/miq_exchange_demo_repos/zipball/1.0.0","body":"This
-        is the release_1"},{"url":"https://api.github.com/repos/miq-consumption/miq_exchange_demo_repos/releases/9192636","assets_url":"https://api.github.com/repos/miq-consumption/miq_exchange_demo_repos/releases/9192636/assets","upload_url":"https://uploads.github.com/repos/miq-consumption/miq_exchange_demo_repos/releases/9192636/assets{?name,label}","html_url":"https://github.com/miq-consumption/miq_exchange_demo_repos/releases/tag/prerelease_1","id":9192636,"tag_name":"prerelease_1","target_commitish":"master","name":"Prerelease
-        Version 1 of miq_exchange_demo_repos","draft":false,"author":{"login":"aljesusg","id":3019213,"avatar_url":"https://avatars2.githubusercontent.com/u/3019213?v=4","gravatar_id":"","url":"https://api.github.com/users/aljesusg","html_url":"https://github.com/aljesusg","followers_url":"https://api.github.com/users/aljesusg/followers","following_url":"https://api.github.com/users/aljesusg/following{/other_user}","gists_url":"https://api.github.com/users/aljesusg/gists{/gist_id}","starred_url":"https://api.github.com/users/aljesusg/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/aljesusg/subscriptions","organizations_url":"https://api.github.com/users/aljesusg/orgs","repos_url":"https://api.github.com/users/aljesusg/repos","events_url":"https://api.github.com/users/aljesusg/events{/privacy}","received_events_url":"https://api.github.com/users/aljesusg/received_events","type":"User","site_admin":false},"prerelease":true,"created_at":"2018-01-11T09:17:01Z","published_at":"2018-01-11T09:55:34Z","assets":[],"tarball_url":"https://api.github.com/repos/miq-consumption/miq_exchange_demo_repos/tarball/prerelease_1","zipball_url":"https://api.github.com/repos/miq-consumption/miq_exchange_demo_repos/zipball/prerelease_1","body":""}]'
-    http_version: 
-  recorded_at: Thu, 11 Jan 2018 10:34:04 GMT
-- request:
-    method: get
-    uri: https://api.github.com/repos/miq-consumption/miq_exchange_demo_repos/releases
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept:
-      - application/vnd.github.v3+json
-      User-Agent:
-      - Octokit Ruby Gem 4.7.0
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Server:
-      - GitHub.com
-      Date:
-      - Thu, 11 Jan 2018 10:38:18 GMT
-      Content-Type:
-      - application/json; charset=utf-8
-      Transfer-Encoding:
-      - chunked
-      Status:
-      - 200 OK
-      X-Ratelimit-Limit:
-      - '60'
-      X-Ratelimit-Remaining:
-      - '55'
-      X-Ratelimit-Reset:
-      - '1515669489'
-      Cache-Control:
-      - public, max-age=60, s-maxage=60
-      Vary:
-      - Accept
-      Etag:
-      - W/"18469d08231525ed290f4bd4b31c5df0"
-      X-Github-Media-Type:
-      - github.v3; format=json
-      Access-Control-Expose-Headers:
-      - ETag, Link, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining,
-        X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
-      Access-Control-Allow-Origin:
-      - "*"
-      Content-Security-Policy:
-      - default-src 'none'
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubdomains; preload
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - deny
-      X-Xss-Protection:
-      - 1; mode=block
-      X-Runtime-Rack:
-      - '0.073446'
-      X-Github-Request-Id:
-      - 6D17:2FDB:B02E4C:1D9680E:5A573E9A
-    body:
-      encoding: ASCII-8BIT
-      string: '[{"url":"https://api.github.com/repos/miq-consumption/miq_exchange_demo_repos/releases/9193300","assets_url":"https://api.github.com/repos/miq-consumption/miq_exchange_demo_repos/releases/9193300/assets","upload_url":"https://uploads.github.com/repos/miq-consumption/miq_exchange_demo_repos/releases/9193300/assets{?name,label}","html_url":"https://github.com/miq-consumption/miq_exchange_demo_repos/releases/tag/1.0.1","id":9193300,"tag_name":"1.0.1","target_commitish":"master","name":"Release
-        1 update 1","draft":false,"author":{"login":"chargio","id":7500590,"avatar_url":"https://avatars3.githubusercontent.com/u/7500590?v=4","gravatar_id":"","url":"https://api.github.com/users/chargio","html_url":"https://github.com/chargio","followers_url":"https://api.github.com/users/chargio/followers","following_url":"https://api.github.com/users/chargio/following{/other_user}","gists_url":"https://api.github.com/users/chargio/gists{/gist_id}","starred_url":"https://api.github.com/users/chargio/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/chargio/subscriptions","organizations_url":"https://api.github.com/users/chargio/orgs","repos_url":"https://api.github.com/users/chargio/repos","events_url":"https://api.github.com/users/chargio/events{/privacy}","received_events_url":"https://api.github.com/users/chargio/received_events","type":"User","site_admin":false},"prerelease":false,"created_at":"2018-01-11T10:29:56Z","published_at":"2018-01-11T10:37:29Z","assets":[],"tarball_url":"https://api.github.com/repos/miq-consumption/miq_exchange_demo_repos/tarball/1.0.1","zipball_url":"https://api.github.com/repos/miq-consumption/miq_exchange_demo_repos/zipball/1.0.1","body":"Update
-        on README"},{"url":"https://api.github.com/repos/miq-consumption/miq_exchange_demo_repos/releases/9193048","assets_url":"https://api.github.com/repos/miq-consumption/miq_exchange_demo_repos/releases/9193048/assets","upload_url":"https://uploads.github.com/repos/miq-consumption/miq_exchange_demo_repos/releases/9193048/assets{?name,label}","html_url":"https://github.com/miq-consumption/miq_exchange_demo_repos/releases/tag/v1.0.0","id":9193048,"tag_name":"v1.0.0","target_commitish":"master","name":"Release
-        1","draft":false,"author":{"login":"aljesusg","id":3019213,"avatar_url":"https://avatars2.githubusercontent.com/u/3019213?v=4","gravatar_id":"","url":"https://api.github.com/users/aljesusg","html_url":"https://github.com/aljesusg","followers_url":"https://api.github.com/users/aljesusg/followers","following_url":"https://api.github.com/users/aljesusg/following{/other_user}","gists_url":"https://api.github.com/users/aljesusg/gists{/gist_id}","starred_url":"https://api.github.com/users/aljesusg/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/aljesusg/subscriptions","organizations_url":"https://api.github.com/users/aljesusg/orgs","repos_url":"https://api.github.com/users/aljesusg/repos","events_url":"https://api.github.com/users/aljesusg/events{/privacy}","received_events_url":"https://api.github.com/users/aljesusg/received_events","type":"User","site_admin":false},"prerelease":false,"created_at":"2018-01-11T10:29:56Z","published_at":"2018-01-11T10:23:14Z","assets":[],"tarball_url":"https://api.github.com/repos/miq-consumption/miq_exchange_demo_repos/tarball/v1.0.0","zipball_url":"https://api.github.com/repos/miq-consumption/miq_exchange_demo_repos/zipball/v1.0.0","body":"This
-        is the release_1"},{"url":"https://api.github.com/repos/miq-consumption/miq_exchange_demo_repos/releases/9192636","assets_url":"https://api.github.com/repos/miq-consumption/miq_exchange_demo_repos/releases/9192636/assets","upload_url":"https://uploads.github.com/repos/miq-consumption/miq_exchange_demo_repos/releases/9192636/assets{?name,label}","html_url":"https://github.com/miq-consumption/miq_exchange_demo_repos/releases/tag/prerelease_1","id":9192636,"tag_name":"prerelease_1","target_commitish":"master","name":"Prerelease
-        Version 1 of miq_exchange_demo_repos","draft":false,"author":{"login":"aljesusg","id":3019213,"avatar_url":"https://avatars2.githubusercontent.com/u/3019213?v=4","gravatar_id":"","url":"https://api.github.com/users/aljesusg","html_url":"https://github.com/aljesusg","followers_url":"https://api.github.com/users/aljesusg/followers","following_url":"https://api.github.com/users/aljesusg/following{/other_user}","gists_url":"https://api.github.com/users/aljesusg/gists{/gist_id}","starred_url":"https://api.github.com/users/aljesusg/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/aljesusg/subscriptions","organizations_url":"https://api.github.com/users/aljesusg/orgs","repos_url":"https://api.github.com/users/aljesusg/repos","events_url":"https://api.github.com/users/aljesusg/events{/privacy}","received_events_url":"https://api.github.com/users/aljesusg/received_events","type":"User","site_admin":false},"prerelease":true,"created_at":"2018-01-11T09:17:01Z","published_at":"2018-01-11T09:55:34Z","assets":[],"tarball_url":"https://api.github.com/repos/miq-consumption/miq_exchange_demo_repos/tarball/prerelease_1","zipball_url":"https://api.github.com/repos/miq-consumption/miq_exchange_demo_repos/zipball/prerelease_1","body":""}]'
-    http_version: 
-  recorded_at: Thu, 11 Jan 2018 10:38:18 GMT
+  recorded_at: Tue, 23 Jan 2018 15:11:33 GMT
 recorded_with: VCR 4.0.0

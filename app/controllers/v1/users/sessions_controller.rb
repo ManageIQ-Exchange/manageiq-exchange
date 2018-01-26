@@ -70,7 +70,7 @@ module V1
       #
       def verify_user!(code, request)
         logger.debug 'Verifying that the user code is valid and authenticating user'
-        connection = source_control_server
+        connection = Providers::BaseManager.new('github.com').get_connector
         access_token = code ? connection.exchange_code_for_token!(code) : nil # Verify github code and get token with it
         raise Octokit::NotFound unless access_token[:error].nil?
         github_user = connection.user
