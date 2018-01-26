@@ -17,6 +17,7 @@ module Spec
                        user_agent: 'Travis'
           request_headers["X-USER-TOKEN"] = token
           request_headers["X-USER-ID"] = @user.github_id
+          token
         end
       end
     end
