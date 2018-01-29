@@ -3,19 +3,19 @@ require 'rails_helper'
 RSpec.describe 'V1::Users::Sessions', type: :request do
   context 'v1' do
     context 'new user' do
-      let(:code) { 'b10f1847f4fef3dd2b1d' }
+      let(:code) { '2931e223feda1c5c331c' }
 
       it 'creates a new user when it does not exist' do
         VCR.use_cassette('sessions/session-new-user-good-code',
                          :decode_compressed_response => true,
-                         :record                     => :none) do
+                         :record => :none) do
           headers = {
               params: {
                 "code": code
               }
           }
           expect { post('/v1/users/sign_in',
-                        headers)
+                                headers)
           }.to change(User, :count).from(0).to(1)
           expect(response).to have_http_status(:ok)
           expect(response.body).to include "authentication_token"

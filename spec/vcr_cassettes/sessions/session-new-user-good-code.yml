@@ -1,0 +1,152 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://github.com/login/oauth/access_token?client_id=CLIENT-ID&client_secret=CLIENT-SECRET
+    body:
+      encoding: UTF-8
+      string: '{"code":"2931e223feda1c5c331c","client_id":"CLIENT-ID","client_secret":"CLIENT-SECRET"}'
+    headers:
+      User-Agent:
+      - Octokit Ruby Gem 4.8.0
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Mon, 29 Jan 2018 16:13:59 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Status:
+      - 200 OK
+      Cache-Control:
+      - no-cache
+      Vary:
+      - X-PJAX
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      X-Request-Id:
+      - 5793ccb54e1deb7cf65bccf36f142516
+      X-Runtime:
+      - '0.072122'
+      Expect-Ct:
+      - max-age=2592000, report-uri="https://api.github.com/_private/browser/errors"
+      Content-Security-Policy:
+      - 'default-src ''none''; base-uri ''self''; block-all-mixed-content; child-src
+        render.githubusercontent.com; connect-src ''self'' uploads.github.com status.github.com
+        collector.githubapp.com api.github.com www.google-analytics.com github-cloud.s3.amazonaws.com
+        github-production-repository-file-5c1aeb.s3.amazonaws.com github-production-upload-manifest-file-7fdce7.s3.amazonaws.com
+        github-production-user-asset-6210df.s3.amazonaws.com wss://live.github.com;
+        font-src assets-cdn.github.com; form-action ''self'' github.com gist.github.com;
+        frame-ancestors ''none''; img-src ''self'' data: assets-cdn.github.com identicons.github.com
+        collector.githubapp.com github-cloud.s3.amazonaws.com *.githubusercontent.com;
+        media-src ''none''; script-src assets-cdn.github.com; style-src ''unsafe-inline''
+        assets-cdn.github.com'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Runtime-Rack:
+      - '0.077859'
+      X-Github-Request-Id:
+      - D80C:181C9:4A5D090:78159DF:5A6F4846
+    body:
+      encoding: ASCII-8BIT
+      string: '{"access_token":"1b91c8b817fac4d3629642ea8f0f48ffbbf9d7fb","token_type":"bearer","scope":"user:email"}'
+    http_version: 
+  recorded_at: Mon, 29 Jan 2018 16:13:59 GMT
+- request:
+    method: get
+    uri: https://api.github.com/user
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Octokit Ruby Gem 4.8.0
+      Accept:
+      - application/vnd.github.v3+json
+      Content-Type:
+      - application/json
+      Authorization:
+      - token 1b91c8b817fac4d3629642ea8f0f48ffbbf9d7fb
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Mon, 29 Jan 2018 16:13:59 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4999'
+      X-Ratelimit-Reset:
+      - '1517246039'
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Vary:
+      - Accept, Authorization, Cookie, X-GitHub-OTP
+      Etag:
+      - W/"9136097a6a419a514d2fc4cb9eeef1c0"
+      Last-Modified:
+      - Sat, 27 Jan 2018 15:58:25 GMT
+      X-Oauth-Scopes:
+      - user:email
+      X-Accepted-Oauth-Scopes:
+      - ''
+      X-Oauth-Client-Id:
+      - 6260e5a4c3e173a40795
+      X-Github-Media-Type:
+      - github.v3; format=json
+      Access-Control-Expose-Headers:
+      - ETag, Link, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining,
+        X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      Content-Security-Policy:
+      - default-src 'none'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Runtime-Rack:
+      - '0.069159'
+      X-Github-Request-Id:
+      - D811:5F81:414A76B:87DC052:5A6F4847
+    body:
+      encoding: ASCII-8BIT
+      string: '{"login":"aljesusg","id":3019213,"avatar_url":"https://avatars2.githubusercontent.com/u/3019213?v=4","gravatar_id":"","url":"https://api.github.com/users/aljesusg","html_url":"https://github.com/aljesusg","followers_url":"https://api.github.com/users/aljesusg/followers","following_url":"https://api.github.com/users/aljesusg/following{/other_user}","gists_url":"https://api.github.com/users/aljesusg/gists{/gist_id}","starred_url":"https://api.github.com/users/aljesusg/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/aljesusg/subscriptions","organizations_url":"https://api.github.com/users/aljesusg/orgs","repos_url":"https://api.github.com/users/aljesusg/repos","events_url":"https://api.github.com/users/aljesusg/events{/privacy}","received_events_url":"https://api.github.com/users/aljesusg/received_events","type":"User","site_admin":false,"name":"Alberto
+        Gutierrez","company":"@ManageIQ Red Hat, GDG","blog":"","location":"Granada,Spain","email":"aljesusg@gmail.com","hireable":true,"bio":null,"public_repos":45,"public_gists":0,"followers":24,"following":10,"created_at":"2012-12-11T19:52:55Z","updated_at":"2018-01-27T15:58:25Z"}'
+    http_version: 
+  recorded_at: Mon, 29 Jan 2018 16:13:59 GMT
+recorded_with: VCR 4.0.0

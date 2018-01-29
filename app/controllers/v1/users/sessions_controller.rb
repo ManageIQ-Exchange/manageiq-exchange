@@ -7,7 +7,6 @@ module V1
     # Authentication is done via tokens, using GitHub
     ##
     class SessionsController < Devise::SessionsController
-      include SourceControlHelper
 
       # before_action :configure_sign_in_params, only: [:create]
       def create
@@ -22,18 +21,18 @@ module V1
         code = params[:code] || request.headers[:code] # Get code from headers or params
         if code.nil?
           logger.warn 'Null code, impossible to authenticate'
-          render_error_exchange(:auth_code_error, :not_acceptable)
+          render json: ErrorExchange.new(:auth_code_error, :not_acceptable, {}), status: :not_acceptable
           return
         end
         begin
           user, token = verify_user!(code, request)
         rescue Octokit::NotFound
           logger.info 'User not found'
-          render_error_exchange(:auth_github_code_error, :unauthorized)
+          render json: ErrorExchange.new(:auth_github_code_error, :unauthorized, {}), status: :unauthorized
           return
         rescue Octokit::Unauthorized
           logger.info 'User is not authorized'
-          render_error_exchange(:auth_github_unauthorized_error, :unauthorized)
+          render json: ErrorExchange.new(:auth_github_unauthorized_error, :unauthorized, {}), status: :unauthorized
           return
         end
         # Return token
@@ -42,7 +41,7 @@ module V1
           render json: { data: { user: user, authentication_token: token } }
         else
           logger.info 'Authentication token error'
-          render_error_exchange(:auth_token_error, :unauthorized)
+          render json: ErrorExchange.new(:auth_token_error, :unauthorized, {}), status: :unauthorized
         end
       end
 
