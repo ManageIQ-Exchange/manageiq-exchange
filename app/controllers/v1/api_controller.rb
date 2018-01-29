@@ -11,7 +11,14 @@ module V1
 
     def version
       logger.debug 'Creating session, verifying code'
-      render json: { data: { version: Rails.application.config.api_version } } , status: :ok
+      providers = {}
+      Rails.application.secrets.oauth_providers.each do |pr|
+        pro = pr.clone
+        pro.delete(:secret)
+        name = pro.delete(:name)
+        providers[name] = pro if pro[:enabled]
+      end
+      render json: { data: { version: Rails.application.config.api_version, providers: providers } } , status: :ok
     end
 
     def return_response(collection, state = :ok, metadata = {}, role = nil)

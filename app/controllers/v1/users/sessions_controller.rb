@@ -18,14 +18,27 @@ module V1
         end
 
         logger.info 'Creating session, verifying code sent'
+
         code = params[:code] || request.headers[:code] # Get code from headers or params
         if code.nil?
           logger.warn 'Null code, impossible to authenticate'
           render json: ErrorExchange.new(:auth_code_error, :not_acceptable, {}), status: :not_acceptable
           return
         end
+
+        provider = params[:provider] || request.headers[:provider]
+        if provider.nil?
+          logger.warn 'Null provider, impossible to authenticate'
+          render json: ErrorExchange.new(:auth_provider_error, :not_acceptable, {}), status: :not_acceptable
+          return
+        end
         begin
-          user, token = verify_user!(code, request)
+          verify = verify_user!(code, provider, request)
+          if verify.kind_of? ErrorExchange
+            render json: verify, status: verify.status
+            return
+          end
+          user,token = verify
         rescue Octokit::NotFound
           logger.info 'User not found'
           render json: ErrorExchange.new(:auth_github_code_error, :unauthorized, {}), status: :unauthorized
@@ -67,9 +80,11 @@ module V1
       # @return user [User]
       # @return token [String]
       #
-      def verify_user!(code, request)
+      def verify_user!(code, provider, request)
         logger.debug 'Verifying that the user code is valid and authenticating user'
-        connection = Providers::BaseManager.new('github.com').get_connector
+        pr = Providers::BaseManager.new(provider)
+        return pr.provider if pr.provider.kind_of? ErrorExchange
+        connection = pr.get_connector
         access_token = code ? connection.exchange_code_for_token!(code) : nil # Verify github code and get token with it
         raise Octokit::NotFound unless access_token[:error].nil?
         github_user = connection.user
@@ -79,7 +94,7 @@ module V1
         logger.debug 'Creating user session token'
         token = Tiddle.create_and_return_token(user, request)
         authentication_token = Tiddle::TokenIssuer.build.find_token(user, token)
-        authentication_token.update(github_token: access_token[:access_token])
+        authentication_token.update(github_token: access_token[:access_token], provider: provider)
         [user, token]
       end
     end

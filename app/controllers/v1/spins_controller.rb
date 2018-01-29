@@ -97,7 +97,7 @@ module V1
       spin = Spin.find_by(id:params[:spin_id])
       if spin
         if spin.spin_of?(current_user)
-          if spin.publish_to(true?(params[:flag]))
+          if spin.publish_to( @current_user, true?(params[:flag]))
             return_response spin, :accepted, {}
           else
             render_error_exchange(:spin_not_published, :method_not_allowed, spin.log)

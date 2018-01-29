@@ -11,7 +11,8 @@ RSpec.describe 'V1::Users::Sessions', type: :request do
                          :record => :none) do
           headers = {
               params: {
-                "code": code
+                "code": code,
+                "provider": 'github.com'
               }
           }
           expect { post('/v1/users/sign_in',
@@ -20,6 +21,55 @@ RSpec.describe 'V1::Users::Sessions', type: :request do
           expect(response).to have_http_status(:ok)
           expect(response.body).to include "authentication_token"
           expect(response.body).to include "user"
+        end
+      end
+
+      it 'Throw an error without code param' do
+        VCR.use_cassette('sessions/session-new-user-good-code',
+                         :decode_compressed_response => true,
+                         :record => :none) do
+          headers = {
+              params: {
+                  "provider": 'github.com'
+              }
+          }
+          @identifier = :auth_code_error
+          post('/v1/users/sign_in', headers)
+          expect(response).to have_http_status(:not_acceptable)
+          expect_error
+        end
+      end
+
+      it 'Throw an error without provider param' do
+        VCR.use_cassette('sessions/session-new-user-good-code',
+                         :decode_compressed_response => true,
+                         :record => :none) do
+          headers = {
+              params: {
+                  "code": code
+              }
+          }
+          @identifier = :auth_provider_error
+          post('/v1/users/sign_in', headers)
+          expect(response).to have_http_status(:not_acceptable)
+          expect_error
+        end
+      end
+
+      it 'Throw an error without provider provided' do
+        VCR.use_cassette('sessions/session-new-user-good-code',
+                         :decode_compressed_response => true,
+                         :record => :none) do
+          headers = {
+              params: {
+                  "code": code,
+                  "provider": 'another_not_provided'
+              }
+          }
+          @identifier = :provider_name_not_provided
+          post('/v1/users/sign_in', headers)
+          expect(response).to have_http_status(:bad_request)
+          expect_error
         end
       end
       pending 'fails when the profile is not public'
