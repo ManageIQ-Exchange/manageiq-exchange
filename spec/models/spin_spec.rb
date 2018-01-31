@@ -41,7 +41,7 @@ RSpec.describe Spin, type: :model do
   it 'validate_readme?' do
     @user = user
     api_basic_authorize
-    VCR.use_cassette('github/get_readme',
+    VCR.use_cassette('providers/github/get_readme',
                      :decode_compressed_response => true,
                       :record => :none) do
       expect(spin_exchange.validate_readme?(user)).to be_truthy
@@ -51,7 +51,7 @@ RSpec.describe Spin, type: :model do
   it 'validate_metadata?' do
     @user = user
     api_basic_authorize
-    VCR.use_cassette('github/get_metadata',
+    VCR.use_cassette('providers/github/get_metadata',
                      :decode_compressed_response => true,
                      :record => :none) do
       expect(spin_exchange.validate_metadata?(user)).to be_truthy
@@ -61,8 +61,8 @@ RSpec.describe Spin, type: :model do
   it 'validate_spin? without releases' do
     @user = user
     api_basic_authorize
-    VCR.use_cassette("github/get_readme",:decode_compressed_response => true,:record => :none) do
-      VCR.use_cassette("github/get_metadata",:decode_compressed_response => true,:record => :none) do
+    VCR.use_cassette("providers/github/get_readme",:decode_compressed_response => true,:record => :none) do
+      VCR.use_cassette("providers/github/get_metadata",:decode_compressed_response => true,:record => :none) do
         expect(spin_exchange.validate_spin?(user)).to be_falsey
       end
     end
@@ -71,7 +71,7 @@ RSpec.describe Spin, type: :model do
   it 'validate_releases?' do
     @user = user
     api_basic_authorize
-    VCR.use_cassette("github/get_releases",:decode_compressed_response => true,:record => :none) do
+    VCR.use_cassette("providers/github/get_releases",:decode_compressed_response => true,:record => :none) do
       expect(spin_exchange.validate_releases?).to be_falsey
       expect(spin_exchange.log).to eq 'Error in releases, you need  a release in your spin, if you have one refresh the spin'
       expect(spin_exchange.releases).to eq []
@@ -84,9 +84,9 @@ RSpec.describe Spin, type: :model do
   it 'validate_spin? with releases' do
     @user = user
     api_basic_authorize
-    VCR.use_cassette("github/get_readme",:decode_compressed_response => true,:record => :none) do
-      VCR.use_cassette("github/get_metadata",:decode_compressed_response => true,:record => :none) do
-        VCR.use_cassette("github/get_releases",:decode_compressed_response => true,:record => :none) do
+    VCR.use_cassette("providers/github/get_readme",:decode_compressed_response => true,:record => :none) do
+      VCR.use_cassette("providers/github/get_metadata",:decode_compressed_response => true,:record => :none) do
+        VCR.use_cassette("providers/github/get_releases",:decode_compressed_response => true,:record => :none) do
           expect(spin_exchange.update_releases(user)). to be_truthy
           expect(spin_exchange.validate_spin?(user)).to be_truthy
         end
@@ -97,7 +97,7 @@ RSpec.describe Spin, type: :model do
   it 'update_releases' do
     @user = user
     api_basic_authorize
-    VCR.use_cassette("github/get_releases",:decode_compressed_response => true,:record => :none) do
+    VCR.use_cassette("providers/github/get_releases",:decode_compressed_response => true,:record => :none) do
        spin_exchange.releases = []
        spin_exchange.save
        expect(spin_exchange.update_releases(user)).to be_truthy
@@ -108,7 +108,7 @@ RSpec.describe Spin, type: :model do
   it 'refresh_tags' do
     @user = user
     api_basic_authorize
-    VCR.use_cassette('github/get_metadata',
+    VCR.use_cassette('providers/github/get_metadata',
                      :decode_compressed_response => true,
                      :record => :none) do
       expect(spin_exchange.validate_metadata?(user)).to be_truthy
@@ -120,7 +120,7 @@ RSpec.describe Spin, type: :model do
   it 'generate a log by a tag' do
     @user = user
     api_basic_authorize
-    VCR.use_cassette('github/get_metadata',
+    VCR.use_cassette('providers/github/get_metadata',
                      :decode_compressed_response => true,
                      :record => :none) do
       expect(spin_exchange.validate_metadata?(user)).to be_truthy

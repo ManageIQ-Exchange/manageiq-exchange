@@ -46,9 +46,21 @@ en:
     auth_token_error:
       title: Authentication Token error
       detail: There is a problem in the authentication with token
+    github_octokit_not_found:
+      title: Octokit not Found
+      detail: There is a problem with the connection to GitHub
     provider_name_not_provided:
       title: Provider not provided
       detail: This provider is not supported, check the API info endpoint
+    spin_error_metadata:
+      title: There is an error in Metadata
+      detail: Check if the schema is OK
+    spin_get_metadata_from_provider:
+      title: Error getting the metadata from provider
+      detail: Check if you have a metadata in repo
+    spin_metadata_to_json:
+      title: Error in convert metadata to json
+      detail: Check if metadata has a correct format.
     spin_not_found:
       title: This spin is not in the database
       detail: Maybe the id of spin is wrong
