@@ -34,6 +34,9 @@ en:
     auth_code_error:
       title: Null code
       detail: You need to set the code in request
+    auth_provider_error:
+      title: Null provider
+      detail: You need to set the provider in request
     auth_github_code_error:
       title: Authentication error in GitHub with code
       detail: The code is wrong or github error
@@ -42,7 +45,10 @@ en:
       detail: The user is not authorized
     auth_token_error:
       title: Authentication Token error
-      detail: there is a problem in the authentication with token
+      detail: There is a problem in the authentication with token
+    provider_name_not_provided:
+      title: Provider not provided
+      detail: This provider is not supported, check the API info endpoint
     spin_not_found:
       title: This spin is not in the database
       detail: Maybe the id of spin is wrong

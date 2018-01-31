@@ -100,9 +100,9 @@ class Spin < ApplicationRecord
   # == Returns:
   # A boolean representing if the spin was updated with publish to flag or not
   #
-  def publish_to(flag = true)
+  def publish_to(user, flag = true)
     if flag
-      validate_spin? ? update(published: flag) : (return false)
+      validate_spin?(user) ? update(published: flag) : (return false)
     else
       update(published: flag)
     end
@@ -124,8 +124,8 @@ class Spin < ApplicationRecord
   # == Returns:
   # A boolean representing if the spin is validated or not
   #
-  def validate_spin?
-    validate_readme? && validate_metadata? && validate_releases?
+  def validate_spin?(user)
+    validate_readme?(user) && validate_metadata?(user) && validate_releases?
   end
 
   # Validate release
@@ -144,8 +144,8 @@ class Spin < ApplicationRecord
   # == Returns:
   # A boolean representing if the spin readme is ok
   #
-  def validate_readme?
-    rdm = Providers::BaseManager.new('github.com').get_connector.readme(full_name)
+  def validate_readme?(user)
+    rdm = Providers::BaseManager.new(user.authentication_tokens.first.provider).get_connector.readme(full_name)
     if rdm
       update(readme: rdm)
       return true
@@ -160,8 +160,8 @@ class Spin < ApplicationRecord
   # == Returns:
   # A boolean representing if the spin metadata is ok
   #
-  def validate_metadata?
-    metadata = Providers::BaseManager.new('github.com').get_connector.metadata(full_name)
+  def validate_metadata?(user)
+    metadata = Providers::BaseManager.new(user.authentication_tokens.first.provider).get_connector.metadata(full_name)
     if metadata.kind_of? ErrorExchange
       spin_log("#{metadata.as_json["title"]} \n #{metadata.as_json["detail"]}")
     else
@@ -176,8 +176,8 @@ class Spin < ApplicationRecord
   # == Returns:
   # A boolean representing if the spin releases are updated
   #
-  def update_releases
-    releases = Providers::BaseManager.new('github.com').get_connector.releases(full_name)
+  def update_releases(user)
+    releases = Providers::BaseManager.new(user.authentication_tokens.first.provider).get_connector.releases(full_name)
     return false unless releases
     update(releases: releases)
     true

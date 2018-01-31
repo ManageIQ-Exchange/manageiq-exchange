@@ -12,15 +12,15 @@ RSpec.describe 'V1::Api', type: :request do
         expect(response).to have_http_status(200)
         expect(response.content_type).to eq('application/json')
         expect(response.charset).to eq('utf-8')
-        expect(response.body).to eq("{\"data\":{\"version\":\"#{version}\"}}")
+        expect(response.body).to eq("{\"data\":{\"version\":\"1.0\",\"providers\":{\"github.com\":{\"type\":\"github\",\"enabled\":true,\"id_application\":null,\"server\":\"api.github.com\",\"version\":\"v3\",\"verify\":true}}}}")
       end
 
-      it 'gets the API version' do
+      it 'gets the API version2' do
         get '/v1/api/version'
         expect(response).to have_http_status(200)
         expect(response.content_type).to eq('application/json')
         expect(response.charset).to eq('utf-8')
-        expect(response.body).to eq("{\"data\":{\"version\":\"#{version}\"}}")
+        expect(response.body).to eq("{\"data\":{\"version\":\"1.0\",\"providers\":{\"github.com\":{\"type\":\"github\",\"enabled\":true,\"id_application\":null,\"server\":\"api.github.com\",\"version\":\"v3\",\"verify\":true}}}}")
       end
     end
   end

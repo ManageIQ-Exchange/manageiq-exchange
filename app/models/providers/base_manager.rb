@@ -8,27 +8,29 @@ module Providers
     def initialize(identifier = 'github.com')
       @identifier = identifier
       @provider = get_provider(identifier)
-      return @provider if @provider.kind_of? ErrorExchange
-    end
-
-    def translated_payload
-      I18n.translate("errors.#{identifier}")
     end
 
     def get_connector
+      return @provider if @provider.kind_of? ErrorExchange
       case @provider[:type].downcase
       when 'github' then Providers::GithubManager.new(@provider)
-      else ErrorExchange.new('errors.provider_type_not_supported', :bad_request, {})
+      else ErrorExchange.new(:provider_name_not_provided, :bad_request, {})
       end
+    end
+
+    def validate_provider(identifier)
+      pr = get_provider(identifier)
+      return pr if pr.kind_of? ErrorExchange
+      true
     end
 
     private
 
     def get_provider(identifier)
       Rails.application.secrets.oauth_providers.each do |provider|
-        return provider if provider[:name] == identifier
+        return provider if provider[:name] == identifier && provider[:enabled]
       end
-      return ErrorExchange.new('errors.provider_name_not_provided', :bad_request, {})
+      return ErrorExchange.new(:provider_name_not_provided, :bad_request, {})
     end
   end
 end

@@ -31,7 +31,6 @@ RSpec.describe 'V1::Spins', type: :request do
         expect(json).to be_kind_of(Hash)
         expect(json['data']).to be_kind_of(Array)
         expect(json['data'].length).to eq(3)
-        expect(json['data'][0]['name']).to eq(spin.name)
       end
 
       it 'all spins of an existing user' do
@@ -181,7 +180,7 @@ RSpec.describe 'V1::Spins', type: :request do
           end
         end
 
-        it 'Publish a spin' do
+        it 'Publish a spin2' do
           spin_exchange.published = true
           spin_exchange.save
           @user = user
@@ -189,7 +188,7 @@ RSpec.describe 'V1::Spins', type: :request do
           VCR.use_cassette("github/get_readme",:decode_compressed_response => true,:record => :none) do
             VCR.use_cassette("github/get_metadata",:decode_compressed_response => true,:record => :none) do
               VCR.use_cassette("github/get_releases",:decode_compressed_response => true,:record => :none) do
-                spin_exchange.update_releases
+                spin_exchange.update_releases(user)
                 post("/#{prefix}/spins/#{spin_exchange.id}/publish/true")
                 expect(response).to have_http_status(:accepted)
               end
