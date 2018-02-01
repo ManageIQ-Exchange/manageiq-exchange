@@ -54,8 +54,8 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 #
 
 gem 'devise', '~> 4.0'
-gem 'tiddle', :git => 'https://github.com/miq-consumption/tiddle.git'
-
+# gem 'tiddle', :git => 'https://github.com/miq-consumption/tiddle.git'
+gem 'tiddle', '~> 1.0'
 
 # Github tools
 gem 'octokit', '~> 4.0'

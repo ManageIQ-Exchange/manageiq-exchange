@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180129165753) do
+ActiveRecord::Schema.define(version: 20180201092313) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,22 +86,22 @@ ActiveRecord::Schema.define(version: 20180129165753) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "name", null: false
+    t.string "name"
     t.boolean "admin", default: false, null: false
     t.boolean "staff", default: false, null: false
     t.integer "karma", default: 0, null: false
-    t.string "github_avatar_url", default: "", null: false
-    t.string "github_html_url", null: false
-    t.string "github_id", null: false
-    t.string "github_login", null: false
-    t.string "github_company", default: "", null: false
-    t.string "github_type", null: false
-    t.string "github_blog", default: "", null: false
-    t.string "github_location", default: "", null: false
-    t.string "github_bio", default: "", null: false
-    t.datetime "github_created_at", null: false
-    t.datetime "github_updated_at", null: false
-    t.string "email", default: "", null: false
+    t.string "github_avatar_url"
+    t.string "github_html_url"
+    t.string "github_id"
+    t.string "github_login"
+    t.string "github_company"
+    t.string "github_type"
+    t.string "github_blog"
+    t.string "github_location"
+    t.string "github_bio"
+    t.datetime "github_created_at"
+    t.datetime "github_updated_at"
+    t.string "email"
     t.datetime "remember_created_at"
     t.integer "sign_in_count", default: 0, null: false
     t.datetime "current_sign_in_at"
