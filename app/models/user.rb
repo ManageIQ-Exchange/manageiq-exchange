@@ -42,17 +42,17 @@ class User < ApplicationRecord
   validates :name,              presence: true, allow_blank: true
   validates :admin,             inclusion: { in: [true, false] }
   validates :staff,             inclusion: { in: [true, false] }
-  validates :karma,             presence: true
-  validates :github_avatar_url, presence: true
+  validates :karma,             numericality: { only_integer: true }
+  validates :github_avatar_url, presence: true, allow_blank: true
   validates :github_html_url,   presence: true
-  validates :github_id,         presence: true
+  validates :github_id,         presence: true, format: { with: /\A\d+\z/, message: "must be integer" }
   validates :github_login,      presence: true
-  validates :github_company,    exclusion: { in: [nil]}
+  validates :github_company,    presence: true, allow_blank: true
   validates :github_type,       presence: true
-  validates :github_blog,       exclusion: { in: [nil]}
-  validates :github_location,   presence: true
-  validates :github_bio,        exclusion: { in: [nil]}
-  validates :email,             presence: true
+  validates :github_blog,       presence: true, allow_blank: true
+  validates :github_location,   presence: true, allow_blank: true
+  validates :github_bio,        presence: true, allow_blank: true
+  validates :email,             presence: true, allow_blank: true
   validates :sign_in_count,     numericality: true
 
   def self.return_user(github_user)
