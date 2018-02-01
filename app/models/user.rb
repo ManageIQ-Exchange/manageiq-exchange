@@ -38,7 +38,8 @@ class User < ApplicationRecord
   has_many :authentication_tokens, dependent: :destroy
   has_many :spins, dependent: :destroy
 
-  validates :name,              presence: true
+  validates :id,                presence: true
+  validates :name,              presence: true, allow_blank: true
   validates :admin,             inclusion: { in: [true, false] }
   validates :staff,             inclusion: { in: [true, false] }
   validates :karma,             presence: true
