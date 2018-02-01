@@ -50,7 +50,7 @@ module Providers
       begin
         metadata_raw = @github_access.contents(full_name, path: '/metadata.yml', accept: 'application/vnd.github.raw')
       rescue Octokit::NotFound
-        return ErrorExchange.new("errors.spin_get_metadata_from_provider", nil, {})
+        return ErrorExchange.new(:spin_get_metadata_from_provider, nil, {})
       end
 
       begin
@@ -59,9 +59,9 @@ module Providers
           JSON::Validator.validate!(SPIN_SCHEMA, metadata_json)
           return [metadata_raw, metadata_json]
         end
-        return ErrorExchange.new("errors.spin_metadata_to_json", nil, {})
+        return ErrorExchange.new(:spin_metadata_to_json, nil, {})
       rescue TypeError, JSON::ParserError, JSON::Schema::ValidationError => e
-        return ErrorExchange.new("errors.spin_error_metadata", nil, {error: e.to_json})
+        return ErrorExchange.new(:spin_error_metadata, nil, {error: e.to_json})
       end
     end
 
@@ -71,9 +71,10 @@ module Providers
     # @return [metadata_raw, metadata_json]
     def releases(full_name)
       begin
+        raise Octokit::NotFound if @github_access.nil?
         @github_access.releases(full_name)
-      rescue Octokit::NotFound
-        nil
+      rescue Octokit::NotFound => e
+        ErrorExchange.new(:github_octokit_not_found, nil, {error: e.to_json})
       end
     end
 
@@ -81,14 +82,17 @@ module Providers
     # Returns readme decoded
     # @param full_name [String] Full name of repo
     def readme(full_name)
+      raise Octokit::NotFound if @github_access.nil?
       @github_access.readme(full_name, accept: 'application/vnd.github.raw')
-    rescue Octokit::NotFound
-      nil
+    rescue Octokit::NotFound => e
+      ErrorExchange.new(:github_octokit_not_found, nil, {error: e.to_json})
     end
 
     def repos(user:, github_token:)
       @github_access.access_token ||= github_token
       @github_access.repos(user)
+    rescue  Octokit::NotFound => e
+      ErrorExchange.new(:github_octokit_not_found, nil, {error: e.to_json})
     end
   end
 end

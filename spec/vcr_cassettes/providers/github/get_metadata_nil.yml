@@ -1,0 +1,74 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.github.com/repos/miq-consumption/miq_exchange_demo_repo/contents/metadata.yml?client_id=CLIENT-ID&client_secret=CLIENT-SECRET
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Octokit Ruby Gem 4.8.0
+      Accept:
+      - application/vnd.github.raw
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Tue, 23 Jan 2018 14:30:52 GMT
+      Content-Type:
+      - application/vnd.github.raw; charset=utf-8
+      Content-Length:
+      - '902'
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4974'
+      X-Ratelimit-Reset:
+      - '1516719312'
+      Cache-Control:
+      - public, max-age=60, s-maxage=60
+      Vary:
+      - Accept
+      Etag:
+      - '"c5f9a790061e95cbb8079e223f6f1038caa56d32"'
+      Last-Modified:
+      - Tue, 23 Jan 2018 08:46:49 GMT
+      X-Github-Media-Type:
+      - github.v3; param=raw
+      Access-Control-Expose-Headers:
+      - ETag, Link, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining,
+        X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      Content-Security-Policy:
+      - default-src 'none'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Runtime-Rack:
+      - '0.054525'
+      X-Github-Request-Id:
+      - 776F:1DEC:652D72:C2A839:5A67471B
+    body:
+      encoding: UTF-8
+      string: |
+        #
+    http_version: 
+  recorded_at: Tue, 23 Jan 2018 14:30:52 GMT
+recorded_with: VCR 4.0.0

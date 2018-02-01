@@ -37,10 +37,10 @@ module Spec
           @request_headers ||= {}
         end
 
-        def expect_error
-          expect(json['code'].to_sym).to eq(@identifier)
-          %w(title detail).each do |data|
-            expect(json[data]).to eq(I18n.translate("errors.#{@identifier}")[data.to_sym])
+        def expect_error(data = json)
+          expect((data['code'] || data[:code]).to_sym).to eq(@identifier)
+          %w(title detail).each do |item|
+            expect(data[item] || data[item.to_sym]).to eq(I18n.translate("errors.#{@identifier}")[item.to_sym])
           end
         end
 
