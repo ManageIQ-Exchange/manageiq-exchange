@@ -94,7 +94,7 @@ RSpec.describe 'V1::Spins', type: :request do
         let!(:spin) { FactoryBot.create(:spin) }
         let!(:spin_exchange) { FactoryBot.create(:spin, name: "exchange",user: user, published: false) }
 
-        it 'Set visible of a not found spin without authenticated' do
+        it 'Set visible of a not existing spin without authentication' do
           post("/#{prefix}/spins/000323/visible/true")
           expect(response).to have_http_status(401)
         end
@@ -122,6 +122,7 @@ RSpec.describe 'V1::Spins', type: :request do
           @identifier = :spin_not_published
           api_basic_authorize
           post("/#{prefix}/spins/#{spin_exchange.id}/visible/true")
+          expect(response.content_type).to eq("application/json")
           expect(response).to have_http_status(:method_not_allowed)
           expect_error
         end
@@ -138,10 +139,10 @@ RSpec.describe 'V1::Spins', type: :request do
 
       describe '#POST Published operation' do
         let!(:spin) { FactoryBot.create(:spin) }
-        let!(:spin_exchange) { FactoryBot.create(:spin, name: "exchange", full_name: 'miq-consumption/miq_exchange_demo_repo', user: user, published: false) }
+        let!(:spin_exchange) { FactoryBot.create(:spin, name: "exchange", full_name: 'ManageIQ/miq_exchange_demo_repo', user: user, published: false) }
 
-        it 'Publish a not found spin without authenticated' do
-          post("/#{prefix}/spins/000323/publish/true")
+        it 'Publish a not found spin without authentication' do
+          post "/#{prefix}/spins/000323/publish/true"
           expect(response).to have_http_status(401)
         end
 

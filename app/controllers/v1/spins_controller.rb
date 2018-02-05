@@ -38,7 +38,6 @@ module V1
     # TODO: When authenticated, provide extended info
     # users/<user_id>/spins/<spin_id_or_name> Get a specific spin of user
     def show
-      return unless  check_params_required(:id)
       if params[:user_id]
         @user = User.find_by_github_login(params[:user_id])
         return_response status: :not_found unless @user
@@ -60,12 +59,7 @@ module V1
     # Connects to github, gets all repos of the user, and search for spins
     #
     def refresh
-      return unless  check_params_required(:user_id)
-      user = if current_user.admin?
-               User.find(params[:user_id]) || current_user
-             else
-               current_user
-             end
+      user = current_user.admin? ? User.find(params[:user_id]) : current_user
       if user.nil?
         render json: { error: 'No user found' }, status: :not_found
         return

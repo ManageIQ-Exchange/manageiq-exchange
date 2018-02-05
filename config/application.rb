@@ -34,7 +34,6 @@ module ManageiqExchange
     config.api_only = true
 
     # Adding back session store in cookies, so that it is possible to create and destroy sessions
-    config.active_support.escape_html_entities_in_json = false
     # config.session_store :cookie_store, key: '_miq_exchange_session'
     # config.middleware.use ActionDispatch::Cookies # Required for all session management
     # config.middleware.use ActionDispatch::Session::CookieStore, config.session_options
