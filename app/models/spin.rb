@@ -104,7 +104,7 @@ class Spin < ApplicationRecord
   #
   def publish_to(user, flag = true)
     if flag
-      validate_spin?(user) ? update(published: flag) : (return false)
+      acceptable?(user) ? update(published: flag) : (return false)
     else
       update(published: flag)
     end
@@ -118,7 +118,7 @@ class Spin < ApplicationRecord
   #   A Text with the value of a log
   #
   def spin_log(log)
-    update(log:log)
+    update(log: log)
   end
 
   # Validate if the spin is ok or not
@@ -126,8 +126,8 @@ class Spin < ApplicationRecord
   # == Returns:
   # A boolean representing if the spin is validated or not
   #
-  def validate_spin?(user)
-    validate_readme?(user) && validate_metadata?(user) && validate_releases?
+  def acceptable?(user)
+    has_valid_readme?(user) && has_valid_metadata?(user) && has_valid_releases?
   end
 
   # Validate release
@@ -135,7 +135,7 @@ class Spin < ApplicationRecord
   # == Returns:
   # A boolean representing if the spin has releases
   #
-  def validate_releases?
+  def has_valid_releases?
     (return true) unless releases.empty?
     spin_log('[ERROR] The Spin should have at least a release, please add it to the source control and refresh the Spin')
     false
@@ -146,7 +146,7 @@ class Spin < ApplicationRecord
   # == Returns:
   # A boolean representing if the spin readme is ok
   #
-  def validate_readme?(user)
+  def has_valid_readme?(user)
     rdm = Providers::BaseManager.new(user.authentication_tokens.first.provider).get_connector.readme(full_name)
     if rdm
       update(readme: rdm)
@@ -162,7 +162,7 @@ class Spin < ApplicationRecord
   # == Returns:
   # A boolean representing if the spin metadata is ok
   #
-  def validate_metadata?(user)
+  def has_valid_metadata?(user)
     metadata = Providers::BaseManager.new(user.authentication_tokens.first.provider).get_connector.metadata(full_name)
     if metadata.kind_of? ErrorExchange
       spin_log("[ERROR] Metadata error")
