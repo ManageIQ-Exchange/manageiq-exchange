@@ -1,19 +1,24 @@
 ###
 # Tag Class
-# Includes all tags
+# Includes all tags in the system (lowercase)
 #
-# Tag(id: integer,
+#
+# Tag
+#     id: integer,
 #     name: string,
 #     created_at: datetime,
-#     updated_at: datetime)
+#     updated_at: datetime
 ##
 class Tag < ApplicationRecord
+  # Represents the tags in the system
   has_many :taggings, dependent: :destroy
   has_many :spins, through: :taggings
 
   validates :name, presence: true, uniqueness: true
   before_save :name_to_lower
 
+  # Returns whether the tag is valid or not, and similar tags
+  # @return [String] Similar tags
   def validate?
     seed_data.each do |tag, candidates|
       candidates.each do |candidate|

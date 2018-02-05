@@ -10,6 +10,7 @@ RSpec.describe Tag, type: :model do
   it 'is not valid without a name' do
     tag.name = nil
     tag.valid?
+    byebug
     expect(tag.errors[:name]).to include("can't be blank")
   end
 
