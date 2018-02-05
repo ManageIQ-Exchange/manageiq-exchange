@@ -1,7 +1,8 @@
 ###
 # Spin Class
 #
-# Spin(id: integer,
+# Spin
+#     id: integer,
 #     published: boolean,
 #     name: string,
 #     full_name: text,
@@ -33,13 +34,14 @@
 #     user_id: integer,
 #     company: text,
 #     created_at: datetime,
-#     updated_at: datetime)
+#     updated_at: datetime
 #
 class Spin < ApplicationRecord
   belongs_to :user
-  has_many :taggings, dependent: :destroy
+  has_many :taggings, dependent: :destroy, inverse_of: :spin
   has_many :tags, through: :taggings
 
+  # A JSON Schema to check the format of the metadata file
   SPIN_SCHEMA = Rails.application.config.spin_schema.freeze
 
   # Show if the spin is visible or not

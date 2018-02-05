@@ -17,12 +17,13 @@ class Tag < ApplicationRecord
   validates :name, presence: true, uniqueness: true
   before_save :name_to_lower
 
-  # Returns whether the tag is valid or not, and similar tags
-  # @return [String] Similar tags
-  def validate?
+  # Returns similar tags if found or nil
+  # @return [formated String] Similar tags
+  # @return [nil] no match
+  def find_similar
     seed_data.each do |tag, candidates|
       candidates.each do |candidate|
-        return "Maybe the tag #{name} is wrong. Did you mean #{tag}?. " if name.match(/#{candidate}/) && name!=tag
+        return "Maybe the tag #{name} is wrong. Did you mean #{tag}?" if name.match(/#{candidate}/) && name!=tag
       end
     end
     nil
