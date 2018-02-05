@@ -18,6 +18,7 @@ class RefreshSpinsJob < ApplicationJob
     # Find the spins in the database, store them as an array
     user_spins = user.spins
     app_token = Tiddle::TokenIssuer.build.find_token(user, token)
+    client.github_access.access_token = app_token.github_token
     user_spins_list = user_spins.map(&:id)
     # Get the list of repos in GitHub (they use the same id in github and local) for the user
     repos = client.repos(user: user, github_token: app_token.github_token)
@@ -33,7 +34,7 @@ class RefreshSpinsJob < ApplicationJob
     # If it is not in the database, add it to the database
     repos.each do |repo|
       spin = user_spins_list.include?(repo.id) ? Spin.find_by(id: repo.id) : Spin.new(id: repo.id, first_import: DateTime.current)
-      if (client.candidate_spin?(repo.full_name))
+      if (spin.acceptable? user)
         releases = client.releases(repo.full_name) || []
         _metadata_raw, metadata_json = client.metadata(repo.full_name) || {}
         spin.update(name: repo.name,

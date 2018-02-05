@@ -139,7 +139,7 @@ RSpec.describe 'V1::Spins', type: :request do
 
       describe '#POST Published operation' do
         let!(:spin) { FactoryBot.create(:spin) }
-        let!(:spin_exchange) { FactoryBot.create(:spin, name: "exchange", full_name: 'ManageIQ/miq_exchange_demo_repo', user: user, published: false) }
+        let!(:spin_exchange) { FactoryBot.create(:spin, name: "exchange", full_name: 'ManageIQ/manageiq-exchange-spin-template', user: user, published: false) }
 
         it 'Publish a not found spin without authentication' do
           post "/#{prefix}/spins/000323/publish/true"
@@ -169,9 +169,9 @@ RSpec.describe 'V1::Spins', type: :request do
           spin_exchange.save
           @user = user
           api_basic_authorize
-          VCR.use_cassette("providers/github/get_readme",:decode_compressed_response => true,:record => :none) do
-            VCR.use_cassette("providers/github/get_metadata",:decode_compressed_response => true,:record => :none) do
-              VCR.use_cassette("providers/github/get_releases",:decode_compressed_response => true,:record => :none) do
+          VCR.use_cassette("providers/github/get_readme",:decode_compressed_response => true) do
+            VCR.use_cassette("providers/github/get_metadata",:decode_compressed_response => true) do
+              VCR.use_cassette("providers/github/get_releases",:decode_compressed_response => true) do
                 post("/#{prefix}/spins/#{spin_exchange.id}/publish/true")
                 expect(response).to have_http_status(:method_not_allowed)
                 spin_exchange.reload
@@ -186,9 +186,9 @@ RSpec.describe 'V1::Spins', type: :request do
           spin_exchange.save
           @user = user
           api_basic_authorize
-          VCR.use_cassette("providers/github/get_readme",:decode_compressed_response => true,:record => :none) do
-            VCR.use_cassette("providers/github/get_metadata",:decode_compressed_response => true,:record => :none) do
-              VCR.use_cassette("providers/github/get_releases",:decode_compressed_response => true,:record => :none) do
+          VCR.use_cassette("providers/github/get_readme",:decode_compressed_response => true) do
+            VCR.use_cassette("providers/github/get_metadata",:decode_compressed_response => true) do
+              VCR.use_cassette("providers/github/get_releases",:decode_compressed_response => true) do
                 spin_exchange.update_releases(user)
                 post("/#{prefix}/spins/#{spin_exchange.id}/publish/true")
                 expect(response).to have_http_status(:accepted)

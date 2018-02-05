@@ -7,20 +7,29 @@ Rails.application.routes.draw do
         sessions: "#{@api_prefix}/users/sessions"
     }
     resources :users, only: [:index, :show] do
-      resources :spins
+      resources :spins, only: [:index, :show, :destroy]
+    end
+
+    # namespace :admin do
+    #   resources :users, only: [:index, :show] do
+    #     resources :spins, only: [:index, :show, :destroy]
+    #     resources :spin_candidates, only: [:index, :show] do
+    #       collection do
+    #         post 'refresh'
+    #       end
+    #       post 'publish', to: 'spin_candidates#publish'
+    #     end
+    #   end
+    # end
+
+    resources :spin_candidates, only: [:index, :show] do # on the user resources
+      collection do
+        post 'refresh'
+      end
+      post 'publish', to: 'spin_candidates#publish'
     end
     resources :tags,  only: [:index, :show]
     resources :spins, only: [:index, :show]
-
-    as :user do
-      resources :spins, only: [] do
-        collection do
-          post 'refresh'
-        end
-        post 'publish/:flag', to: 'spins#publish'
-        post 'visible/:flag', to: 'spins#visible'
-      end
-    end
   end
 
 

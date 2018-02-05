@@ -193,7 +193,7 @@ class Spin < ApplicationRecord
   # Nothing
   # == Logs
   # tags added + validation in the spin
-  # 
+  #
   def refresh_tags
     taggings.delete_all
     metadata['tags'].each do |tag|

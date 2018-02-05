@@ -37,6 +37,7 @@ class User < ApplicationRecord
 
   has_many :authentication_tokens, dependent: :destroy
   has_many :spins, dependent: :destroy
+  has_many :spin_candidates, dependent: :destroy
 
   validates :id,                presence: true
   validates :name,              presence: true, allow_blank: true

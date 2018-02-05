@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.github.com/repos/miq-consumption/miq_exchange_demo_repo/contents/metadata.yml?client_id=CLIENT-ID&client_secret=CLIENT-SECRET
+    uri: https://api.github.com/repos/ManageIQ-Exchange/manageiq-exchange-spin-template/contents/metadata.yml?client_id=CLIENT-ID&client_secret=CLIENT-SECRET
     body:
       encoding: US-ASCII
       string: ''
