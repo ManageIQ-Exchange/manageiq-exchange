@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/ManageIQ-Exchange/manageiq-exchange.svg?branch=master)](https://travis-ci.org/ManageIQ-Exchange/manageiq-exchange)
+[![API Docs](http://img.shields.io/badge/yard-docs-blue.svg)](http://www.rubydoc.info/github/miq-consumption/manageiq-exchange/master)
+[![Coverage Status](https://coveralls.io/repos/github/ManageIQ-Exchange/manageiq-exchange/badge.svg?branch=master)](https://coveralls.io/github/ManageIQ-Exchange/manageiq-exchange?branch=master)
+
 # README
 
 This is the API only backend application for Exchange. It is prepared to be deployed on OpenShift online using 3 pods (React frontend, this backend, database)
