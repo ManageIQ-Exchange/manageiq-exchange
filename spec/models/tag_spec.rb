@@ -29,12 +29,12 @@ RSpec.describe Tag, type: :model do
   end
 
   it 'find similar with a wrong tag' do
-    wrong_tag =  FactoryBot.build(:tag, name: 'zemo')
+    wrong_tag = FactoryBot.build(:tag, name: 'zemo')
     expect(wrong_tag.find_similar). to eq 'Maybe the tag zemo is wrong. Did you mean demo?'
   end
 
   it 'find similar with a correct tag' do
-    correct_tag =  FactoryBot.build(:tag, name: 'demo')
+    correct_tag = FactoryBot.build(:tag, name: 'demo')
     expect(correct_tag.find_similar).to be_nil
   end
 end

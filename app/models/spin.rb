@@ -38,7 +38,7 @@
 #
 class Spin < ApplicationRecord
   belongs_to :user
-  has_many :taggings, dependent: :destroy, inverse_of: :spin
+  has_many :taggings, dependent: :destroy
   has_many :tags, through: :taggings
 
   # A JSON Schema to check the format of the metadata file
@@ -58,7 +58,7 @@ class Spin < ApplicationRecord
   # == Returns:
   # A boolean representing if the spin is publish
   #
-  def publish?
+  def published?
     published
   end
 
@@ -71,7 +71,7 @@ class Spin < ApplicationRecord
   # == Returns:
   # A boolean representing if the spin owner is target_user
   #
-  def spin_of?(target_user)
+  def belongs_to?(target_user)
     user == target_user
   end
 
@@ -85,7 +85,7 @@ class Spin < ApplicationRecord
   # A boolean representing if the spin was updated with visible to flag or not
   #
   def visible_to(flag = true)
-    if publish?
+    if published?
       update(visible: flag)
       true
     else
@@ -137,7 +137,7 @@ class Spin < ApplicationRecord
   #
   def validate_releases?
     (return true) unless releases.empty?
-    spin_log("Error in releases, you need  a release in your spin, if you have one refresh the spin")
+    spin_log('[ERROR] The Spin should have at least a release, please add it to the source control and refresh the Spin')
     false
   end
 
@@ -152,7 +152,7 @@ class Spin < ApplicationRecord
       update(readme: rdm)
       return true
     else
-      spin_log('[ERROR] No release found in GitHub. We need a release in the spin so it can be downloaded. Please refresh the spin if you have added one')
+      spin_log('[ERROR] The Spin should have a readme, please add it to the source control and refresh the Spin')
     end
     false
   end
@@ -165,6 +165,7 @@ class Spin < ApplicationRecord
   def validate_metadata?(user)
     metadata = Providers::BaseManager.new(user.authentication_tokens.first.provider).get_connector.metadata(full_name)
     if metadata.kind_of? ErrorExchange
+      spin_log("[ERROR] Metadata error")
       spin_log("#{metadata.as_json["title"]} \n #{metadata.as_json["detail"]}")
     else
       update(metadata: metadata.second, metadata_raw: metadata.first)
@@ -192,7 +193,7 @@ class Spin < ApplicationRecord
     metadata['tags'].each do |tag|
       new_tag = Tag.find_or_create_by(name: tag)
       tags << new_tag
-      validation = new_tag.validate?
+      validation = new_tag.find_similar
       spin_log(log + validation) unless validation.nil?
     end
   end

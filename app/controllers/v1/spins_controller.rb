@@ -78,7 +78,7 @@ module V1
       return unless  check_params_required(:spin_id, :flag)
       spin = Spin.find_by(id:params[:spin_id])
       if spin
-        if spin.spin_of?(current_user)
+        if spin.belongs_to?(current_user)
           if spin.visible_to(true?(params[:flag]))
             return_response spin, :accepted, {}
           else
@@ -96,7 +96,7 @@ module V1
       return unless  check_params_required(:spin_id, :flag)
       spin = Spin.find_by(id:params[:spin_id])
       if spin
-        if spin.spin_of?(current_user)
+        if spin.belongs_to?(current_user)
           if spin.publish_to( @current_user, true?(params[:flag]))
             return_response spin, :accepted, {}
           else

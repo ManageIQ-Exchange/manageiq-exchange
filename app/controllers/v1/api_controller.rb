@@ -18,7 +18,7 @@ module V1
         name = pro.delete(:name)
         providers[name] = pro if pro[:enabled]
       end
-      render json: { data: { version: Rails.application.config.api_version, providers: providers } } , status: :ok
+      render json: { data: { version: Rails.application.config.api_version, providers: providers } }, status: :ok
     end
 
     def return_response(collection, state = :ok, metadata = {}, role = nil)

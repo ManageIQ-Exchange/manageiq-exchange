@@ -17,14 +17,14 @@ RSpec.describe Tagging, type: :model do
   it 'is destroyed when the spin is destroyed' do
     tagging
     expect(Tagging.count).to eq(1)
-    expect{ tagging.spin.destroy }.to change(Tagging, :count).from(1).to(0)
-    expect{ tagging.reload }.to raise_exception ActiveRecord::RecordNotFound
+    expect { tagging.spin.destroy }.to change(Tagging, :count).from(1).to(0)
+    expect { tagging.reload }.to raise_exception ActiveRecord::RecordNotFound
   end
 
   it 'is destroyed when the tag is destroyed' do
     tagging
     expect(Tagging.count).to eq(1)
-    expect{ tagging.tag.destroy }.to change(Tagging, :count).from(1).to(0)
-    expect{ tagging.reload }.to raise_exception ActiveRecord::RecordNotFound
+    expect { tagging.tag.destroy }.to change(Tagging, :count).from(1).to(0)
+    expect { tagging.reload }.to raise_exception ActiveRecord::RecordNotFound
   end
 end

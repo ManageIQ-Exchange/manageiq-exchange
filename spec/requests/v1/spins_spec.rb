@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'V1::Spins', type: :request do
 
   context 'v1' do
-    let(:prefix) { 'v1' }
+    let!(:prefix) { 'v1' }
 
     describe '#GET when spin is not found' do
       it 'all spins when there is none' do
@@ -174,7 +174,7 @@ RSpec.describe 'V1::Spins', type: :request do
                 post("/#{prefix}/spins/#{spin_exchange.id}/publish/true")
                 expect(response).to have_http_status(:method_not_allowed)
                 spin_exchange.reload
-                expect(spin_exchange.log).to eq 'Error in releases, you need  a release in your spin, if you have one refresh the spin'
+                expect(spin_exchange.log).to eq '[ERROR] The Spin should have at least a release, please add it to the source control and refresh the Spin'
               end
             end
           end
