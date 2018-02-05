@@ -187,9 +187,15 @@ class Spin < ApplicationRecord
   end
 
   # Refresh tags of spin
+  # TODO: add tags from GitHub
   #
+  # == Returns
+  # Nothing
+  # == Logs
+  # tags added + validation in the spin
+  # 
   def refresh_tags
-    tags.delete_all
+    taggings.delete_all
     metadata['tags'].each do |tag|
       new_tag = Tag.find_or_create_by(name: tag)
       tags << new_tag
