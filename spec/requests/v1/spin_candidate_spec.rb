@@ -35,8 +35,20 @@ RSpec.describe 'V1::SpinCandidates', type: :request do
       get "/#{prefix}/spin_candidates"
       expect(response).to have_http_status(:ok)
       data = JSON.parse(response.body)["data"]
-      expect(data).to include ({"id" => spin_candidate.id, "full_name" => spin_candidate.full_name, "validation_log" => spin_candidate.validation_log})
-      expect(data).to include ({"id" => spin_candidate1.id, "full_name" => spin_candidate1.full_name, "validation_log" => spin_candidate1.validation_log})
+      expect(data).to include({
+          "id" => spin_candidate.id,
+          "full_name" => spin_candidate.full_name,
+          "validation_log" => spin_candidate.validation_log,
+          "published" => spin_candidate.published,
+          "validated" => spin_candidate.validated,
+          "last_validation" => spin_candidate.last_validation })
+      expect(data).to include ({
+          "id" => spin_candidate1.id,
+          "full_name" => spin_candidate1.full_name,
+          "validation_log" => spin_candidate1.validation_log,
+          "published" => spin_candidate1.published,
+          "validated" => spin_candidate1.validated,
+          "last_validation" => spin_candidate1.last_validation })
     end
 
 
@@ -46,7 +58,13 @@ RSpec.describe 'V1::SpinCandidates', type: :request do
       get "/#{prefix}/spin_candidates/#{spin_candidate.id}"
       expect(response).to have_http_status(:ok)
       data = JSON.parse(response.body)["data"]
-      expect(data).to include ({"id" => spin_candidate.id, "full_name" => spin_candidate.full_name, "validation_log" => spin_candidate.validation_log})
+      expect(data).to include({
+          "id" => spin_candidate.id,
+          "full_name" => spin_candidate.full_name,
+          "validation_log" => spin_candidate.validation_log,
+          "published" => spin_candidate.published,
+          "validated" => spin_candidate.validated,
+          "last_validation" => spin_candidate.last_validation })
     end
 
     it 'show when invalid id' do

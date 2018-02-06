@@ -13,6 +13,8 @@ RSpec.describe Spin, type: :model do
     expect(spin).to be_valid
   end
 
+  pending 'is destroyed when the spin candidate is destroyed'
+
   it '#visible?' do
     expect(spin_exchange.visible?).to be_truthy
     expect(spin_content.visible?).to be_falsey
