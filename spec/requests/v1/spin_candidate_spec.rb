@@ -52,7 +52,7 @@ RSpec.describe 'V1::SpinCandidates', type: :request do
     end
 
 
-    it "show when valid id" do
+    it 'show when valid id' do
       @user = user
       api_basic_authorize
       get "/#{prefix}/spin_candidates/#{spin_candidate.id}"
@@ -73,9 +73,15 @@ RSpec.describe 'V1::SpinCandidates', type: :request do
       get "/#{prefix}/spin_candidates/error"
       expect(response).to have_http_status(:not_found)
     end
+
     pending "refresh when same repos"
     pending "refresh when deleted repos"
     pending "refresh when new repos"
     pending "refresh when updated repos"
+    pending "publish when the repo is not valid"
+    pending "publish when the repo is valid and new"
+    pending "publish when the repo is valid and was there"
+    pending "validate when the repo is valid"
+    pending "validate when the repo is not valid"
   end
 end
