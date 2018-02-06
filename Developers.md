@@ -56,11 +56,11 @@ If a valid id and token are included, even when creating new session, authentica
 
 Up to date documentation can be found on the following link:
 
-[Developers documentation](http://www.rubydoc.info/github/miq-consumption/manageiq-exchange)
+[Developers documentation](http://www.rubydoc.info/github/ManageIQ-Exchange/manageiq-exchange)
 
 For development, you will need a mean to gather a code and token from GitHub. Users are created automatically when they are authenticated
 
-For instance, you can use [manageiq-exchange-web](https://github.com/miq-consumption/manageiq-exchange-web)
+For instance, you can use [manageiq-exchange-web](https://github.com/ManageIQ-Exchange/manageiq-exchange-web)
 
 You will also need to define environment variables:
 ```bash

@@ -94,5 +94,21 @@ module Providers
     rescue  Octokit::NotFound => e
       ErrorExchange.new(:github_octokit_not_found, nil, {error: e.to_json})
     end
+
+    #
+    # Returns if the repo is a candidate to be a spin
+    # @param full_name [String] Full name of repo
+    # @returns true | false
+    #
+    def candidate_spin?(full_name)
+      raise Octokit::NotFound if @github_access.nil?
+      begin
+        # GitHub returns false when there is no content, or the content otherwise
+        not (@github_access.contents(full_name, path: '/.manageiq-spin', accept: 'application/vnd.github.raw') == false)
+      rescue Octokit::NotFound
+        return false
+      end
+    end
+
   end
 end

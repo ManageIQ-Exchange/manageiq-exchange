@@ -1,7 +1,8 @@
 ###
 # Spin Class
 #
-# Spin(id: integer,
+# Spin
+#     id: integer,
 #     published: boolean,
 #     name: string,
 #     full_name: text,
@@ -33,13 +34,14 @@
 #     user_id: integer,
 #     company: text,
 #     created_at: datetime,
-#     updated_at: datetime)
+#     updated_at: datetime
 #
 class Spin < ApplicationRecord
   belongs_to :user
   has_many :taggings, dependent: :destroy
   has_many :tags, through: :taggings
 
+  # A JSON Schema to check the format of the metadata file
   SPIN_SCHEMA = Rails.application.config.spin_schema.freeze
 
   # Show if the spin is visible or not
@@ -56,7 +58,7 @@ class Spin < ApplicationRecord
   # == Returns:
   # A boolean representing if the spin is publish
   #
-  def publish?
+  def published?
     published
   end
 
@@ -69,7 +71,7 @@ class Spin < ApplicationRecord
   # == Returns:
   # A boolean representing if the spin owner is target_user
   #
-  def spin_of?(target_user)
+  def belongs_to?(target_user)
     user == target_user
   end
 
@@ -83,7 +85,7 @@ class Spin < ApplicationRecord
   # A boolean representing if the spin was updated with visible to flag or not
   #
   def visible_to(flag = true)
-    if publish?
+    if published?
       update(visible: flag)
       true
     else
@@ -102,7 +104,7 @@ class Spin < ApplicationRecord
   #
   def publish_to(user, flag = true)
     if flag
-      validate_spin?(user) ? update(published: flag) : (return false)
+      acceptable?(user) ? update(published: flag) : (return false)
     else
       update(published: flag)
     end
@@ -116,7 +118,7 @@ class Spin < ApplicationRecord
   #   A Text with the value of a log
   #
   def spin_log(log)
-    update(log:log)
+    update(log: log)
   end
 
   # Validate if the spin is ok or not
@@ -124,8 +126,8 @@ class Spin < ApplicationRecord
   # == Returns:
   # A boolean representing if the spin is validated or not
   #
-  def validate_spin?(user)
-    validate_readme?(user) && validate_metadata?(user) && validate_releases?
+  def acceptable?(user)
+    has_valid_readme?(user) && has_valid_metadata?(user) && has_valid_releases?
   end
 
   # Validate release
@@ -133,9 +135,9 @@ class Spin < ApplicationRecord
   # == Returns:
   # A boolean representing if the spin has releases
   #
-  def validate_releases?
+  def has_valid_releases?
     (return true) unless releases.empty?
-    spin_log("Error in releases, you need  a release in your spin, if you have one refresh the spin")
+    spin_log('[ERROR] The Spin should have at least a release, please add it to the source control and refresh the Spin')
     false
   end
 
@@ -144,13 +146,13 @@ class Spin < ApplicationRecord
   # == Returns:
   # A boolean representing if the spin readme is ok
   #
-  def validate_readme?(user)
+  def has_valid_readme?(user)
     rdm = Providers::BaseManager.new(user.authentication_tokens.first.provider).get_connector.readme(full_name)
     if rdm
       update(readme: rdm)
       return true
     else
-      spin_log('[ERROR] No release found in GitHub. We need a release in the spin so it can be downloaded. Please refresh the spin if you have added one')
+      spin_log('[ERROR] The Spin should have a readme, please add it to the source control and refresh the Spin')
     end
     false
   end
@@ -160,9 +162,10 @@ class Spin < ApplicationRecord
   # == Returns:
   # A boolean representing if the spin metadata is ok
   #
-  def validate_metadata?(user)
+  def has_valid_metadata?(user)
     metadata = Providers::BaseManager.new(user.authentication_tokens.first.provider).get_connector.metadata(full_name)
     if metadata.kind_of? ErrorExchange
+      spin_log("[ERROR] Metadata error")
       spin_log("#{metadata.as_json["title"]} \n #{metadata.as_json["detail"]}")
     else
       update(metadata: metadata.second, metadata_raw: metadata.first)
@@ -184,13 +187,19 @@ class Spin < ApplicationRecord
   end
 
   # Refresh tags of spin
+  # TODO: add tags from GitHub
+  #
+  # == Returns
+  # Nothing
+  # == Logs
+  # tags added + validation in the spin
   #
   def refresh_tags
-    tags.delete_all
+    taggings.delete_all
     metadata['tags'].each do |tag|
       new_tag = Tag.find_or_create_by(name: tag)
       tags << new_tag
-      validation = new_tag.validate?
+      validation = new_tag.find_similar
       spin_log(log + validation) unless validation.nil?
     end
   end

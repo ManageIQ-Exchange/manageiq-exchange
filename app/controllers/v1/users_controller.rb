@@ -14,7 +14,7 @@ module V1
     # users?query=<value> get users login include value
     def index
       logger.debug 'Providing all users'
-      @users = User.all   # TODO: Pagination
+      @users = User.all # TODO: Pagination
       @users = @users.where('github_login like? or github_login like?', "%#{params[:query]}%", "%#{params[:query].downcase}%") if params[:query]
 
       total_users = @users.count
@@ -37,7 +37,7 @@ module V1
       logger.debug "Looking for user with github_login #{params[:id]}"
       @user = User.find_by(id: params[:id]) || User.find_by(github_login: params[:id])
       if @user
-        return_response  @user,  :ok
+        return_response @user, :ok
       else
         render_error_exchange(:user_not_found, :not_found, { username: params[:id]})
       end

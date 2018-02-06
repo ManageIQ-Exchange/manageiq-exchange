@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'V1::Spins', type: :request do
 
   context 'v1' do
-    let(:prefix) { 'v1' }
+    let!(:prefix) { 'v1' }
 
     describe '#GET when spin is not found' do
       it 'all spins when there is none' do
@@ -84,117 +84,6 @@ RSpec.describe 'V1::Spins', type: :request do
         expect(json['data'].length).to eq(1)
         get "/#{prefix}/spins?query=sample"
         expect(response).to have_http_status(204)
-      end
-    end
-
-    context 'authentication requests' do
-      let(:user) { FactoryBot.create(:user) }
-
-      describe '#POST Visible operation' do
-        let!(:spin) { FactoryBot.create(:spin) }
-        let!(:spin_exchange) { FactoryBot.create(:spin, name: "exchange",user: user, published: false) }
-
-        it 'Set visible of a not found spin without authenticated' do
-          post("/#{prefix}/spins/000323/visible/true")
-          expect(response).to have_http_status(401)
-        end
-
-        it 'Set visible of a not found spin with authentication' do
-          @user = user
-          @identifier = :spin_not_found
-          api_basic_authorize
-          post("/#{prefix}/spins/000323/visible/true")
-          expect(response).to have_http_status(:not_found)
-          expect_error
-        end
-
-        it 'Set visible of a spin of other user' do
-          @user = user
-          @identifier = :spin_not_owner
-          api_basic_authorize
-          post("/#{prefix}/spins/#{spin.id}/visible/true")
-          expect(response).to have_http_status(:unauthorized)
-          expect_error
-        end
-
-        it 'Set visible of a spin not published' do
-          @user = user
-          @identifier = :spin_not_published
-          api_basic_authorize
-          post("/#{prefix}/spins/#{spin_exchange.id}/visible/true")
-          expect(response).to have_http_status(:method_not_allowed)
-          expect_error
-        end
-
-        it 'Set visible of a spin published' do
-          spin_exchange.published = true
-          spin_exchange.save
-          @user = user
-          api_basic_authorize
-          post("/#{prefix}/spins/#{spin_exchange.id}/visible/true")
-          expect(response).to have_http_status(:accepted)
-        end
-      end
-
-      describe '#POST Published operation' do
-        let!(:spin) { FactoryBot.create(:spin) }
-        let!(:spin_exchange) { FactoryBot.create(:spin, name: "exchange", full_name: 'miq-consumption/miq_exchange_demo_repo', user: user, published: false) }
-
-        it 'Publish a not found spin without authenticated' do
-          post("/#{prefix}/spins/000323/publish/true")
-          expect(response).to have_http_status(401)
-        end
-
-        it 'Publish of a not found spin with authentication' do
-          @user = user
-          @identifier = :spin_not_found
-          api_basic_authorize
-          post("/#{prefix}/spins/000323/publish/true")
-          expect(response).to have_http_status(:not_found)
-          expect_error
-        end
-
-        it 'Publish of a spin of other user' do
-          @user = user
-          @identifier = :spin_not_owner
-          api_basic_authorize
-          post("/#{prefix}/spins/#{spin.id}/publish/true")
-          expect(response).to have_http_status(:unauthorized)
-          expect_error
-        end
-
-        it 'Publish a spin with no releases' do
-          spin_exchange.published = true
-          spin_exchange.save
-          @user = user
-          api_basic_authorize
-          VCR.use_cassette("providers/github/get_readme",:decode_compressed_response => true,:record => :none) do
-            VCR.use_cassette("providers/github/get_metadata",:decode_compressed_response => true,:record => :none) do
-              VCR.use_cassette("providers/github/get_releases",:decode_compressed_response => true,:record => :none) do
-                post("/#{prefix}/spins/#{spin_exchange.id}/publish/true")
-                expect(response).to have_http_status(:method_not_allowed)
-                spin_exchange.reload
-                expect(spin_exchange.log).to eq 'Error in releases, you need  a release in your spin, if you have one refresh the spin'
-              end
-            end
-          end
-        end
-
-        it 'Publish a spin2' do
-          spin_exchange.published = true
-          spin_exchange.save
-          @user = user
-          api_basic_authorize
-          VCR.use_cassette("providers/github/get_readme",:decode_compressed_response => true,:record => :none) do
-            VCR.use_cassette("providers/github/get_metadata",:decode_compressed_response => true,:record => :none) do
-              VCR.use_cassette("providers/github/get_releases",:decode_compressed_response => true,:record => :none) do
-                spin_exchange.update_releases(user)
-                post("/#{prefix}/spins/#{spin_exchange.id}/publish/true")
-                expect(response).to have_http_status(:accepted)
-              end
-            end
-          end
-        end
       end
     end
   end

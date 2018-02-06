@@ -12,7 +12,8 @@ RSpec.describe 'V1::Api', type: :request do
         expect(response).to have_http_status(200)
         expect(response.content_type).to eq('application/json')
         expect(response.charset).to eq('utf-8')
-        expect(response.body).to eq("{\"data\":{\"version\":\"1.0\",\"providers\":{\"github.com\":{\"type\":\"github\",\"enabled\":true,\"id_application\":null,\"server\":\"api.github.com\",\"version\":\"v3\",\"verify\":true}}}}")
+        id_app =Rails.application.secrets.oauth_providers.first[:id_application] ?  "\"#{Rails.application.secrets.oauth_providers.first[:id_application]}\"" : "null"
+        expect(response.body).to eq("{\"data\":{\"version\":\"1.0\",\"providers\":{\"github.com\":{\"type\":\"github\",\"enabled\":true,\"id_application\":#{ id_app },\"server\":\"api.github.com\",\"version\":\"v3\",\"verify\":true}}}}")
       end
 
       it 'gets the API version2' do
@@ -20,7 +21,8 @@ RSpec.describe 'V1::Api', type: :request do
         expect(response).to have_http_status(200)
         expect(response.content_type).to eq('application/json')
         expect(response.charset).to eq('utf-8')
-        expect(response.body).to eq("{\"data\":{\"version\":\"1.0\",\"providers\":{\"github.com\":{\"type\":\"github\",\"enabled\":true,\"id_application\":null,\"server\":\"api.github.com\",\"version\":\"v3\",\"verify\":true}}}}")
+        id_app =Rails.application.secrets.oauth_providers.first[:id_application] ?  "\"#{Rails.application.secrets.oauth_providers.first[:id_application]}\"" : "null"
+        expect(response.body).to eq("{\"data\":{\"version\":\"1.0\",\"providers\":{\"github.com\":{\"type\":\"github\",\"enabled\":true,\"id_application\":#{ id_app },\"server\":\"api.github.com\",\"version\":\"v3\",\"verify\":true}}}}")
       end
     end
   end

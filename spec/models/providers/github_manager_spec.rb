@@ -69,7 +69,7 @@ RSpec.describe Providers::GithubManager, type: :model do
 
   it 'readme' do
     VCR.use_cassette("providers/github/get_readme",:decode_compressed_response => true, :record => :none) do
-      expect(subject.readme('miq-consumption/miq_exchange_demo_repo')).to eq(
+      expect(subject.readme('ManageIQ-Exchange/manageiq-exchange-spin-template')).to eq(
                                                                               "# Test repo for content in ManageIQ Exchange\n\nIn order to publish a Spin in ManageIQ Exchange you will need:\n\n" +
                                                                                   " - A file that identifies the repo as a manageiq-spin\n ```.manageiq-spin```\n - A metadata file with the right" +
                                                                                   " format (please see example in \n ```metadata.yml```\n - At least a release in the GitHub Repo. Please use x.y.z" +
@@ -80,7 +80,7 @@ RSpec.describe Providers::GithubManager, type: :model do
 
   it 'releases' do
     VCR.use_cassette("providers/github/get_releases",:decode_compressed_response => true, :record => :none) do
-      releases = subject.releases('miq-consumption/miq_exchange_demo_repo')
+      releases = subject.releases('ManageIQ-Exchange/manageiq-exchange-spin-template')
       expect(releases).to be_kind_of Array
       expect(releases).not_to be_empty
     end
@@ -89,7 +89,7 @@ RSpec.describe Providers::GithubManager, type: :model do
   it 'releases fail with @github_access nil' do
     VCR.use_cassette("providers/github/get_releases",:decode_compressed_response => true, :record => :none) do
       subject.instance_variable_set(:@github_access, nil)
-      releases = subject.releases('miq-consumption/miq_exchange_demo_repo')
+      releases = subject.releases('ManageIQ-Exchange/manageiq-exchange-spin-template')
       expect(releases).to be_kind_of ErrorExchange
     end
   end
@@ -104,7 +104,7 @@ RSpec.describe Providers::GithubManager, type: :model do
 
   it 'right metadata' do
     VCR.use_cassette("providers/github/get_metadata",:decode_compressed_response => true, :record => :none) do
-      meta = subject.metadata('miq-consumption/miq_exchange_demo_repo')
+      meta = subject.metadata('ManageIQ-Exchange/manageiq-exchange-spin-template')
       expect(meta).to be_kind_of Array
     end
   end
@@ -112,7 +112,7 @@ RSpec.describe Providers::GithubManager, type: :model do
   it 'metadata not valid schema' do
     VCR.use_cassette("providers/github/get_metadata_schema_fail",:decode_compressed_response => true, :record => :none) do
       @identifier = :spin_error_metadata
-      meta = subject.metadata('miq-consumption/miq_exchange_demo_repo')
+      meta = subject.metadata('ManageIQ-Exchange/manageiq-exchange-spin-template')
       expect(meta).to be_kind_of ErrorExchange
       expect_error(meta.as_json)
     end
@@ -121,7 +121,7 @@ RSpec.describe Providers::GithubManager, type: :model do
   it 'metadata is null' do
     VCR.use_cassette("providers/github/get_metadata_nil",:decode_compressed_response => true, :record => :none) do
       @identifier = :spin_metadata_to_json
-      meta = subject.metadata('miq-consumption/miq_exchange_demo_repo')
+      meta = subject.metadata('ManageIQ-Exchange/manageiq-exchange-spin-template')
       expect(meta).to be_kind_of ErrorExchange
       expect_error(meta.as_json)
     end

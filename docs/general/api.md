@@ -55,7 +55,7 @@ http://localhost:3000/users?expand=resources
 }
 ```
 
-For more information about how this is working you can see the [produc/json_returns.yml](https://github.com/miq-consumption/manageiq-exchange/blob/master/product/json_returns.yml) file
+For more information about how this is working you can see the [produc/json_returns.yml](https://github.com/ManageIQ-Exchange/manageiq-exchange/blob/master/product/json_returns.yml) file
 
 ```yaml
 users:

@@ -1,11 +1,12 @@
 module V1
   ###
-  # Spins controller
-  # Provides actions on the Spins
+  # Spin Candidates controller
+  # Provides actions on the Spin Candidates
   #
   ##
-  class SpinsController < ApiController
-    before_action :authenticate_user!, only: [:refresh, :visible, :publish]
+  class SpinCandidatesController < ApiController
+    before_action :authenticate_user! # Only authenticated values are valid
+
     ###
     # Index (search: string - optional )
     # Provides an index of all spins in the system
@@ -20,9 +21,9 @@ module V1
           return_response status: :no_content
           return
         end
-        @spins = Spin.where(user_id: @user.id, visible: true ) if @user
+        @spins = SpinCandidate.where(user_id: @user.id) if @user
       else
-        @spins = Spin.where(visible:true)
+        @spins = SpinCandidate.all
       end
       @spins = @spins.where('name like? or name like?', "%#{params[:query]}%", "%#{params[:query].downcase}%") if params[:query]
       if @spins.count.positive?
@@ -41,15 +42,15 @@ module V1
       if params[:user_id]
         @user = User.find_by_github_login(params[:user_id])
         return_response status: :not_found unless @user
-        @spin = Spin.find_by(user_id: @user.id, visible: true, id: params[:id]) || Spin.find_by(user_id: @user.id, visible: true, name: params[:id])
+        @spin = SpinCandidate.find_by(user_id: @user.id, visible: true, id: params[:id]) || Spin.find_by(user_id: @user.id, visible: true, name: params[:id])
       else
-        @spin = Spin.find_by(id: params[:id], visible: true) || Spin.find_by(name: params[:id], visible: true)
+        @spin = SpinCandidate.find_by(id: params[:id], visible: true) || Spin.find_by(name: params[:id], visible: true)
       end
       unless @spin
         render_error_exchange(:spin_not_found, :not_found)
         return
       end
-      return_response  @spin,  :ok, {}
+      return_response @spin, :ok, {}
     end
 
     ###
@@ -64,44 +65,27 @@ module V1
         render json: { error: 'No user found' }, status: :not_found
         return
       end
-      job = RefreshSpinsJob.perform_later(user: user, token: request.headers['HTTP_X_USER_TOKEN'])
+      job = RefreshSpinCandidatesJob.perform_later(user: user, token: request.headers['HTTP_X_USER_TOKEN'])
       render json: { data: job.job_id, metadata: { queue: job.queue_name, priority: job.priority } }, status: :accepted
     end
 
-    def visible
-      return unless  check_params_required(:spin_id, :flag)
-      spin = Spin.find_by(id:params[:spin_id])
-      if spin
-        if spin.belongs_to?(current_user)
-          if spin.visible_to(true?(params[:flag]))
-            return_response spin, :accepted, {}
-          else
-            render_error_exchange(:spin_not_published, :method_not_allowed)
-          end
-        else
-          render_error_exchange(:spin_not_owner, :unauthorized)
-        end
-      else
-        render_error_exchange(:spin_not_found, :not_found)
-      end
+    # Validates the SpinCandidate
+    # @returns true | false
+    # updates the log
+    def validate
+      # Create Spin with metadata
+      # Validate the Spin
+      # Write result in log
+      # Return true or false
+      false
     end
 
+    # Publish the SpinCandidate into a Spin
+    # @returns :ok or :error
     def publish
-      return unless  check_params_required(:spin_id, :flag)
-      spin = Spin.find_by(id:params[:spin_id])
-      if spin
-        if spin.belongs_to?(current_user)
-          if spin.publish_to( @current_user, true?(params[:flag]))
-            return_response spin, :accepted, {}
-          else
-            render_error_exchange(:spin_not_published, :method_not_allowed, spin.log)
-          end
-        else
-          render_error_exchange(:spin_not_owner, :unauthorized)
-        end
-      else
-        render_error_exchange(:spin_not_found, :not_found)
-      end
+      valid?
+      # If valid create or update the Spin
+      # If not valid, the log should be updated.
     end
   end
 end

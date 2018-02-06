@@ -16,7 +16,7 @@ It has been developed using:
 
 ## Getting Help
 
-If you find a bug, please report an [Issue](https://github.com/miq-consumption/manageiq-exchange/issues/new)
+If you find a bug, please report an [Issue](https://github.com/ManageIQ-Exchange/manageiq-exchange/issues/new)
 and see our [contributing guide](CONTRIBUTING.md).
 
 If you have a question, please [post to Stack Overflow](https://stackoverflow.com/questions/tagged/manageiq-exchange).
@@ -26,11 +26,11 @@ Thanks!
 
 ## Documentation
 
-If you're reading this at https://github.com/miq-consumption/manageiq-exchange you are
+If you're reading this at https://github.com/ManageIQ-Exchange/manageiq-exchange you are
 reading documentation for our `master`, which is not yet released.
 
-- [0.1.0 (master) Documentation](https://github.com/miq-consumption/manageiq-exchange/tree/master)
-  - [![API Docs](http://img.shields.io/badge/yard-docs-blue.svg)](http://www.rubydoc.info/github/miq-consumption/manageiq-exchange/master)
+- [0.1.0 (master) Documentation](https://github.com/ManageIQ-Exchange/manageiq-exchange/tree/master)
+  - [![API Docs](http://img.shields.io/badge/yard-docs-blue.svg)](http://www.rubydoc.info/github/ManageIQ-Exchange/manageiq-exchange/master)
   - [Guides](docs)
 ## ENVIRONMENT VARIABLES
 
