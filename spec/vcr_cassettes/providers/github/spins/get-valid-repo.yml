@@ -1,0 +1,73 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.github.com/repos/ManageIQ-Exchange/manageiq-exchange-spin-template/contents/.manageiq-spin?client_id=CLIENT-ID&client_secret=CLIENT-SECRET
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Octokit Ruby Gem 4.8.0
+      Accept:
+      - application/vnd.github.v3+json
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Tue, 06 Feb 2018 10:12:40 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4997'
+      X-Ratelimit-Reset:
+      - '1517915401'
+      Cache-Control:
+      - public, max-age=60, s-maxage=60
+      Vary:
+      - Accept
+      Etag:
+      - W/"8b137891791fe96927ad78e64b0aad7bded08bdc"
+      Last-Modified:
+      - Tue, 23 Jan 2018 08:46:49 GMT
+      X-Github-Media-Type:
+      - github.v3; format=json
+      Access-Control-Expose-Headers:
+      - ETag, Link, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining,
+        X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      Content-Security-Policy:
+      - default-src 'none'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Runtime-Rack:
+      - '0.057965'
+      X-Github-Request-Id:
+      - E85A:2E706:21C1D4:7565C7:5A797F98
+    body:
+      encoding: ASCII-8BIT
+      string: '{"name":".manageiq-spin","path":".manageiq-spin","sha":"8b137891791fe96927ad78e64b0aad7bded08bdc","size":1,"url":"https://api.github.com/repos/ManageIQ-Exchange/manageiq-exchange-spin-template/contents/.manageiq-spin?ref=master","html_url":"https://github.com/ManageIQ-Exchange/manageiq-exchange-spin-template/blob/master/.manageiq-spin","git_url":"https://api.github.com/repos/ManageIQ-Exchange/manageiq-exchange-spin-template/git/blobs/8b137891791fe96927ad78e64b0aad7bded08bdc","download_url":"https://raw.githubusercontent.com/ManageIQ-Exchange/manageiq-exchange-spin-template/master/.manageiq-spin","type":"file","content":"Cg==\n","encoding":"base64","_links":{"self":"https://api.github.com/repos/ManageIQ-Exchange/manageiq-exchange-spin-template/contents/.manageiq-spin?ref=master","git":"https://api.github.com/repos/ManageIQ-Exchange/manageiq-exchange-spin-template/git/blobs/8b137891791fe96927ad78e64b0aad7bded08bdc","html":"https://github.com/ManageIQ-Exchange/manageiq-exchange-spin-template/blob/master/.manageiq-spin"}}'
+    http_version: 
+  recorded_at: Tue, 06 Feb 2018 10:12:40 GMT
+recorded_with: VCR 4.0.0

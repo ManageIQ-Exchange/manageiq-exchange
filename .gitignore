@@ -18,5 +18,6 @@
 
 .byebug_history
 /.yardoc/
+/coverage/
 
 /doc/

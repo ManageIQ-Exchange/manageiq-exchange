@@ -3,8 +3,7 @@ require 'rails_helper'
 RSpec.describe 'V1::SpinCandidates', type: :request do
   context "when not authenticated " do
     VCR.use_cassette('spins/spin-candidates-bad-auth') do
-      it '#index returns 401' do
-      end
+      pending '#index returns 401'
       pending '#show returns 401'
       pending '#refresh returns 401'
     end

@@ -42,9 +42,9 @@ module V1
       if params[:user_id]
         @user = User.find_by_github_login(params[:user_id])
         return_response status: :not_found unless @user
-        @spin = SpinCandidate.find_by(user_id: @user.id, visible: true, id: params[:id]) || Spin.find_by(user_id: @user.id, visible: true, name: params[:id])
+        @spin = SpinCandidate.find_by(user_id: @user.id, visible: true, id: params[:id]) || SpinCandidate.find_by(user_id: @user.id, name: params[:id])
       else
-        @spin = SpinCandidate.find_by(id: params[:id], visible: true) || Spin.find_by(name: params[:id], visible: true)
+        @spin = SpinCandidate.find_by(id: params[:id], visible: true) || SpinCandidate.find_by(name: params[:id])
       end
       unless @spin
         render_error_exchange(:spin_not_found, :not_found)

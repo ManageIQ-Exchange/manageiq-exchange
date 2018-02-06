@@ -39,7 +39,7 @@ class RefreshSpinCandidatesJob < ApplicationJob
                                              full_name: repo.full_name,
                                              user: user,
                                              validation_log: "Pending validation")
-      if (spin_candidate.is_candidate? client: client)
+      if (spin_candidate.is_candidate? user: user)
         spin_candidate.save
       else
         spin_candidate.destroy unless spin_candidate.new_record?

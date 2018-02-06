@@ -3,9 +3,9 @@ module Providers
     attr_reader :server_type, :github_access
 
     def initialize(provider)
-      Rails.logger.info 'Generating new connection to Source Control'
+      Rails.logger.info 'Generating new connection to GitHub'
 
-      github_url = provider[:enterprise] ? URI::HTTPS.build(host: provider[:server],path: "api/#{provider[:version]}") : URI::HTTPS.build(host: provider[:server])
+      # github_url = provider[:enterprise] ? URI::HTTPS.build(host: provider[:server],path: "api/#{provider[:version]}") : URI::HTTPS.build(host: provider[:server])
       github_url = URI::HTTPS.build(host: provider[:server])
 
       opts = {
@@ -17,7 +17,6 @@ module Providers
       }
 
       @github_access ||= Octokit::Client.new opts
-
       @server_type = 'GitHub'
     end
 
@@ -104,11 +103,10 @@ module Providers
       raise Octokit::NotFound if @github_access.nil?
       begin
         # GitHub returns false when there is no content, or the content otherwise
-        not (@github_access.contents(full_name, path: '/.manageiq-spin', accept: 'application/vnd.github.raw') == false)
-      rescue Octokit::NotFound
+        not (@github_access.contents(full_name, path: '/.manageiq-spin') == false)
+      rescue Octokit::NotFound, Octokit::InvalidRepository
         return false
       end
     end
-
   end
 end
