@@ -35,19 +35,13 @@ module V1
 
     ###
     # Show (id: identification of the spin)
-    # Provides a view of the spin
-    # TODO: When authenticated, provide extended info
-    # users/<user_id>/spins/<spin_id_or_name> Get a specific spin of user
+    # Provides a view of the Spin Candidate
+    #
+    # @params id: integer id of the spin candidate
     def show
-      if params[:user_id]
-        @user = User.find_by_github_login(params[:user_id])
-        return_response status: :not_found unless @user
-        @spin = SpinCandidate.find_by(user_id: @user.id, visible: true, id: params[:id]) || Spin.find_by(user_id: @user.id, visible: true, name: params[:id])
-      else
-        @spin = SpinCandidate.find_by(id: params[:id], visible: true) || Spin.find_by(name: params[:id], visible: true)
-      end
+      @spin = SpinCandidate.find_by(user_id: current_user.id, id: params[:id])
       unless @spin
-        render_error_exchange(:spin_not_found, :not_found)
+        render_error_exchange(:spin_candidate_not_found, :not_found)
         return
       end
       return_response @spin, :ok, {}

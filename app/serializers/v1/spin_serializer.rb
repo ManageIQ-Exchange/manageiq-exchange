@@ -1,4 +1,4 @@
 module V1
-  class SpinSerializer < ApplicationSerializer
+class SpinSerializer < ApplicationSerializer
   end
 end

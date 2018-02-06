@@ -13,11 +13,11 @@ module V1
     end
 
     def load_serialization_config_for(type = 'attributes')
-      @seed_data[@object.class.name.downcase.pluralize][type]
+      @seed_data[@object.class.name.tableize][type]
     end
 
     def serialization_columns
-      @serialization_columns ||= @seed_data[@object.class.name.downcase.pluralize]['columns']
+      @serialization_columns ||= @seed_data[@object.class.name.tableize]['columns']
     end
 
     def param_admin?
