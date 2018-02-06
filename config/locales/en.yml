@@ -85,4 +85,6 @@ en:
     spin_candidate_not_owner:
         title: You don't have access to the Spin Candidate
         detail: The user is wrong or the Spin Candidate does not exist
-
+    spin_candidate_not_validated:
+        title: Spin Candidate is not validated
+        detail: Check de extra information or logs

@@ -13,7 +13,8 @@ module Providers
           connection_options: { ssl: { verify: provider[:verify] } },
           client_id:          provider[:id_application],
           client_secret:      provider[:secret],
-          scope:              'user:email'
+          scope:              'user:email',
+          access_token:       @provider_token
       }
 
       @github_access ||= Octokit::Client.new opts
@@ -87,9 +88,16 @@ module Providers
       ErrorExchange.new(:github_octokit_not_found, nil, {error: e.to_json})
     end
 
-    def repos(user:, github_token:)
-      @github_access.access_token ||= github_token
-      @github_access.repos(user)
+    def repo(fullname)
+      raise Octokit::NotFound if @github_access.nil?
+      @github_access.repository(fullname)
+    rescue  Octokit::NotFound => e
+      ErrorExchange.new(:github_octokit_not_found, nil, {error: e.to_json})
+    end
+
+    def repos
+      @github_access.access_token ||= @provider_token
+      @github_access.repos(@provider_user)
     rescue  Octokit::NotFound => e
       ErrorExchange.new(:github_octokit_not_found, nil, {error: e.to_json})
     end

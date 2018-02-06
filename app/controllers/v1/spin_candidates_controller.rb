@@ -70,7 +70,16 @@ module V1
       # Validate the Spin
       # Write result in log
       # Return true or false
-      false
+      sc = SpinCandidate.find(params[:spin_candidate_id])
+      render_error_exchange(:spin_not_owner, :not_allowed) unless @current_user == sc.user
+
+      # TODO test sc
+      spin = sc.spin || Spin.new(full_name: sc.full_name, user: sc.user,)
+      if(spin.check current_user)
+        return_response sc, :ok, {}
+      else
+        render_error_exchange(:spin_candidate_not_validated, :not_found, {log: sc.validation_log})
+      end
     end
 
     # Publish the SpinCandidate into a Spin

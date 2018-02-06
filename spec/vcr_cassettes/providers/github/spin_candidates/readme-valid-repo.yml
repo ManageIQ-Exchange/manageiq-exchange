@@ -1,0 +1,80 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.github.com/repos/ManageIQ-Exchange/manageiq-exchange-spin-template/readme?client_id=CLIENT-ID&client_secret=CLIENT-SECRET
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Octokit Ruby Gem 4.8.0
+      Accept:
+      - application/vnd.github.raw
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Tue, 06 Feb 2018 19:21:46 GMT
+      Content-Type:
+      - application/vnd.github.raw; charset=utf-8
+      Content-Length:
+      - '575'
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4968'
+      X-Ratelimit-Reset:
+      - '1517945146'
+      Cache-Control:
+      - public, max-age=60, s-maxage=60
+      Vary:
+      - Accept
+      Etag:
+      - '"c61f2841dd572027cc723bd096ab12aa"'
+      Last-Modified:
+      - Tue, 06 Feb 2018 15:58:04 GMT
+      X-Github-Media-Type:
+      - github.v3; param=raw
+      Access-Control-Expose-Headers:
+      - ETag, Link, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining,
+        X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      Content-Security-Policy:
+      - default-src 'none'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Runtime-Rack:
+      - '0.030158'
+      X-Github-Request-Id:
+      - D82C:256CC:A7DD9:13C851:5A7A004A
+    body:
+      encoding: UTF-8
+      string: "# Test repo for content in ManageIQ Exchange\n\nIn order to publish
+        a Spin in ManageIQ Exchange you will need:\n\n - A file that identifies the
+        repo as a manageiq-spin\n ```.manageiq-spin```\n - A metadata file with the
+        right format (please see template comments in \n ```metadata.yml```. Metadata
+        format is validated.\n - At least a [release](https://help.github.com/articles/creating-releases/)
+        in the GitHub Repo. Please use vx.y.z as the release tag, except for betas
+        or special test releases. For instance, v1.0.0\n - A license that is identified
+        in GitHub (use the add license)\n"
+    http_version: 
+  recorded_at: Tue, 06 Feb 2018 19:21:46 GMT
+recorded_with: VCR 4.0.0

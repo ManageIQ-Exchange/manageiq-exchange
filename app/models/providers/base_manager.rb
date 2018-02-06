@@ -5,9 +5,11 @@ module Providers
 
     SPIN_SCHEMA = Rails.application.config.spin_schema.freeze
 
-    def initialize(identifier = 'github.com')
-      @identifier = identifier
-      @provider = get_provider(identifier)
+    def initialize(user)
+      @identifier = user ? user.authentication_tokens.first.provider : nil
+      @provider = get_provider(@identifier)
+      @provider_token = user ? user.authentication_tokens.first.github_token : nil
+      @provider_user = user || nil
     end
 
     def get_connector
@@ -20,6 +22,7 @@ module Providers
 
     def validate_provider(identifier)
       pr = get_provider(identifier)
+      @provider = pr
       return pr if pr.kind_of? ErrorExchange
       true
     end
