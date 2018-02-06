@@ -1,5 +1,6 @@
 class SpinCandidate < ApplicationRecord
   belongs_to :user
+  has_one :spin, dependent: :destroy
   validates :full_name, :validation_log, presence: true
 
   def is_candidate? user:

@@ -1,11 +1,12 @@
 FactoryBot.define do
   factory :spin do
-    id                { Faker::Number.number(10) }
+    spin_candidate
+    user              { spin_candidate.user }
+    id                { spin_candidate.id }
     published         false
     visible           false
-    user
     name              { Faker::App.name.parameterize }
-    full_name         { "#{user.github_login}/#{name}" }
+    full_name         { spin_candidate.full_name }
     description       { Faker::Lorem.sentence }
     clone_url         { Faker::Internet.url }
     forks_count       { Faker::Number.between(0, 10) }

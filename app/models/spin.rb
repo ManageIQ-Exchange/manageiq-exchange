@@ -40,6 +40,7 @@ class Spin < ApplicationRecord
   belongs_to :user
   has_many :taggings, dependent: :destroy
   has_many :tags, through: :taggings
+  belongs_to :spin_candidate
 
   # A JSON Schema to check the format of the metadata file
   SPIN_SCHEMA = Rails.application.config.spin_schema.freeze
