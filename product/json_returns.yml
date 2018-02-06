@@ -17,10 +17,9 @@ spins:
     id: "id"
 
 spin_candidates:
-  attributes: ["id", "full_name", "validation_log"]
-  expand: []
+  attributes: ["id", "full_name", "validation_log", "published", "validated", "last_validation"]
+  expand: ["user_id"]
   staff: ["created_at", "updated_at"]
   admin: []
   columns:
     id: "id"
-

@@ -9,6 +9,12 @@ RSpec.describe Spin, type: :model do
   let!(:spin_exchange) { FactoryBot.create(:spin, name: 'exchange', full_name: 'ManageIQ-Exchange/manageiq-exchange-spin-template',user: user, published: true, visible:true) }
   let!(:spin_content) { FactoryBot.create(:spin, name: 'content', user: user) }
 
+  it 'has a valid factory' do
+    expect(spin).to be_valid
+  end
+
+  pending 'is destroyed when the spin candidate is destroyed'
+
   it '#visible?' do
     expect(spin_exchange.visible?).to be_truthy
     expect(spin_content.visible?).to be_falsey
@@ -45,8 +51,7 @@ RSpec.describe Spin, type: :model do
     @user = user
     api_basic_authorize
     VCR.use_cassette('providers/github/get_readme',
-                     :decode_compressed_response => true,
-                      :record => :none) do
+                     :decode_compressed_response => true) do
       expect(spin_exchange.has_valid_readme?(user)).to be_truthy
     end
   end
@@ -55,8 +60,7 @@ RSpec.describe Spin, type: :model do
     @user = user
     api_basic_authorize
     VCR.use_cassette('providers/github/get_metadata',
-                     :decode_compressed_response => true,
-                     :record => :none) do
+                     :decode_compressed_response => true) do
       expect(spin_exchange.has_valid_metadata?(user)).to be_truthy
     end
   end
@@ -74,7 +78,7 @@ RSpec.describe Spin, type: :model do
   it 'validate_releases?' do
     @user = user
     api_basic_authorize
-    VCR.use_cassette("providers/github/get_releases",:decode_compressed_response => true,:record => :none) do
+    VCR.use_cassette("providers/github/get_releases",:decode_compressed_response => true) do
       expect(spin_exchange.has_valid_releases?).to be_falsey
       expect(spin_exchange.log).to eq '[ERROR] The Spin should have at least a release, please add it to the source control and refresh the Spin'
       expect(spin_exchange.releases).to eq []
@@ -100,7 +104,7 @@ RSpec.describe Spin, type: :model do
   it 'update_releases' do
     @user = user
     api_basic_authorize
-    VCR.use_cassette("providers/github/get_releases",:decode_compressed_response => true,:record => :none) do
+    VCR.use_cassette("providers/github/get_releases",:decode_compressed_response => true) do
        spin_exchange.releases = []
        spin_exchange.save
        expect(spin_exchange.update_releases(user)).to be_truthy
@@ -112,8 +116,7 @@ RSpec.describe Spin, type: :model do
     @user = user
     api_basic_authorize
     VCR.use_cassette('providers/github/get_metadata',
-                     :decode_compressed_response => true,
-                     :record => :none) do
+                     :decode_compressed_response => true) do
       expect(spin_exchange.has_valid_metadata?(user)).to be_truthy
       spin_exchange.refresh_tags
       expect(spin_exchange.tags.count).to eq 2
@@ -124,8 +127,7 @@ RSpec.describe Spin, type: :model do
     @user = user
     api_basic_authorize
     VCR.use_cassette('providers/github/get_metadata',
-                     :decode_compressed_response => true,
-                     :record => :none) do
+                     :decode_compressed_response => true) do
       expect(spin_exchange.has_valid_metadata?(user)).to be_truthy
       spin_exchange.metadata['tags'] = ['semo']
       spin_exchange.refresh_tags

@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.github.com/repos/ManageIQ/manageiq-exchange-spin-template/releases?client_id=CLIENT-ID&client_secret=CLIENT-SECRET
+    uri: https://api.github.com/repos/ManageIQ-Exchange/manageiq-exchange-spin-template/releases?client_id=CLIENT-ID&client_secret=CLIENT-SECRET
     body:
       encoding: US-ASCII
       string: ''
@@ -17,25 +17,31 @@ http_interactions:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
   response:
     status:
-      code: 404
-      message: Not Found
+      code: 200
+      message: OK
     headers:
       Server:
       - GitHub.com
       Date:
-      - Mon, 05 Feb 2018 16:19:03 GMT
+      - Tue, 06 Feb 2018 15:17:22 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
       - chunked
       Status:
-      - 404 Not Found
+      - 200 OK
       X-Ratelimit-Limit:
       - '5000'
       X-Ratelimit-Remaining:
-      - '4999'
+      - '4994'
       X-Ratelimit-Reset:
-      - '1517851143'
+      - '1517932901'
+      Cache-Control:
+      - public, max-age=60, s-maxage=60
+      Vary:
+      - Accept
+      Etag:
+      - W/"ad459add403cd0c99ed31500912cb28c"
       X-Github-Media-Type:
       - github.v3; format=json
       Access-Control-Expose-Headers:
@@ -54,136 +60,17 @@ http_interactions:
       X-Xss-Protection:
       - 1; mode=block
       X-Runtime-Rack:
-      - '0.035259'
+      - '0.041925'
       X-Github-Request-Id:
-      - CF13:04E6:209280C:43F650F:5A7883F7
+      - E939:2E705:6F4718:BFA2F6:5A79C702
     body:
       encoding: ASCII-8BIT
-      string: '{"message":"Not Found","documentation_url":"https://developer.github.com/v3"}'
+      string: '[{"url":"https://api.github.com/repos/ManageIQ-Exchange/manageiq-exchange-spin-template/releases/9193300","assets_url":"https://api.github.com/repos/ManageIQ-Exchange/manageiq-exchange-spin-template/releases/9193300/assets","upload_url":"https://uploads.github.com/repos/ManageIQ-Exchange/manageiq-exchange-spin-template/releases/9193300/assets{?name,label}","html_url":"https://github.com/ManageIQ-Exchange/manageiq-exchange-spin-template/releases/tag/v1.0.1","id":9193300,"tag_name":"v1.0.1","target_commitish":"master","name":"Release
+        1 update 1","draft":false,"author":{"login":"chargio","id":7500590,"avatar_url":"https://avatars3.githubusercontent.com/u/7500590?v=4","gravatar_id":"","url":"https://api.github.com/users/chargio","html_url":"https://github.com/chargio","followers_url":"https://api.github.com/users/chargio/followers","following_url":"https://api.github.com/users/chargio/following{/other_user}","gists_url":"https://api.github.com/users/chargio/gists{/gist_id}","starred_url":"https://api.github.com/users/chargio/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/chargio/subscriptions","organizations_url":"https://api.github.com/users/chargio/orgs","repos_url":"https://api.github.com/users/chargio/repos","events_url":"https://api.github.com/users/chargio/events{/privacy}","received_events_url":"https://api.github.com/users/chargio/received_events","type":"User","site_admin":false},"prerelease":false,"created_at":"2018-01-23T08:46:49Z","published_at":"2018-01-11T10:37:29Z","assets":[],"tarball_url":"https://api.github.com/repos/ManageIQ-Exchange/manageiq-exchange-spin-template/tarball/v1.0.1","zipball_url":"https://api.github.com/repos/ManageIQ-Exchange/manageiq-exchange-spin-template/zipball/v1.0.1","body":"Update
+        on README"},{"url":"https://api.github.com/repos/ManageIQ-Exchange/manageiq-exchange-spin-template/releases/9193048","assets_url":"https://api.github.com/repos/ManageIQ-Exchange/manageiq-exchange-spin-template/releases/9193048/assets","upload_url":"https://uploads.github.com/repos/ManageIQ-Exchange/manageiq-exchange-spin-template/releases/9193048/assets{?name,label}","html_url":"https://github.com/ManageIQ-Exchange/manageiq-exchange-spin-template/releases/tag/v1.0.0","id":9193048,"tag_name":"v1.0.0","target_commitish":"master","name":"Release
+        1","draft":false,"author":{"login":"aljesusg","id":3019213,"avatar_url":"https://avatars2.githubusercontent.com/u/3019213?v=4","gravatar_id":"","url":"https://api.github.com/users/aljesusg","html_url":"https://github.com/aljesusg","followers_url":"https://api.github.com/users/aljesusg/followers","following_url":"https://api.github.com/users/aljesusg/following{/other_user}","gists_url":"https://api.github.com/users/aljesusg/gists{/gist_id}","starred_url":"https://api.github.com/users/aljesusg/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/aljesusg/subscriptions","organizations_url":"https://api.github.com/users/aljesusg/orgs","repos_url":"https://api.github.com/users/aljesusg/repos","events_url":"https://api.github.com/users/aljesusg/events{/privacy}","received_events_url":"https://api.github.com/users/aljesusg/received_events","type":"User","site_admin":false},"prerelease":false,"created_at":"2018-01-11T10:29:56Z","published_at":"2018-01-11T10:23:14Z","assets":[],"tarball_url":"https://api.github.com/repos/ManageIQ-Exchange/manageiq-exchange-spin-template/tarball/v1.0.0","zipball_url":"https://api.github.com/repos/ManageIQ-Exchange/manageiq-exchange-spin-template/zipball/v1.0.0","body":"This
+        is the release_1"},{"url":"https://api.github.com/repos/ManageIQ-Exchange/manageiq-exchange-spin-template/releases/9192636","assets_url":"https://api.github.com/repos/ManageIQ-Exchange/manageiq-exchange-spin-template/releases/9192636/assets","upload_url":"https://uploads.github.com/repos/ManageIQ-Exchange/manageiq-exchange-spin-template/releases/9192636/assets{?name,label}","html_url":"https://github.com/ManageIQ-Exchange/manageiq-exchange-spin-template/releases/tag/prerelease_1.0.0","id":9192636,"tag_name":"prerelease_1.0.0","target_commitish":"master","name":"Prerelease
+        Version 1","draft":false,"author":{"login":"aljesusg","id":3019213,"avatar_url":"https://avatars2.githubusercontent.com/u/3019213?v=4","gravatar_id":"","url":"https://api.github.com/users/aljesusg","html_url":"https://github.com/aljesusg","followers_url":"https://api.github.com/users/aljesusg/followers","following_url":"https://api.github.com/users/aljesusg/following{/other_user}","gists_url":"https://api.github.com/users/aljesusg/gists{/gist_id}","starred_url":"https://api.github.com/users/aljesusg/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/aljesusg/subscriptions","organizations_url":"https://api.github.com/users/aljesusg/orgs","repos_url":"https://api.github.com/users/aljesusg/repos","events_url":"https://api.github.com/users/aljesusg/events{/privacy}","received_events_url":"https://api.github.com/users/aljesusg/received_events","type":"User","site_admin":false},"prerelease":true,"created_at":"2018-01-23T08:46:49Z","published_at":"2018-01-11T09:55:34Z","assets":[],"tarball_url":"https://api.github.com/repos/ManageIQ-Exchange/manageiq-exchange-spin-template/tarball/prerelease_1.0.0","zipball_url":"https://api.github.com/repos/ManageIQ-Exchange/manageiq-exchange-spin-template/zipball/prerelease_1.0.0","body":""}]'
     http_version: 
-  recorded_at: Mon, 05 Feb 2018 16:19:03 GMT
-- request:
-    method: get
-    uri: https://api.github.com/repos/ManageIQ/manageiq-exchange-spin-template/readme?client_id=CLIENT-ID&client_secret=CLIENT-SECRET
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Octokit Ruby Gem 4.8.0
-      Accept:
-      - application/vnd.github.raw
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response:
-    status:
-      code: 404
-      message: Not Found
-    headers:
-      Server:
-      - GitHub.com
-      Date:
-      - Mon, 05 Feb 2018 16:19:04 GMT
-      Content-Type:
-      - application/json; charset=utf-8
-      Transfer-Encoding:
-      - chunked
-      Status:
-      - 404 Not Found
-      X-Ratelimit-Limit:
-      - '5000'
-      X-Ratelimit-Remaining:
-      - '4998'
-      X-Ratelimit-Reset:
-      - '1517851143'
-      X-Github-Media-Type:
-      - github.v3; param=raw
-      Access-Control-Expose-Headers:
-      - ETag, Link, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining,
-        X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
-      Access-Control-Allow-Origin:
-      - "*"
-      Content-Security-Policy:
-      - default-src 'none'
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubdomains; preload
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - deny
-      X-Xss-Protection:
-      - 1; mode=block
-      X-Runtime-Rack:
-      - '0.040016'
-      X-Github-Request-Id:
-      - CF14:04E4:1466881:2D45274:5A7883F8
-    body:
-      encoding: ASCII-8BIT
-      string: '{"message":"Not Found","documentation_url":"https://developer.github.com/v3"}'
-    http_version: 
-  recorded_at: Mon, 05 Feb 2018 16:19:04 GMT
-- request:
-    method: get
-    uri: https://api.github.com/repos/ManageIQ/manageiq-exchange-spin-template/contents/metadata.yml?client_id=CLIENT-ID&client_secret=CLIENT-SECRET
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Octokit Ruby Gem 4.8.0
-      Accept:
-      - application/vnd.github.raw
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response:
-    status:
-      code: 404
-      message: Not Found
-    headers:
-      Server:
-      - GitHub.com
-      Date:
-      - Mon, 05 Feb 2018 16:19:05 GMT
-      Content-Type:
-      - application/json; charset=utf-8
-      Transfer-Encoding:
-      - chunked
-      Status:
-      - 404 Not Found
-      X-Ratelimit-Limit:
-      - '5000'
-      X-Ratelimit-Remaining:
-      - '4997'
-      X-Ratelimit-Reset:
-      - '1517851143'
-      X-Github-Media-Type:
-      - github.v3; param=raw
-      Access-Control-Expose-Headers:
-      - ETag, Link, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining,
-        X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
-      Access-Control-Allow-Origin:
-      - "*"
-      Content-Security-Policy:
-      - default-src 'none'
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubdomains; preload
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - deny
-      X-Xss-Protection:
-      - 1; mode=block
-      X-Runtime-Rack:
-      - '0.015745'
-      X-Github-Request-Id:
-      - CF15:04E5:393BC71:6A73A78:5A7883F8
-    body:
-      encoding: ASCII-8BIT
-      string: '{"message":"Not Found","documentation_url":"https://developer.github.com/v3"}'
-    http_version: 
-  recorded_at: Mon, 05 Feb 2018 16:19:05 GMT
+  recorded_at: Tue, 06 Feb 2018 15:17:22 GMT
 recorded_with: VCR 4.0.0

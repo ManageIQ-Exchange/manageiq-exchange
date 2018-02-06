@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180205163158) do
+ActiveRecord::Schema.define(version: 20180206144300) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,10 @@ ActiveRecord::Schema.define(version: 20180205163158) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "published"
+    t.boolean "validated"
+    t.datetime "last_validation"
+    t.index ["published"], name: "index_spin_candidates_on_published"
     t.index ["user_id"], name: "index_spin_candidates_on_user_id"
   end
 
@@ -74,7 +78,9 @@ ActiveRecord::Schema.define(version: 20180205163158) do
     t.boolean "visible", default: false
     t.text "log"
     t.jsonb "releases", default: []
+    t.bigint "spin_candidate_id"
     t.index ["published"], name: "index_spins_on_published"
+    t.index ["spin_candidate_id"], name: "index_spins_on_spin_candidate_id"
     t.index ["user_id"], name: "index_spins_on_user_id"
   end
 
@@ -124,5 +130,6 @@ ActiveRecord::Schema.define(version: 20180205163158) do
 
   add_foreign_key "authentication_tokens", "users"
   add_foreign_key "spin_candidates", "users"
+  add_foreign_key "spins", "spin_candidates"
   add_foreign_key "spins", "users"
 end
