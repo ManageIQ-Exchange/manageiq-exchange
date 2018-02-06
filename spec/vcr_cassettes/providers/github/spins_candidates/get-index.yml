@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.github.com/repos/ManageIQ-Exchange/i_do-not_exist/contents/.manageiq-spin?client_id=CLIENT-ID&client_secret=CLIENT-SECRET
+    uri: https://api.github.com/repos/mohamed-konopelski/cardguard/contents/.manageiq-spin?client_id=CLIENT-ID&client_secret=CLIENT-SECRET
     body:
       encoding: US-ASCII
       string: ''
@@ -23,7 +23,7 @@ http_interactions:
       Server:
       - GitHub.com
       Date:
-      - Tue, 06 Feb 2018 10:11:47 GMT
+      - Tue, 06 Feb 2018 10:54:50 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -33,7 +33,7 @@ http_interactions:
       X-Ratelimit-Limit:
       - '5000'
       X-Ratelimit-Remaining:
-      - '4998'
+      - '4996'
       X-Ratelimit-Reset:
       - '1517915401'
       X-Github-Media-Type:
@@ -54,12 +54,12 @@ http_interactions:
       X-Xss-Protection:
       - 1; mode=block
       X-Runtime-Rack:
-      - '0.021063'
+      - '0.018148'
       X-Github-Request-Id:
-      - E750:2E706:21B4A5:753C0C:5A797F63
+      - DB47:2E705:4CD0E7:82AE7A:5A79897A
     body:
       encoding: ASCII-8BIT
       string: '{"message":"Not Found","documentation_url":"https://developer.github.com/v3"}'
     http_version: 
-  recorded_at: Tue, 06 Feb 2018 10:11:47 GMT
+  recorded_at: Tue, 06 Feb 2018 10:54:50 GMT
 recorded_with: VCR 4.0.0

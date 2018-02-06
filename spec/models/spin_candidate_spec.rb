@@ -33,7 +33,7 @@ RSpec.describe SpinCandidate, type: :model do
     spin_candidate.full_name = non_valid_repo
     @user = user
     api_basic_authorize
-    VCR.use_cassette('providers/github/spins/get-non-valid-repo') do
+    VCR.use_cassette('providers/github/spin_candidates/get-non-valid-repo') do
       expect(spin_candidate.is_candidate?(user: user)).to be_falsy
     end
 
@@ -43,7 +43,7 @@ RSpec.describe SpinCandidate, type: :model do
     spin_candidate.full_name = nonexisting_repo
     @user = user
     api_basic_authorize
-    VCR.use_cassette('providers/github/spins/get-non-existing-repo') do
+    VCR.use_cassette('providers/github/spin_candidates/get-non-existing-repo') do
       expect(spin_candidate.is_candidate?(user: user)).to be_falsy
     end
 
@@ -53,7 +53,7 @@ RSpec.describe SpinCandidate, type: :model do
     spin_candidate.full_name = valid_repo
     @user = user
     api_basic_authorize
-    VCR.use_cassette('providers/github/spins/get-valid-repo') do
+    VCR.use_cassette('providers/github/spin_candidates/get-valid-repo') do
       expect(spin_candidate.is_candidate?(user: user)).to be_truthy
     end
   end

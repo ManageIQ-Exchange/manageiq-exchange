@@ -25,9 +25,36 @@ RSpec.describe 'V1::SpinCandidates', type: :request do
     end
   end
   context 'when authenticated' do
-    pending "index" 
-    pending "show when valid id"
-    pending "show when invalid id"
+    let!(:user) { FactoryBot.create(:user) }
+    let!(:spin_candidate) { FactoryBot.create(:spin_candidate, user: user) }
+    let!(:spin_candidate1) { FactoryBot.create(:spin_candidate, user: user) }
+
+    it '#index' do
+      @user = user
+      api_basic_authorize
+      get "/#{prefix}/spin_candidates"
+      expect(response).to have_http_status(:ok)
+      data = JSON.parse(response.body)["data"]
+      expect(data).to include ({"id" => spin_candidate.id, "full_name" => spin_candidate.full_name, "validation_log" => spin_candidate.validation_log})
+      expect(data).to include ({"id" => spin_candidate1.id, "full_name" => spin_candidate1.full_name, "validation_log" => spin_candidate1.validation_log})
+    end
+
+
+    it "show when valid id" do
+      @user = user
+      api_basic_authorize
+      get "/#{prefix}/spin_candidates/#{spin_candidate.id}"
+      expect(response).to have_http_status(:ok)
+      data = JSON.parse(response.body)["data"]
+      expect(data).to include ({"id" => spin_candidate.id, "full_name" => spin_candidate.full_name, "validation_log" => spin_candidate.validation_log})
+    end
+
+    it 'show when invalid id' do
+      @user = user
+      api_basic_authorize
+      get "/#{prefix}/spin_candidates/error"
+      expect(response).to have_http_status(:not_found)
+    end
     pending "refresh when same repos"
     pending "refresh when deleted repos"
     pending "refresh when new repos"

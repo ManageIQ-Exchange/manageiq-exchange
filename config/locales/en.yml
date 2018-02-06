@@ -79,3 +79,10 @@ en:
     user_not_found:
       title: This user is not in the database
       detail: Maybe the id of user is wrong
+    spin_candidate_not_found:
+        title: Spin Candidate not found in the database
+        detail: Check that the id of the spin exists
+    spin_candidate_not_owner:
+        title: You don't have access to the Spin Candidate
+        detail: The user is wrong or the Spin Candidate does not exist
+
