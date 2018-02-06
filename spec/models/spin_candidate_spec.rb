@@ -56,7 +56,6 @@ RSpec.describe SpinCandidate, type: :model do
     VCR.use_cassette('providers/github/spin_candidates/get-non-valid-repo') do
       expect(spin_candidate.is_candidate?(user: user)).to be_falsy
     end
-
   end
 
   it 'verifies a non-existing repo' do
@@ -66,7 +65,6 @@ RSpec.describe SpinCandidate, type: :model do
     VCR.use_cassette('providers/github/spin_candidates/get-non-existing-repo') do
       expect(spin_candidate.is_candidate?(user: user)).to be_falsy
     end
-
   end
 
   it 'verifies a valid repo' do

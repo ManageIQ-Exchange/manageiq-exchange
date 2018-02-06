@@ -27,7 +27,9 @@ Rails.application.routes.draw do
         post 'refresh'
       end
       post 'publish', to: 'spin_candidates#publish'
+      post 'validate', to: 'spin_candidates#validate'
     end
+
     resources :tags,  only: [:index, :show]
     resources :spins, only: [:index, :show]
   end

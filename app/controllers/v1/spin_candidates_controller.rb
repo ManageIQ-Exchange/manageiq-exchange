@@ -11,7 +11,6 @@ module V1
     # Index (search: string - optional )
     # Provides an index of all spins in the system
     # TODO If you provide a search team, it will return those spins mathing the search
-    # TODO: Add paging
     # users/<user_id>/spins Get all spins of a user
     # spins?query=<value>  Look spins include value in the name
     def index
