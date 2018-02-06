@@ -70,13 +70,22 @@ module V1
       # Validate the Spin
       # Write result in log
       # Return true or false
-      false
+      sc = SpinCandidate.find(params[:spin_candidate_id])
+      # TODO test sc
+      spin = sc.spin || Spin.new(full_name: sc.full_name, user: sc.user)
+      sc.validated = spin.acceptable? current_user
+      sc.validation_log = spin.log
+      if(sc.save)
+
+      else
+
+      end
     end
 
     # Publish the SpinCandidate into a Spin
     # @returns :ok or :error
     def publish
-      valid?
+
       # If valid create or update the Spin
       # If not valid, the log should be updated.
     end
