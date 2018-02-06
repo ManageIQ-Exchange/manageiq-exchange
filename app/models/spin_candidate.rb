@@ -1,5 +1,6 @@
 class SpinCandidate < ApplicationRecord
   belongs_to :user
+  validates :full_name, :validation_log, presence: true
 
   def is_candidate?(client:)
     begin
