@@ -21,7 +21,7 @@ class RefreshSpinCandidatesJob < ApplicationJob
     client.github_access.access_token = app_token.github_token
     user_spin_candidates_list = user_spin_candidates.map(&:id)
     # Get the list of repos in GitHub (they use the same id in github and local) for the user
-    repos = client.repos(user: user, github_token: app_token.github_token)
+    repos = client.repos
     repos_list = repos.map(&:id)
     # List of deleted repos
     deleted_repos = user_spin_candidates_list - repos_list
