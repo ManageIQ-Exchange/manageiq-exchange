@@ -14,7 +14,7 @@ class RefreshSpinCandidatesJob < ApplicationJob
     logger.info "Refresh Spin Candidates Job for user: #{user.id}"
     # Get the client using the application id (only public information)
     #
-    client = Providers::BaseManager.new(user.authentication_tokens.first.provider).get_connector
+    client = Providers::BaseManager.new(user).get_connector
     # Find the spins in the database, store them as an array
     user_spin_candidates = user.spin_candidates
     app_token = Tiddle::TokenIssuer.build.find_token(user, token)
