@@ -55,22 +55,23 @@ class Spin < ApplicationRecord
     user == target_user
   end
 
-  def check user:
+  def check(user)
     @spin_log = ""
     if update_values user
       if has_valid_readme? &&
           has_valid_metadata? &&
           has_valid_releases?
-        spin_candidate.update(validated: true, validation_log: "[OK] Spin is validated")
-        save
-        return true
+        if save
+          spin_candidate.update(validated: true, validation_log: "[OK] Spin is validated")
+          return true
+        end
       end
     end
     spin_candidate.update(validated: false, validation_log: @spinlog)
     return false
   end
 
-  def update_values user:
+  def update_values(user)
     client = Providers::BaseManager.new(user).get_connector
     meta = client.metadata(full_name)
     readme = client.readme(full_name)
@@ -89,39 +90,40 @@ class Spin < ApplicationRecord
       return false
     end
     # Store new values
-    name= repo.name,
-    readme = readme,
-    full_name= repo.full_name,
-    description= repo.description,
-    clone_url= repo.clone_url,
-    html_url= repo.html_url,
-    issues_url= repo.rels[:issues].href,
-    forks_count= repo.forks_count,
-    stargazers_count= repo.stargazers_count,
-    watchers_count= repo.watchers,
-    open_issues_count= repo.open_issues_count,
-    size= repo.size,
-    gh_id= repo.id,
-    gh_created_at= repo.created_at,
-    gh_pushed_at= repo.pushed_at,
-    gh_updated_at= repo.updated_at,
-    gh_archived= repo.archived,
-    default_branch= repo.default_branch || 'master',
-    license_key= repo.license&.key,
-    license_name= repo.license&.name,
-    license_html_url= repo.license&.url,
-    version= metadata_json['spin_version'],
-    min_miq_version= metadata_json['min_miq_version'].downcase.bytes[0] - 'a'.bytes[0],
-    metadata = metadata_json
-    metadata_raw = metadata_raw
-    releases= releases,
-    user= user,
-    user_login= user.github_login
+    self.name= repo.name,
+    self.readme = readme,
+    self.full_name= repo.full_name,
+    self.description= repo.description,
+    self.clone_url= repo.clone_url,
+    self.html_url= repo.html_url,
+    self.issues_url= repo.rels[:issues].href,
+    self.forks_count= repo.forks_count,
+    self.stargazers_count= repo.stargazers_count,
+    self.watchers_count= repo.watchers,
+    self.open_issues_count= repo.open_issues_count,
+    self.size= repo.size,
+    self.gh_id= repo.id,
+    self.gh_created_at= repo.created_at,
+    self.gh_pushed_at= repo.pushed_at,
+    self.gh_updated_at= repo.updated_at,
+    self.gh_archived= repo.archived,
+    self.default_branch= repo.default_branch || 'master',
+    self.license_key= repo.license&.key,
+    self.license_name= repo.license&.name,
+    self.license_html_url= repo.license&.url,
+    self.version= metadata_json['spin_version'],
+    self.min_miq_version= metadata_json['min_miq_version'].downcase.bytes[0] - 'a'.bytes[0],
+    self.metadata = metadata_json
+    self.metadata_raw = metadata_raw
+    self.releases= releases,
+    self.user= user,
+    self.user_login= user.github_login
+    true
   end
 
   # Update Log
   def spin_log(log)
-    @spin_log = @spin_log + '\n' + log
+    @spin_log = (@spin_log || '')+ '\n' + log
   end
 
   # Validate release
@@ -130,7 +132,7 @@ class Spin < ApplicationRecord
   # A boolean representing if the spin has releases
   #
   def has_valid_releases?
-    (return true) unless releases.empty?
+    (return true) unless releases.blank?
     spin_log('[ERROR] The Spin should have at least a release, please add it to the source control and refresh the Spin')
     false
   end
@@ -141,7 +143,7 @@ class Spin < ApplicationRecord
   # A boolean representing if the spin readme is ok
   #
   def has_valid_readme?
-    if readme.kind_of? ErrorExchange
+    if readme.blank?
       spin_log('[ERROR] The Spin should have a readme, please add it to the source control and refresh the Spin')
     else
       return true
@@ -155,9 +157,8 @@ class Spin < ApplicationRecord
   # A boolean representing if the spin metadata is ok
   #
   def has_valid_metadata?
-    if metadata.kind_of? ErrorExchange
+    if metadata.blank?
       spin_log("[ERROR] Metadata error")
-      spin_log("#{metadata.as_json["title"]} \n #{metadata.as_json["detail"]}")
     else
       return true
     end

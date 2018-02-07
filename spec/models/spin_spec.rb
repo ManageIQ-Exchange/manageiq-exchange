@@ -9,7 +9,23 @@ RSpec.describe Spin, type: :model do
   let(:non_valid_repo)   { 'ManageIQ-Exchange/manageiq-exchange' }
   let(:nonexisting_repo) { 'ManageIQ-Exchange/i_do-not_exist' }
   let(:valid_repo)       { 'ManageIQ-Exchange/manageiq-exchange-spin-template' }
+  let(:metadata_valid) {
+    {
+        metadata_version: 1, # It must be 1
+        description: "Description",
+        author: "Author Name",
 
+        min_miq_version: "h",
+        # A letter with the manageiq_version:
+        # For Hammer, use "h"
+        # For Gaprishdanvili, use "g"
+        # Etc.
+
+        # max_miq_version: "h"
+
+        tags: ['demo','open source']
+    }
+  }
   before(:each) do
     @user = user
     api_basic_authorize
@@ -17,6 +33,70 @@ RSpec.describe Spin, type: :model do
 
   it 'has a valid factory' do
     expect(spin).to be_valid
+  end
+
+  it 'has_valid_metadata?' do
+    spin.metadata = metadata_valid
+    expect(spin.has_valid_metadata?).to be_truthy
+  end
+
+  it 'has_valid_metadata? is false with nil metadata' do
+    spin.metadata = nil
+    expect(spin.has_valid_metadata?).to be_falsey
+  end
+
+  it 'has_valid_metadata? is false with empty metadata' do
+    spin.metadata = ''
+    expect(spin.has_valid_metadata?).to be_falsey
+  end
+
+  it 'has_valid_readme?' do
+    spin.readme = 'sample'
+    expect(spin.has_valid_readme?).to be_truthy
+  end
+
+  it 'has_valid_readme? is false with nil readme' do
+    spin.readme = nil
+    expect(spin.has_valid_readme?).to be_falsey
+  end
+
+  it 'has_valid_readme? is false with empty radme' do
+    spin.readme = ''
+    expect(spin.has_valid_readme?).to be_falsey
+  end
+
+  it 'has_valid_releases?' do
+    spin.releases = {'Release':'One'}
+    expect(spin.has_valid_releases?).to be_truthy
+  end
+
+  it 'has_valid_releases? is false with nil releases' do
+    spin.releases = nil
+    expect(spin.has_valid_releases?).to be_falsey
+  end
+
+  it 'has_valid_releases? is false with empty releases' do
+    spin.releases = {}
+    expect(spin.has_valid_releases?).to be_falsey
+  end
+
+  it 'update_values' do
+    spin.full_name = valid_repo
+    VCR.use_cassette('providers/github/update_values',
+                     :decode_compressed_response => true) do
+        expect(spin.update_values(user)).to be_truthy
+    end
+  end
+
+  it 'check' do
+    spin.full_name = valid_repo
+    VCR.use_cassette('providers/github/update_values',
+                     :decode_compressed_response => true) do
+      expect(spin.check(user)).to be_truthy
+      expect(spin.spin_candidate.validated).to be_truthy
+      expect(spin.spin_candidate.validation_log).to include('[OK] Spin is validated')
+
+    end
   end
 
   pending 'is destroyed when the spin candidate is destroyed'
