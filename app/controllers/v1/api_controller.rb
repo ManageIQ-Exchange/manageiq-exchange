@@ -3,7 +3,7 @@ module V1
   # API Controller
   # Provides information about the API
   ##
-  class ApiController < ActionController::API
+  class ApiController < ApplicationController
 
     include Parameters
     include Pagination

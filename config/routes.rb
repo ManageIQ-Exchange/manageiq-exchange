@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
+
+
   @api_prefix ||= Rails.application.config.api_prefix
 
   concern :api_base do
     get 'api/version'
+    get 'top', to: 'top#index'
     devise_for :users, controllers: {
         sessions: "#{@api_prefix}/users/sessions"
     }
