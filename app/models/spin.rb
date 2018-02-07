@@ -61,9 +61,14 @@ class Spin < ApplicationRecord
       if has_valid_readme? &&
           has_valid_metadata? &&
           has_valid_releases?
-        if save
+        if new_record?
           spin_candidate.update(validated: true, validation_log: "[OK] Spin is validated")
           return true
+        else
+          if save
+            spin_candidate.update(validated: true, validation_log: "[OK] Spin is validated")
+            return true
+          end
         end
       end
     end
