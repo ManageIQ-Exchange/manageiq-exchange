@@ -74,7 +74,7 @@ module V1
       render_error_exchange(:spin_not_owner, :not_allowed) unless @current_user == sc.user
 
       # TODO test sc
-      spin = sc.spin || Spin.new(full_name: sc.full_name, user: sc.user,)
+      spin = sc.spin || Spin.new(full_name: sc.full_name, user: sc.user, spin_candidate: sc)
       if(spin.check current_user)
         return_response sc, :ok, {}
       else
