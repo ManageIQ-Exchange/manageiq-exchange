@@ -45,81 +45,23 @@ class Spin < ApplicationRecord
   # A JSON Schema to check the format of the metadata file
   SPIN_SCHEMA = Rails.application.config.spin_schema.freeze
 
-  # Show if the spin is visible or not
-  #
-  # == Returns:
-  # A boolean representing if the spin is visible
-  #
-  def visible?
-    visible
-  end
-
-  # Show if the spin is published or not
-  #
-  # == Returns:
-  # A boolean representing if the spin is publish
-  #
-  def published?
-    published
-  end
-
-  # Check if the spin is from the user
-  #
-  # == Parameters:
-  # target_user::
-  #   A User object
-  #
-  # == Returns:
-  # A boolean representing if the spin owner is target_user
-  #
-  def belongs_to?(target_user)
-    user == target_user
-  end
-
-  # Set spin visible to true or false
-  #
-  # == Parameters:
-  # flag::
-  #   A boolean with the value to the visible spin
-  #
-  # == Returns:
-  # A boolean representing if the spin was updated with visible to flag or not
-  #
-  def visible_to(flag = true)
-    if published?
-      update(visible: flag)
-      true
-    else
-      false
-    end
-  end
-
-  # Set spin publish to true or false
-  #
-  # == Parameters:
-  # flag::
-  #   A boolean with the value to the publish spin
-  #
-  # == Returns:
-  # A boolean representing if the spin was updated with publish to flag or not
-  #
-  def publish_to(user, flag = true)
-    if flag
-      acceptable?(user) ? update(published: flag) : (return false)
-    else
-      update(published: flag)
-    end
-    true
-  end
-
   # Set spin log
   #
   # == Parameters:
   # log::
   #   A Text with the value of a log
   #
-  def spin_log(log)
-    update(log: log)
+  def spin_log(new_log)
+    log ||= ''
+    log << new_log << "\n"
+  end
+
+  # Clean spin log
+  #
+  # == Parameters:
+  #
+  def clean_log
+    log = ''
   end
 
   # Validate if the spin is ok or not
@@ -128,7 +70,40 @@ class Spin < ApplicationRecord
   # A boolean representing if the spin is validated or not
   #
   def acceptable?(user)
-    has_valid_readme?(user) && has_valid_metadata?(user) && has_valid_releases?
+    clean_log
+    update_values(user)
+    has_valid_readme?(user) && has_valid_metadata?(user) && has_valid_releases?(user)
+    valid?
+  end
+
+  def update_values(user)
+    byebug
+    repo = Providers::BaseManager.new(user.authentication_tokens.first.provider).get_connector.readme(full_name)
+    spin.name = repo.name
+    spin.            full_name: repo.full_name,
+                description: repo.description,
+                clone_url: repo.clone_url,
+                html_url: repo.html_url,
+                issues_url: repo.rels[:issues].href,
+                forks_count: repo.forks_count,
+                stargazers_count: repo.stargazers_count,
+                watchers_count: repo.watchers,
+                open_issues_count: repo.open_issues_count,
+                size: repo.size,
+                gh_id: repo.id,
+                gh_created_at: repo.created_at,
+                gh_pushed_at: repo.pushed_at,
+                gh_updated_at: repo.updated_at,
+                gh_archived: repo.archived,
+                default_branch: repo.default_branch || 'master',
+                license_key: repo.license&.key,
+                license_name: repo.license&.name,
+                license_html_url: repo.license&.url,
+                version: metadata_json['spin_version'],
+                min_miq_version: metadata_json['min_miq_version'].downcase.bytes[0] - 'a'.bytes[0],
+                releases: releases,
+                user: current_user,
+                user_login: current_user.github_login)
   end
 
   # Validate release
@@ -136,9 +111,14 @@ class Spin < ApplicationRecord
   # == Returns:
   # A boolean representing if the spin has releases
   #
-  def has_valid_releases?
-    (return true) unless releases.empty?
-    spin_log('[ERROR] The Spin should have at least a release, please add it to the source control and refresh the Spin')
+  def has_valid_releases?(user)
+    update_releases(user)
+    if releases.empty?
+      spin_log('[ERROR] The Spin should have at least a release, please add it to the source control and refresh the Spin')
+    else
+      spin_log('[INFO] Releases found')
+      return true
+    end
     false
   end
 
@@ -151,6 +131,7 @@ class Spin < ApplicationRecord
     rdm = Providers::BaseManager.new(user.authentication_tokens.first.provider).get_connector.readme(full_name)
     if rdm
       update(readme: rdm)
+      spin_log('[INFO] Readme found')
       return true
     else
       spin_log('[ERROR] The Spin should have a readme, please add it to the source control and refresh the Spin')
@@ -170,6 +151,7 @@ class Spin < ApplicationRecord
       spin_log("#{metadata.as_json["title"]} \n #{metadata.as_json["detail"]}")
     else
       update(metadata: metadata.second, metadata_raw: metadata.first)
+      spin_log('[INFO] Validated metadata')
       return true
     end
     false

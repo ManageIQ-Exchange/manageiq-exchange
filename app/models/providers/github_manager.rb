@@ -94,6 +94,10 @@ module Providers
       ErrorExchange.new(:github_octokit_not_found, nil, {error: e.to_json})
     end
 
+    def repo_meta(user:)
+      byebug
+    end
+
     #
     # Returns if the repo is a candidate to be a spin
     # @param full_name [String] Full name of repo

@@ -26,8 +26,9 @@ RSpec.describe 'V1::SpinCandidates', type: :request do
   end
   context 'when authenticated' do
     let!(:user) { FactoryBot.create(:user) }
-    let!(:spin_candidate) { FactoryBot.create(:spin_candidate, user: user) }
-    let!(:spin_candidate1) { FactoryBot.create(:spin_candidate, user: user) }
+    let(:good_full_name) { 'ManageIQ-Exchange/manageiq-exchange-spin-template' }
+    let(:spin_candidate) { FactoryBot.create(:spin_candidate, user: user, full_name: good_full_name) }
+    let(:spin_candidate1) { FactoryBot.create(:spin_candidate, user: user) }
 
     it '#index' do
       @user = user
@@ -78,10 +79,19 @@ RSpec.describe 'V1::SpinCandidates', type: :request do
     pending "refresh when deleted repos"
     pending "refresh when new repos"
     pending "refresh when updated repos"
+
     pending "publish when the repo is not valid"
     pending "publish when the repo is valid and new"
     pending "publish when the repo is valid and was there"
-    pending "validate when the repo is valid"
+    pending "validate when the repo is valid" do
+      @user = user
+      VCR.use_cassette("providers/github/validate-valid-repo",:decode_compressed_response => true) do
+        api_basic_authorize
+        post "/#{prefix}/spin_candidates/#{spin_candidate.id}/validate"
+        byebug
+        expect(response).to have_http_status(:ok)
+        end
+    end
     pending "validate when the repo is not valid"
   end
 end
