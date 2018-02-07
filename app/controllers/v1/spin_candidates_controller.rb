@@ -85,7 +85,14 @@ module V1
     # Publish the SpinCandidate into a Spin
     # @returns :ok or :error
     def publish
-      valid?
+      sc = SpinCandidate.find(params[:spin_candidate_id])
+      if sc.validated
+        if sc.publish_spin @current_user
+          return_response sc, :ok, {}
+        end
+      else
+        render_error_exchange(:spin_candidate_not_validated, :not_found, {log: sc.validation_log})
+      end
       # If valid create or update the Spin
       # If not valid, the log should be updated.
     end
