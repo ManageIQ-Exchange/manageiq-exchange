@@ -73,6 +73,8 @@ RSpec.describe 'V1::Spins', type: :request do
         expect(json['data']['name']).to eq(spin_content.name)
       end
 
+
+
       pending 'search for spins of a user'
       pending 'search when there is no user'
 

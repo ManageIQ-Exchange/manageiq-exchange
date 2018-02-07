@@ -2,10 +2,7 @@ require 'rails_helper'
 
 RSpec.describe SpinCandidate, type: :model do
   let(:spin_candidate)   { FactoryBot.build(:spin_candidate) }
-  let!(:user) { FactoryBot.create(:user) }
-  let(:non_valid_repo)   { 'ManageIQ-Exchange/manageiq-exchange' }
-  let(:nonexisting_repo) { 'ManageIQ-Exchange/i_do-not_exist' }
-  let(:valid_repo)       { 'ManageIQ-Exchange/manageiq-exchange-spin-template' }
+
   it 'has a valid factory' do
     spin_candidate.valid?
     expect(spin_candidate).to be_valid
@@ -47,32 +44,5 @@ RSpec.describe SpinCandidate, type: :model do
     spin_candidate.validation_log = nil
     spin_candidate.valid?
     expect(spin_candidate.errors.details[:validation_log]).to include(error: :blank)
-  end
-
-  it 'verifies a non-valid repo' do
-    spin_candidate.full_name = non_valid_repo
-    @user = user
-    api_basic_authorize
-    VCR.use_cassette('providers/github/spin_candidates/get-non-valid-repo') do
-      expect(spin_candidate.is_candidate?(user: user)).to be_falsy
-    end
-  end
-
-  it 'verifies a non-existing repo' do
-    spin_candidate.full_name = nonexisting_repo
-    @user = user
-    api_basic_authorize
-    VCR.use_cassette('providers/github/spin_candidates/get-non-existing-repo') do
-      expect(spin_candidate.is_candidate?(user: user)).to be_falsy
-    end
-  end
-
-  it 'verifies a valid repo' do
-    spin_candidate.full_name = valid_repo
-    @user = user
-    api_basic_authorize
-    VCR.use_cassette('providers/github/spin_candidates/get-valid-repo') do
-      expect(spin_candidate.is_candidate?(user: user)).to be_truthy
-    end
   end
 end

@@ -20,7 +20,6 @@ FactoryBot.define do
     gh_updated_at     { Faker::Time.between(gh_created_at, Date.today) }
     gh_archived       false
     default_branch    'master'
-    log               ''
     license_key       "MIT"
     license_name      "MIT License"
     license_html_url  "https://api.github.com/licenses/mit"

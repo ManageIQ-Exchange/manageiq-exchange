@@ -42,27 +42,6 @@ class Spin < ApplicationRecord
   has_many :tags, through: :taggings
   belongs_to :spin_candidate
 
-  # A JSON Schema to check the format of the metadata file
-  SPIN_SCHEMA = Rails.application.config.spin_schema.freeze
-
-  # Show if the spin is visible or not
-  #
-  # == Returns:
-  # A boolean representing if the spin is visible
-  #
-  def visible?
-    visible
-  end
-
-  # Show if the spin is published or not
-  #
-  # == Returns:
-  # A boolean representing if the spin is publish
-  #
-  def published?
-    published
-  end
-
   # Check if the spin is from the user
   #
   # == Parameters:
@@ -76,59 +55,80 @@ class Spin < ApplicationRecord
     user == target_user
   end
 
-  # Set spin visible to true or false
-  #
-  # == Parameters:
-  # flag::
-  #   A boolean with the value to the visible spin
-  #
-  # == Returns:
-  # A boolean representing if the spin was updated with visible to flag or not
-  #
-  def visible_to(flag = true)
-    if published?
-      update(visible: flag)
-      true
-    else
-      false
+  def check(user)
+    @spin_log = ""
+    if update_values user
+      if has_valid_readme? &&
+          has_valid_metadata? &&
+          has_valid_releases?
+        if new_record?
+          spin_candidate.update(validated: true, validation_log: "[OK] Spin is validated")
+          return true
+        else
+          if save
+            spin_candidate.update(validated: true, validation_log: "[OK] Spin is validated")
+            return true
+          end
+        end
+      end
     end
+    spin_candidate.update(validated: false, validation_log: @spinlog)
+    return false
   end
 
-  # Set spin publish to true or false
-  #
-  # == Parameters:
-  # flag::
-  #   A boolean with the value to the publish spin
-  #
-  # == Returns:
-  # A boolean representing if the spin was updated with publish to flag or not
-  #
-  def publish_to(user, flag = true)
-    if flag
-      acceptable?(user) ? update(published: flag) : (return false)
-    else
-      update(published: flag)
+  def update_values(user)
+    client = Providers::BaseManager.new(user).get_connector
+    meta = client.metadata(full_name)
+    readme = client.readme(full_name)
+    releases = client.releases(full_name)
+    repo = client.repo(full_name)
+
+    metadata_raw, metadata_json = meta
+
+    if meta.kind_of?(ErrorExchange) ||
+       readme.kind_of?(ErrorExchange) ||
+       releases.kind_of?(ErrorExchange) ||
+       repo.kind_of?(ErrorExchange)
+      [meta, readme, releases, repo].each do |error|
+        spin_log("#{error.as_json["title"]} \n #{error.as_json["detail"]}") if error.kind_of?(ErrorExchange)
+      end
+      return false
     end
+    # Store new values
+    self.name= repo.name,
+    self.readme = readme,
+    self.full_name= repo.full_name,
+    self.description= repo.description,
+    self.clone_url= repo.clone_url,
+    self.html_url= repo.html_url,
+    self.issues_url= repo.rels[:issues].href,
+    self.forks_count= repo.forks_count,
+    self.stargazers_count= repo.stargazers_count,
+    self.watchers_count= repo.watchers,
+    self.open_issues_count= repo.open_issues_count,
+    self.size= repo.size,
+    self.gh_id= repo.id,
+    self.gh_created_at= repo.created_at,
+    self.gh_pushed_at= repo.pushed_at,
+    self.gh_updated_at= repo.updated_at,
+    self.gh_archived= repo.archived,
+    self.default_branch= repo.default_branch || 'master',
+    self.license_key= repo.license&.key,
+    self.license_name= repo.license&.name,
+    self.license_html_url= repo.license&.url,
+    self.version= metadata_json['spin_version'],
+    self.min_miq_version= metadata_json['min_miq_version'].downcase.bytes[0] - 'a'.bytes[0],
+    self.metadata = metadata_json
+    self.metadata_raw = metadata_raw
+    self.releases= releases,
+    self.user= user,
+    self.user_login= user.github_login
     true
   end
 
-  # Set spin log
-  #
-  # == Parameters:
-  # log::
-  #   A Text with the value of a log
-  #
+  # Update Log
   def spin_log(log)
-    update(log: log)
-  end
-
-  # Validate if the spin is ok or not
-  #
-  # == Returns:
-  # A boolean representing if the spin is validated or not
-  #
-  def acceptable?(user)
-    has_valid_readme?(user) && has_valid_metadata?(user) && has_valid_releases?
+    @spin_log = (@spin_log || '')+ '\n' + log
   end
 
   # Validate release
@@ -137,7 +137,7 @@ class Spin < ApplicationRecord
   # A boolean representing if the spin has releases
   #
   def has_valid_releases?
-    (return true) unless releases.empty?
+    (return true) unless releases.blank?
     spin_log('[ERROR] The Spin should have at least a release, please add it to the source control and refresh the Spin')
     false
   end
@@ -147,13 +147,11 @@ class Spin < ApplicationRecord
   # == Returns:
   # A boolean representing if the spin readme is ok
   #
-  def has_valid_readme?(user)
-    rdm = Providers::BaseManager.new(user.authentication_tokens.first.provider).get_connector.readme(full_name)
-    if rdm
-      update(readme: rdm)
-      return true
-    else
+  def has_valid_readme?
+    if readme.blank?
       spin_log('[ERROR] The Spin should have a readme, please add it to the source control and refresh the Spin')
+    else
+      return true
     end
     false
   end
@@ -163,30 +161,14 @@ class Spin < ApplicationRecord
   # == Returns:
   # A boolean representing if the spin metadata is ok
   #
-  def has_valid_metadata?(user)
-    metadata = Providers::BaseManager.new(user.authentication_tokens.first.provider).get_connector.metadata(full_name)
-    if metadata.kind_of? ErrorExchange
+  def has_valid_metadata?
+    if metadata.blank?
       spin_log("[ERROR] Metadata error")
-      spin_log("#{metadata.as_json["title"]} \n #{metadata.as_json["detail"]}")
     else
-      update(metadata: metadata.second, metadata_raw: metadata.first)
       return true
     end
     false
   end
-
-  # Update releases
-  #
-  # == Returns:
-  # A boolean representing if the spin releases are updated
-  #
-  def update_releases(user)
-    releases = Providers::BaseManager.new(user.authentication_tokens.first.provider).get_connector.releases(full_name)
-    return false unless releases
-    update(releases: releases)
-    true
-  end
-
   # Refresh tags of spin
   # TODO: add tags from GitHub
   #

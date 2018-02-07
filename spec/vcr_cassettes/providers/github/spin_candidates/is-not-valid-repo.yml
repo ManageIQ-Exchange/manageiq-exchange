@@ -1,0 +1,226 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.github.com/repos/ManageIQ-Exchange/manageiq-exchange/readme?client_id=CLIENT-ID&client_secret=CLIENT-SECRET
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Octokit Ruby Gem 4.8.0
+      Accept:
+      - application/vnd.github.raw
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Tue, 06 Feb 2018 19:59:07 GMT
+      Content-Type:
+      - application/vnd.github.raw; charset=utf-8
+      Content-Length:
+      - '2900'
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4997'
+      X-Ratelimit-Reset:
+      - '1517948799'
+      Cache-Control:
+      - public, max-age=60, s-maxage=60
+      Vary:
+      - Accept
+      Etag:
+      - '"40925b071f26d52ca7a19b926db7e7a4"'
+      Last-Modified:
+      - Tue, 06 Feb 2018 17:41:56 GMT
+      X-Github-Media-Type:
+      - github.v3; param=raw
+      Access-Control-Expose-Headers:
+      - ETag, Link, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining,
+        X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      Content-Security-Policy:
+      - default-src 'none'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Runtime-Rack:
+      - '0.038615'
+      X-Github-Request-Id:
+      - D9FA:256CC:E858D:1B6CDB:5A7A090B
+    body:
+      encoding: UTF-8
+      string: |+
+        [![Build Status](https://travis-ci.org/ManageIQ-Exchange/manageiq-exchange.svg?branch=master)](https://travis-ci.org/ManageIQ-Exchange/manageiq-exchange)
+        [![API Docs](http://img.shields.io/badge/yard-docs-blue.svg)](http://www.rubydoc.info/github/miq-consumption/manageiq-exchange/master)
+        [![Coverage Status](https://coveralls.io/repos/github/ManageIQ-Exchange/manageiq-exchange/badge.svg?branch=master)](https://coveralls.io/github/ManageIQ-Exchange/manageiq-exchange?branch=master)
+
+        # README
+
+        This is the API only backend application for Exchange. It is prepared to be deployed on OpenShift online using 3 pods (React frontend, this backend, database)
+
+        It has been developed using:
+        * Ruby 2.4
+        * Rails 5.1 (API MODE)
+        * Devise
+        * Tiddle
+        * Octokat
+
+
+        ## Getting Help
+
+        If you find a bug, please report an [Issue](https://github.com/ManageIQ-Exchange/manageiq-exchange/issues/new)
+        and see our [contributing guide](CONTRIBUTING.md).
+
+        If you have a question, please [post to Stack Overflow](https://stackoverflow.com/questions/tagged/manageiq-exchange).
+
+
+        Thanks!
+
+        ## Documentation
+
+        If you're reading this at https://github.com/ManageIQ-Exchange/manageiq-exchange you are
+        reading documentation for our `master`, which is not yet released.
+
+        - [0.1.0 (master) Documentation](https://github.com/ManageIQ-Exchange/manageiq-exchange/tree/master)
+          - [![API Docs](http://img.shields.io/badge/yard-docs-blue.svg)](http://www.rubydoc.info/github/ManageIQ-Exchange/manageiq-exchange/master)
+          - [Guides](docs)
+        ## ENVIRONMENT VARIABLES
+
+        ### Oauth for connecting to github
+        - GITHUB_OAUTH_ID
+        - GITHUB_OAUTH_SECRET
+
+        ### Base secret:
+
+        - SECRET_KEY_BASE
+
+        ### Rails config
+
+        - RAILS_ENV
+        - RAILS_LOG_TO_STDOUT
+
+        ### Devise
+        - EXCHANGE_MAILER_HOST
+        - EXCHANGE_MAILER_PORT
+        - EXCHANGE_EMAIL_SENDER
+
+        ## Docker configuration to test ManageIq-Exchange
+
+        First you need to create the directory ``postgres-exchange-data``  on the same level of the docker-compose file. In this directory we'll store all database information from our postgres docker.
+
+        Remember set `GITHUB_OAUTH_ID`,`GITHUB_OAUTH_SECRET` in docker-compose file
+
+        ```bash
+        docker-compose build
+        docker-compose up
+        ```
+
+        In your first build you will need to create the database so...
+        ```bash
+        docker-compose run --rm exchange bash
+
+        rails db:create db:migrate
+        ```
+
+        You will see a prompt like root@64bfb5e14bb5:/app#`, this means that you are inside the docker. Execute:
+        ```bash
+        bundle
+        rails db:create db:migrate
+        exit
+        ```
+        You will see some querys, after that you can go to `http://localhost:3000/` and test ManageIQ-Exchange
+
+        To stop environment you can use `CTRL+C` and `docker-compose down`
+
+        You can restore the environment with `docker-compose up` next time without recreate database.
+
+        If you wanna remove the database and start again you only need to remove all content in `/docker-compose down/*`
+
+        ## Developer documentation
+        Please review [Developers Guide](Developers.md)
+
+
+
+    http_version: 
+  recorded_at: Tue, 06 Feb 2018 19:59:07 GMT
+- request:
+    method: get
+    uri: https://api.github.com/repos/ManageIQ-Exchange/manageiq-exchange/contents/metadata.yml?client_id=CLIENT-ID&client_secret=CLIENT-SECRET
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Octokit Ruby Gem 4.8.0
+      Accept:
+      - application/vnd.github.raw
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Tue, 06 Feb 2018 19:59:08 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Status:
+      - 404 Not Found
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4996'
+      X-Ratelimit-Reset:
+      - '1517948799'
+      X-Github-Media-Type:
+      - github.v3; param=raw
+      Access-Control-Expose-Headers:
+      - ETag, Link, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining,
+        X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      Content-Security-Policy:
+      - default-src 'none'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Runtime-Rack:
+      - '0.040201'
+      X-Github-Request-Id:
+      - D9FB:256CB:8AC32:123E50:5A7A090B
+    body:
+      encoding: ASCII-8BIT
+      string: '{"message":"Not Found","documentation_url":"https://developer.github.com/v3/repos/contents/#get-contents"}'
+    http_version: 
+  recorded_at: Tue, 06 Feb 2018 19:59:08 GMT
+recorded_with: VCR 4.0.0

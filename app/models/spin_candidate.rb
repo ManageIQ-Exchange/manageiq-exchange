@@ -5,8 +5,15 @@ class SpinCandidate < ApplicationRecord
   validates :published, inclusion: { in: [true, false] }
   validates :validated, inclusion: { in: [true, false] }
 
-  def is_candidate? user:
-    client = Providers::BaseManager.new(user.authentication_tokens.first.provider).get_connector
-    client.candidate_spin? full_name
+
+  def publish_spin user:
+    if spin.check user
+      spin.visible = true
+      if spin.save
+        published = true
+        return true if save
+      end
+    end
+    false
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180206144300) do
+ActiveRecord::Schema.define(version: 20180207112035) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,7 +76,6 @@ ActiveRecord::Schema.define(version: 20180206144300) do
     t.datetime "updated_at", null: false
     t.string "user_login"
     t.boolean "visible", default: false
-    t.text "log"
     t.jsonb "releases", default: []
     t.bigint "spin_candidate_id"
     t.index ["published"], name: "index_spins_on_published"

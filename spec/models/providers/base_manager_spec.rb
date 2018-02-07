@@ -1,7 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe Providers::BaseManager, type: :model do
-  subject { Providers::BaseManager.new('github.com') }
+  let!(:user) { FactoryBot.create(:user) }
+  subject { Providers::BaseManager.new(user) }
+  before(:each) do
+    @user = user
+    api_basic_authorize
+  end
   it 'initialize correctly' do
     expect(subject).to be_a_kind_of Providers::BaseManager
     expect(subject.identifier).to eq 'github.com'
@@ -9,7 +14,10 @@ RSpec.describe Providers::BaseManager, type: :model do
   end
 
   it 'initialize with wrong provider' do
-    wrong_provider = Providers::BaseManager.new('another.com')
+    token = user.authentication_tokens.first
+    token.provider = 'another.com'
+    token.save
+    wrong_provider = Providers::BaseManager.new(user)
     expect(wrong_provider).to be_a_kind_of Providers::BaseManager
     expect(wrong_provider.identifier).to eq 'another.com'
     expect(wrong_provider.provider).to be_a_kind_of ErrorExchange
@@ -28,7 +36,10 @@ RSpec.describe Providers::BaseManager, type: :model do
   end
 
   it 'get_conector of a wrong provider' do
-    wrong_provider = Providers::BaseManager.new('another.com')
+    token = user.authentication_tokens.first
+    token.provider = 'another.com'
+    token.save
+    wrong_provider = Providers::BaseManager.new(user)
     expect(wrong_provider.get_connector).to be_a_kind_of ErrorExchange
   end
 end

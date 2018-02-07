@@ -1,11 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe Providers::GithubManager, type: :model do
-  let(:base_manager) { Providers::BaseManager.new('github.com') }
+  let!(:user) { FactoryBot.create(:user) }
+  let(:base_manager) { Providers::BaseManager.new(user) }
   let(:code) { '2931e223feda1c5c331c'}
   let!(:user) { FactoryBot.create(:user) }
   subject { Providers::GithubManager.new(base_manager.provider) }
 
+  before(:each) do
+    @user = user
+    api_basic_authorize
+  end
   it 'initialize correctly' do
     expect(subject).to be_a_kind_of Providers::GithubManager
     expect(subject.server_type).to eq 'GitHub'
@@ -97,7 +102,7 @@ RSpec.describe Providers::GithubManager, type: :model do
   it 'repos' do
     VCR.use_cassette("providers/github/get_repos",:decode_compressed_response => true, :record => :none) do
       token = subject.exchange_code_for_token!(code)
-      releases = subject.repos(user:user, github_token: token)
+      releases = subject.repos
       expect(releases).to be_kind_of Array
     end
   end

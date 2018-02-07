@@ -82,12 +82,13 @@ module V1
       #
       def verify_user!(code, provider, request)
         logger.debug 'Verifying that the user code is valid and authenticating user'
-        pr = Providers::BaseManager.new(provider)
-        return pr.provider if pr.provider.kind_of? ErrorExchange
-        connection = pr.get_connector
-        access_token = code ? connection.exchange_code_for_token!(code) : nil # Verify github code and get token with it
+        pr = Providers::BaseManager.new(nil)
+        validate_provider = pr.validate_provider(provider)
+        return  validate_provider if validate_provider.kind_of? ErrorExchange
+        connector = pr.get_connector
+        access_token = code ? connector.exchange_code_for_token!(code) : nil # Verify github code and get token with it
         raise Octokit::NotFound unless access_token[:error].nil?
-        github_user = connection.user
+        github_user = connector.user
         raise Octokit::Unauthorized if github_user.nil?
         logger.debug "Valid code, finding or creating user #{github_user.login}"
         user = User.return_user(github_user)
