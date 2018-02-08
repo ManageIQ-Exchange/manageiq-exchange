@@ -13,6 +13,21 @@ module V1
     # TODO If you provide a search team, it will return those spins mathing the search
     # users/<user_id>/spins Get all spins of a user
     # spins?query=<value>  Look spins include value in the name
+=begin
+  @api {get} /spin_candidates Request list of spin_candidates for the user
+  @apiVersion 1.0.0
+  @apiName GetSpinCandidate
+  @apiGroup SpinCandidate
+  @apiPermission user
+  @apiSuccess {String} version Version of the API
+  @apiSuccess {Object[]} providers Authentication endpoints
+  @apiSuccess {String=["github"]} providers.type Type of provider oauth
+  @apiSuccess {Boolean} providers.enabled Whether the provide is enabled or not
+  @apiSuccess {String} providers.id_application Id of the application in the oauth provider.
+  @apiSuccess {String} providers.server Server Address
+  @apiSuccess {String} providers.version API Prefix
+  @apiSuccess {Boolean} providers.verify Does it need verify?
+=end
     def index
       @spins = SpinCandidate.where(user_id: current_user)
       @spins = @spins.where('name ILIKE ?', "%#{params[:query]}%") if params[:query]

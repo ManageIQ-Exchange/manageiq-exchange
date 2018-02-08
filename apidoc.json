@@ -3,5 +3,5 @@
   "version": "1.0.0",
   "description": "Exchange API doc",
   "title": "ManageIQ Exchange API",
-  "url" : "https://exchange-backend.manageiq.com/v1"
+  "url" : "https://exchange-backend.manageiq.org/v1"
 }

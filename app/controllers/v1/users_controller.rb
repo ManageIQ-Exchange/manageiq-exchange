@@ -12,6 +12,20 @@ module V1
     # Return a no_content 204 if there isn't any record
     #
     # users?query=<value> get users login include value
+=begin
+  @api {get} /users Request user index
+  @apiVersion 1.0.0
+  @apiName GetUsers
+  @apiPermission none
+  @apiGroup Users
+  @apiSuccess {Object} data
+  @apiSuccess {Object[]} data.user User data
+  @apiSuccess {String} data.user.id ID of user in source control
+  @apiSuccess {String} data.user.login Login
+  @apiSuccess {String} data.user.url_profile Url of the profile in source control
+  @apiUse Pagination
+  @apiUse NoContent
+=end
     def index
       logger.debug 'Providing all users'
       @users = User.all # TODO: Pagination
@@ -30,6 +44,26 @@ module V1
     # Return User find by id or github_login with a ok 200 code
     # Return a error message with a not_found 404 code
     #
+    #
+=begin
+  @api {get} /users/:id Request user info
+  @apiVersion 1.0.0
+  @apiName GetUsersShow
+  @apiPermission none
+  @apiGroup Users
+  @apiParam {Integer} id User unique ID.
+  @apiSuccess {Object} data
+  @apiSuccess {String} data.github_id ID of user in source control
+  @apiSuccess {String} data.login Login
+  @apiSuccess {String} data.url_profile Url of the profile in source control
+  @apiError (No Content 404) UserNotFound User has not been found
+  @apiError (No Content 404) {Integer} UserNotFound.status 404
+  @apiError (No Content 404) {String} UserNotFound.code user_not_found
+  @apiError (No Content 404) {String} UserNotFound.title Error title
+  @apiError (No Content 404) {String} UserNotFound.Detail Additional detail on error
+  @apiError (No Content 404) {Object} UserNotFound.extra
+  @apiError (No Content 404) {String} UserNotFound.extra.username User ID
+=end
     def show
       return unless  check_params_required(:id)
       logger.debug "Looking for user with github_login #{params[:id]}"

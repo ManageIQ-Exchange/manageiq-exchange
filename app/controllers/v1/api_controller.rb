@@ -9,14 +9,21 @@ module V1
     include Pagination
     include Metadata
 
-
-    =begin
-      @api {get} / Request version inforrmation
-      @apiName GetApi
-      @apiGroup Api
-          @apiSuccess {String} version Version of the API
-          @apiSuccess {Object[]} authentication_endpoints  Authentication endpoints.
-    =end
+=begin
+  @api {get} / Request version information
+  @apiVersion 1.0.0
+  @apiName GetApi
+  @apiPermission none
+  @apiGroup Api
+  @apiSuccess {String} version Version of the API
+  @apiSuccess {Object[]} providers Authentication endpoints
+  @apiSuccess {String=["github"]} providers.type Type of provider oauth
+  @apiSuccess {Boolean} providers.enabled Whether the provide is enabled or not
+  @apiSuccess {String} providers.id_application Id of the application in the oauth provider
+  @apiSuccess {String} providers.server Server Address
+  @apiSuccess {String} providers.version API Prefix
+  @apiSuccess {Boolean} providers.verify Does it need verify?
+=end
     def version
       logger.debug 'Creating session, verifying code'
       providers = {}
