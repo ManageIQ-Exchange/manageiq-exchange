@@ -121,9 +121,10 @@ class Spin < ApplicationRecord
     self.min_miq_version= metadata_json['min_miq_version'].downcase.bytes[0] - 'a'.bytes[0],
     self.metadata = metadata_json
     self.metadata_raw = metadata_raw
-    self.releases= releases,
+    self.releases= go_json(releases),
     self.user= user,
     self.user_login= user.github_login
+    self.downloads_url = ''
     true
   end
 
@@ -186,5 +187,62 @@ class Spin < ApplicationRecord
       validation = new_tag.find_similar
       spin_log(validation) unless validation.nil?
     end
+  end
+
+  def go_json(data)
+    releases = []
+    data.each do |one_release|
+      obj = {}
+      one_release.each do |k,v|
+        if k.to_s != "author"
+          obj[k.to_s] = v
+        else
+          author_json = {}
+          v.each do |kt,vt|
+            author_json[kt.to_s] = vt
+          end
+          obj[k.to_s] = author_json
+        end
+      end
+      releases.push(obj)
+    end
+    { "releases":releases }
+  end
+
+  def format_releases(id = nil)
+    result = []
+    releases.first["releases"].each do |rele|
+      if id && id == rele["id"].to_s
+        result = rele["zipball_url"]
+        break;
+      else
+        result = result.push(
+          {
+              id:  rele["id"],
+              draft: rele["draft"],
+              tag: rele["tag_name"],
+              name: rele["name"],
+              prerelease: rele["prerelease"],
+              created_at: rele["created_at"],
+              published_at: rele["published_at"],
+              author:{
+                  login: rele["author"]["login"],
+                  id: rele["author"]["id"],
+                  url: rele["author"]["html_url"],
+                  avatar_url: rele["author"]["avatar_url"]
+              }
+          }
+        )
+      end
+    end
+    result
+  end
+
+  def download_release(release_id)
+    result = format_releases(release_id)
+    if result.empty?
+      return nil
+    end
+    result
   end
 end

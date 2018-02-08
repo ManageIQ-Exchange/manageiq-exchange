@@ -79,6 +79,9 @@ en:
     user_not_found:
       title: This user is not in the database
       detail: Maybe the id of user is wrong
+    release_not_found:
+      title: Relase not found
+      detail: Maybe the id is wrong
     spin_candidate_not_found:
         title: Spin Candidate not found in the database
         detail: Check that the id of the spin exists
@@ -88,3 +91,6 @@ en:
     spin_candidate_not_validated:
         title: Spin Candidate is not validated
         detail: Check de extra information or logs
+    spin_candidate_not_published:
+        title: Spin Candidate is not published
+        detail: You need to publish the spin

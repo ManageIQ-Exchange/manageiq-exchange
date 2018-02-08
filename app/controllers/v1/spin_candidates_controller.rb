@@ -104,5 +104,18 @@ module V1
       # If valid create or update the Spin
       # If not valid, the log should be updated.
     end
+
+    def unpublish
+      sc = SpinCandidate.find(params[:spin_candidate_id])
+      if sc.spin
+        if sc.unpublish
+          return_response sc, :ok, {}
+        else
+          render_error_exchange(:spin_candidate_not_published, :precondition_failed)
+        end
+      else
+        render_error_exchange(:spin_candidate_not_published, :not_found)
+      end
+    end
   end
 end
