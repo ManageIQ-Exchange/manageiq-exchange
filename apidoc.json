@@ -1,7 +1,7 @@
 {
-  "name": "example",
-  "version": "0.1.0",
-  "description": "apiDoc basic example",
-  "title": "Custom apiDoc browser title",
-  "url" : "https://api.github.com/v1"
+  "name": "ManageIQ Exchange",
+  "version": "1.0.0",
+  "description": "Exchange API doc",
+  "title": "ManageIQ Exchange API",
+  "url" : "https://exchange-backend.manageiq.com/v1"
 }
