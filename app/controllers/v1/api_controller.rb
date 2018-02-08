@@ -9,6 +9,14 @@ module V1
     include Pagination
     include Metadata
 
+
+    =begin
+      @api {get} / Request version inforrmation
+      @apiName GetApi
+      @apiGroup Api
+          @apiSuccess {String} version Version of the API
+          @apiSuccess {Object[]} authentication_endpoints  Authentication endpoints.
+    =end
     def version
       logger.debug 'Creating session, verifying code'
       providers = {}
