@@ -1,81 +1,58 @@
 module V1
   class TopController < ApiController
     def index
-      # TODO
-      response = { "data": {
-              "Most Starred": [
-              { "name": "primero.primero", "Stars": 10, "id": 123456 },
-              { "name": "segundo.segundo", "Stars": 9,  "id": 123456 },
-              { "name": "tercero.tercero", "Stars": 8,  "id": 123456 },
-              { "name": "cuarto.cuarto",   "Stars": 7,  "id": 123456 },
-              { "name": "quinto.quinto",   "Stars": 6,  "id": 123456 },
-              { "name": "sexto.sexto",     "Stars": 5,  "id": 123456 },
-              { "name": "séptimo.séptimo", "Stars": 4,  "id": 123456 },
-              { "name": "octavo.octavo",   "Stars": 3,  "id": 123456 },
-              { "name": "noveno.noveno",   "Stars": 2,  "id": 123456 },
-              { "name": "décimo.décimo",   "Stars": 1,  "id": 123456 }
-      ],
 
-          "Most Watched": [
-          { "name": "primero.primero", "Watchers": 10, "id": 123456 },
-          { "name": "segundo.segundo", "Watchers": 9,  "id": 123456 },
-          { "name": "tercero.tercero", "Watchers": 8,  "id": 123456 },
-          { "name": "cuarto.cuarto",   "Watchers": 7,  "id": 123456 },
-          { "name": "quinto.quinto",   "Watchers": 6,  "id": 123456 },
-          { "name": "sexto.sexto",     "Watchers": 5,  "id": 123456 },
-          { "name": "séptimo.séptimo", "Watchers": 4,  "id": 123456 },
-          { "name": "octavo.octavo",   "Watchers": 3,  "id": 123456 },
-          { "name": "noveno.noveno",   "Watchers": 2,  "id": 123456 },
-          { "name": "décimo.décimo",   "Watchers": 1,  "id": 123456 }
-      ],
-          "Most Downloaded": [
-          { "name": "primero.primero", "Downloads": 10, "id": 123456 },
-          { "name": "segundo.segundo", "Downloads": 9,  "id": 123456 },
-          { "name": "tercero.tercero", "Downloads": 8,  "id": 123456 },
-          { "name": "cuarto.cuarto",   "Downloads": 7,  "id": 123456 },
-          { "name": "quinto.quinto",   "Downloads": 6,  "id": 123456 },
-          { "name": "sexto.sexto",     "Downloads": 5,  "id": 123456 },
-          { "name": "séptimo.séptimo", "Downloads": 4,  "id": 123456 },
-          { "name": "octavo.octavo",   "Downloads": 3,  "id": 123456 },
-          { "name": "noveno.noveno",   "Downloads": 2,  "id": 123456 },
-          { "name": "décimo.décimo",   "Downloads": 1,  "id": 123456 }
-      ],
-       "Top Tags": [
-          { "name": "primero.primero", "# Spins": 10, "id": 123456 },
-          { "name": "segundo.segundo", "# Spins": 9,  "id": 123456 },
-          { "name": "tercero.tercero", "# Spins": 8,  "id": 123456 },
-          { "name": "cuarto.cuarto",   "# Spins": 7,  "id": 123456 },
-          { "name": "quinto.quinto",   "# Spins": 6,  "id": 123456 },
-          { "name": "sexto.sexto",     "# Spins": 5,  "id": 123456 },
-          { "name": "séptimo.séptimo", "# Spins": 4,  "id": 123456 },
-          { "name": "octavo.octavo",   "# Spins": 3,  "id": 123456 },
-          { "name": "noveno.noveno",   "# Spins": 2,  "id": 123456 },
-          { "name": "décimo.décimo",   "# Spins": 1,  "id": 123456 }
-      ],
-      "Top Contributors": [
-          { "name": "primero.primero", "# Spins": 10, "id": 123456 },
-          { "name": "segundo.segundo", "# Spins": 9,  "id": 123456 },
-          { "name": "tercero.tercero", "# Spins": 8,  "id": 123456 },
-          { "name": "cuarto.cuarto",   "# Spins": 7,  "id": 123456 },
-          { "name": "quinto.quinto",   "# Spins": 6,  "id": 123456 },
-          { "name": "sexto.sexto",     "# Spins": 5,  "id": 123456 },
-          { "name": "séptimo.séptimo", "# Spins": 4,  "id": 123456 },
-          { "name": "octavo.octavo",   "# Spins": 3,  "id": 123456 },
-          { "name": "noveno.noveno",   "# Spins": 2,  "id": 123456 },
-          { "name": "décimo.décimo",   "# Spins": 1,  "id": 123456 }
-      ],
-      "Newest": [
-          { "name": "primero.primero", "Added on": Date.current, "id": 123456 },
-          { "name": "segundo.segundo", "Added on": Date.current, "id": 123456 },
-          { "name": "tercero.tercero", "Added on": Date.current, "id": 123456 },
-          { "name": "cuarto.cuarto",   "Added on": Date.current, "id": 123456 },
-          { "name": "quinto.quinto",   "Added on": Date.current, "id": 123456 },
-          { "name": "sexto.sexto",     "Added on": Date.current, "id": 123456 },
-          { "name": "séptimo.séptimo", "Added on": Date.current, "id": 123456 },
-          { "name": "octavo.octavo",   "Added on": Date.current, "id": 123456 },
-          { "name": "noveno.noveno",   "Added on": Date.current, "id": 123456 },
-          { "name": "décimo.décimo",   "Added on": Date.current, "id": 123456 }
-      ] } }
+      @spin_starred = Spin.select('id','full_name','stargazers_count').order('stargazers_count DESC').limit(10)
+      @spin_watched = Spin.select('id','full_name','watchers_count').order('watchers_count DESC').limit(10)
+      @spin_downloaded= Spin.select('id','full_name','downloads_count').order('downloads_count DESC').limit(10)
+
+      @top_tags = Tag.joins(:spins).group("name","id").order('count_id DESC').count("id")
+      @top_contributors = User.joins(:spins).group("github_login","id").order('count_id DESC').count("id")
+      @newest_users = User.select("id","github_login","created_at").order('created_at DESC').limit(10)
+
+      most_starred = []
+      @spin_starred.each do |spin|
+        most_starred = most_starred.push({ "name": spin.full_name, "Stars": spin.stargazers_count, "id": spin.id })
+      end
+
+      most_watched = []
+      @spin_watched.each do |spin|
+        most_watched = most_watched.push({ "name": spin.full_name, "Watchers": spin.watchers_count, "id": spin.id })
+      end
+
+      most_download = []
+      @spin_downloaded.each do |spin|
+        most_download = most_download.push({ "name": spin.full_name, "Downloads": spin.downloads_count, "id": spin.id })
+      end
+
+      top_tags = []
+      @top_tags.each do |tag, count|
+        break if top_tags.count == 10
+        top_tags = top_tags.push({ "name": tag.first, "# Spins": count, "id": tag.second })
+      end
+
+      top_contributors = []
+      @top_contributors.each do |user, count|
+        break if top_contributors.count == 10
+        top_contributors = top_contributors.push({ "name": user.first, "# Spins": count, "id": user.second })
+      end
+
+      newest = []
+      @newest_users.each do |user|
+        newest = newest.push({ "name": user.github_login, "Added on": user.created_at, "id": user.id })
+      end
+
+      response = {
+        "data": {
+          "Most Starred": most_starred,
+          "Most Watched": most_watched,
+          "Most Downloaded": most_download,
+          "Top Tags": top_tags,
+          "Top Contributors": top_contributors,
+          "Newest": newest
+        }
+      }
+
       return_response response, :ok, {}
     end
   end
