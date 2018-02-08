@@ -66,6 +66,7 @@ class Spin < ApplicationRecord
           return true
         else
           if save
+            refresh_tags
             spin_candidate.update(validated: true, validation_log: "[OK] Spin is validated")
             return true
           end
@@ -180,10 +181,10 @@ class Spin < ApplicationRecord
   def refresh_tags
     taggings.delete_all
     metadata['tags'].each do |tag|
-      new_tag = Tag.find_or_create_by(name: tag)
+      new_tag = Tag.find_or_create_by(name: tag.parameterize)
       tags << new_tag
       validation = new_tag.find_similar
-      spin_log(log + validation) unless validation.nil?
+      spin_log(validation) unless validation.nil?
     end
   end
 end
