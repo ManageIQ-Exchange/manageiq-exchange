@@ -30,11 +30,16 @@ Rails.application.routes.draw do
         post 'refresh'
       end
       post 'publish', to: 'spin_candidates#publish'
+      post 'unpublish', to: 'spin_candidates#unpublish'
       post 'validate', to: 'spin_candidates#validate'
     end
 
     resources :tags,  only: [:index, :show]
-    resources :spins, only: [:index, :show]
+    resources :spins, only: [:index, :show] do
+      get 'releases', to: 'spins#releases'
+      get 'releases/:release_id', to: 'spins#one_release'
+      get 'releases/:release_id/download', to: 'spins#download'
+    end
   end
 
 

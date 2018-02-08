@@ -20,4 +20,13 @@ class SpinCandidate < ApplicationRecord
     end
     false
   end
+
+  def unpublish
+    spin.visible = false
+    if spin.save
+      self.published = false
+      return true if save
+    end
+    false
+  end
 end
