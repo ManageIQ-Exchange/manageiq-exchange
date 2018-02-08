@@ -15,11 +15,9 @@ module V1
     def index
       logger.debug 'Providing all users'
       @users = User.all # TODO: Pagination
-      @users = @users.where('github_login like? or github_login like?', "%#{params[:query]}%", "%#{params[:query].downcase}%") if params[:query]
-
-      total_users = @users.count
-      if total_users.positive?
-        logger.debug { "Returning #{total_users} Users" }
+      @users = @users.where('github_login ILIKE ? ', "%#{params[:query]}%") if params[:query]
+      @users = @users.order("#{params[:sort]} #{params[:order] || 'DESC'}") if params[:sort]
+      if @users.count.positive?
         # render json: @users, expand: params[:expand] == "resources",status: :ok
         return_response @users, :ok
       else
