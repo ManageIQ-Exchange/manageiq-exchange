@@ -14,17 +14,9 @@ module V1
     # users/<user_id>/spins Get all spins of a user
     # spins?query=<value>  Look spins include value in the name
     def index
-      if params[:user_id]
-        @user = User.find_by_github_login(params[:user_id])
-        unless @user
-          return_response status: :no_content
-          return
-        end
-        @spins = SpinCandidate.where(user_id: @user.id) if @user
-      else
-        @spins = SpinCandidate.all
-      end
-      @spins = @spins.where('name like? or name like?', "%#{params[:query]}%", "%#{params[:query].downcase}%") if params[:query]
+      @spins = SpinCandidate.where(user_id: current_user)
+      @spins = @spins.where('name ILIKE ?', "%#{params[:query]}%") if params[:query]
+      @spins = @spins.order("#{params[:sort]} #{params[:order] || 'DESC'}") if params[:sort]
       if @spins.count.positive?
         return_response @spins, :ok, {}
       else
