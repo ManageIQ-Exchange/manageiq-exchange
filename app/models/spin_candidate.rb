@@ -14,7 +14,7 @@ class SpinCandidate < ApplicationRecord
     if spin.check user
       spin.visible = true
       if spin.save
-        published = true
+        self.published = true
         return true if save
       end
     end
