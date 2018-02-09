@@ -17,8 +17,7 @@ default: &default
 
 development:
   <<: *default
-  username: exchange
-  password: exchange
+  username: postgres
   database: exchange_development
 
 test:

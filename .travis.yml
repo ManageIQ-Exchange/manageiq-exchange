@@ -7,12 +7,12 @@ env:
   - RAILS_ENV = test
 addons:
   postgresql: '9.5'
-install: bin/setup
-# after_script: bundle exec codeclimate-test-reporter
 
 before_install:
-  - cp config/database.yml.travis config/database.yml
+  - psql -c "CREATE USER exchange WITH PASSWORD 'exchange';" -U postgres
+
 script:
+  - bin/setup
   - bundle exec rake db:schema:load
   - bundle exec rake db:test:prepare
   - bundle exec rake spec
@@ -25,7 +25,7 @@ deploy:
   - provider: pages
       local-dir: gh_pages
       skip-cleanup: true
-      github-token: $GH-PAGES-TOKEN  # Set in travis-ci.org dashboard, marked secure
+      github-token: $GH_PAGES_TOKEN  # Set in travis-ci.org dashboard, marked secure
       keep-history: true
       target-branch: gh-pages
       on:
