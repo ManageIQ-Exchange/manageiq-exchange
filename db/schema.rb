@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180208130939) do
+ActiveRecord::Schema.define(version: 20180208112242) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,7 +79,6 @@ ActiveRecord::Schema.define(version: 20180208130939) do
     t.jsonb "releases", default: []
     t.bigint "spin_candidate_id"
     t.integer "downloads_count", default: 0
-    t.string "downloads_url", default: ""
     t.index ["published"], name: "index_spins_on_published"
     t.index ["spin_candidate_id"], name: "index_spins_on_spin_candidate_id"
     t.index ["user_id"], name: "index_spins_on_user_id"
