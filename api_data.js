@@ -1,10 +1,10 @@
 define({ "api": [
   {
     "type": "get",
-    "url": "/",
-    "title": "Request version information",
+    "url": "/api/version",
+    "title": "Get API Version",
     "version": "1.0.0",
-    "name": "GetApi",
+    "name": "GetVersion",
     "permission": [
       {
         "name": "none"
@@ -74,7 +74,14 @@ define({ "api": [
             "description": "<p>Does it need verify?</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Success",
+          "content": "{\n    \"data\": {\n        \"version\": \"1.0\",\n        \"providers\": {\n            \"github.com\": {\n                \"type\": \"github\",\n                \"enabled\": true,\n                \"id_application\": \"ID_OF_APPLICATION\",\n                \"server\": \"api.github.com\",\n                \"version\": \"v3\",\n                \"verify\": true\n            }\n        }\n    }\n}",
+          "type": "json"
+        }
+      ]
     },
     "filename": "/home/travis/build/ManageIQ-Exchange/manageiq-exchange/app/controllers/v1/api_controller.rb",
     "groupTitle": "Api"
@@ -163,6 +170,245 @@ define({ "api": [
   },
   {
     "type": "get",
+    "url": "/tags/:id",
+    "title": "Request tag info",
+    "version": "1.0.0",
+    "name": "GetTagInfo",
+    "permission": [
+      {
+        "name": "none"
+      }
+    ],
+    "group": "Tags",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Tag id or name</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "data",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "Integer",
+            "optional": false,
+            "field": "data.id",
+            "description": "<p>ID of the tag</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "data.name",
+            "description": "<p>Tag name</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "data.created_at",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "data.updated_at",
+            "description": ""
+          }
+        ],
+        "No Content 204": [
+          {
+            "group": "No Content 204",
+            "optional": false,
+            "field": "NoContent",
+            "description": "<p>Response has no content</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success",
+          "content": "{\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"report\",\n        \"created_at\": \"2018-01-26T12:18:11.959Z\",\n        \"updated_at\": \"2018-01-26T12:18:11.959Z\"\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "/home/travis/build/ManageIQ-Exchange/manageiq-exchange/app/controllers/v1/tags_controller.rb",
+    "groupTitle": "Tags"
+  },
+  {
+    "type": "get",
+    "url": "/tags?query=",
+    "title": "Request search",
+    "version": "1.0.0",
+    "name": "GetTagQuery",
+    "permission": [
+      {
+        "name": "none"
+      }
+    ],
+    "group": "Tags",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": true,
+            "field": "query",
+            "description": "<p>?] Search parameter</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "data",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "Integer",
+            "optional": false,
+            "field": "data.id",
+            "description": "<p>ID of the tag</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "data.name",
+            "description": "<p>Tag name</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "data.created_at",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "data.updated_at",
+            "description": ""
+          }
+        ],
+        "No Content 204": [
+          {
+            "group": "No Content 204",
+            "optional": false,
+            "field": "NoContent",
+            "description": "<p>Response has no content</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success",
+          "content": "{\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"report\",\n        \"created_at\": \"2018-01-26T12:18:11.959Z\",\n        \"updated_at\": \"2018-01-26T12:18:11.959Z\"\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "/home/travis/build/ManageIQ-Exchange/manageiq-exchange/app/controllers/v1/tags_controller.rb",
+    "groupTitle": "Tags"
+  },
+  {
+    "type": "get",
+    "url": "/tags",
+    "title": "Request index of tags",
+    "version": "1.0.0",
+    "name": "GetTags",
+    "permission": [
+      {
+        "name": "none"
+      }
+    ],
+    "group": "Tags",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "data",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "Integer",
+            "optional": false,
+            "field": "data.id",
+            "description": "<p>ID of the tag</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "data.name",
+            "description": "<p>Tag name</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "data.created_at",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "data.updated_at",
+            "description": ""
+          }
+        ],
+        "No Content 204": [
+          {
+            "group": "No Content 204",
+            "optional": false,
+            "field": "NoContent",
+            "description": "<p>Response has no content</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success",
+          "content": "{ \"data\":\n    [\n    {\n       \"id\": 1,\n       \"name\": \"report\",\n       \"created_at\": \"2018-01-26T12:18:11.959Z\",\n       \"updated_at\": \"2018-01-26T12:18:11.959Z\"\n    },\n    {\n       \"id\": 2,\n       \"name\": \"playbook\",\n       \"created_at\": \"2018-01-26T12:18:11.965Z\",\n       \"updated_at\": \"2018-01-26T12:18:11.965Z\"\n    },\n    {\n       \"id\": 3,\n       \"name\": \"dialogue\",\n       \"created_at\": \"2018-01-26T12:18:11.970Z\",\n       \"updated_at\": \"2018-01-26T12:18:11.970Z\"\n    },\n    {\n        \"id\": 4,\n        \"name\": \"workflow\",\n        \"created_at\": \"2018-01-26T12:18:11.974Z\",\n        \"updated_at\": \"2018-01-26T12:18:11.974Z\"\n      }\n   ]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "/home/travis/build/ManageIQ-Exchange/manageiq-exchange/app/controllers/v1/tags_controller.rb",
+    "groupTitle": "Tags"
+  },
+  {
+    "type": "get",
     "url": "/users",
     "title": "Request user index",
     "version": "1.0.0",
@@ -194,7 +440,7 @@ define({ "api": [
             "group": "Success 200",
             "type": "String",
             "optional": false,
-            "field": "data.user.id",
+            "field": "data.user.github_id",
             "description": "<p>ID of user in source control</p>"
           },
           {
@@ -248,7 +494,14 @@ define({ "api": [
             "description": "<p>Response has no content</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Success",
+          "content": "{\n    \"data\": [\n        {\n            \"github_id\": \"7500590\",\n            \"login\": \"chargio\",\n            \"url_profile\": \"https://github.com/chargio\"\n        }\n    ],\n    \"meta\": {\n        \"current_page\": 1,\n        \"total_pages\": 1,\n        \"total_count\": 1\n    }\n}",
+          "type": "json"
+        }
+      ]
     },
     "filename": "/home/travis/build/ManageIQ-Exchange/manageiq-exchange/app/controllers/v1/users_controller.rb",
     "groupTitle": "Users"
@@ -292,25 +545,32 @@ define({ "api": [
             "group": "Success 200",
             "type": "String",
             "optional": false,
-            "field": "data.github_id",
-            "description": "<p>ID of user in source control</p>"
+            "field": "data.user.github_id",
+            "description": "<p>Github numeric ID</p>"
           },
           {
             "group": "Success 200",
             "type": "String",
             "optional": false,
-            "field": "data.login",
-            "description": "<p>Login</p>"
+            "field": "data.user.login",
+            "description": "<p>Github login</p>"
           },
           {
             "group": "Success 200",
             "type": "String",
             "optional": false,
-            "field": "data.url_profile",
-            "description": "<p>Url of the profile in source control</p>"
+            "field": "data.user.url_profile",
+            "description": "<p>Profile link</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Success",
+          "content": "{\n    \"data\": {\n        \"github_id\": \"7500590\",\n        \"login\": \"chargio\",\n        \"url_profile\": \"https://github.com/chargio\"\n    }\n}",
+          "type": "json"
+        }
+      ]
     },
     "error": {
       "fields": {
@@ -364,7 +624,14 @@ define({ "api": [
             "description": "<p>User ID</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "User not found",
+          "content": "{\n    \"status\": 404,\n    \"code\": \"user_not_found\",\n    \"title\": \"This user is not in the database\",\n    \"detail\": \"Maybe the id of user is wrong\",\n    \"extra_info\": {\n        \"username\": \"7500591\"\n    }\n}",
+          "type": "json"
+        }
+      ]
     },
     "filename": "/home/travis/build/ManageIQ-Exchange/manageiq-exchange/app/controllers/v1/users_controller.rb",
     "groupTitle": "Users"
