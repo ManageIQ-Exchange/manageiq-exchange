@@ -20,11 +20,26 @@ module V1
   @apiGroup Users
   @apiSuccess {Object} data
   @apiSuccess {Object[]} data.user User data
-  @apiSuccess {String} data.user.id ID of user in source control
+  @apiSuccess {String} data.user.github_id ID of user in source control
   @apiSuccess {String} data.user.login Login
   @apiSuccess {String} data.user.url_profile Url of the profile in source control
   @apiUse Pagination
   @apiUse NoContent
+  @apiSuccessExample {json} Success
+{
+    "data": [
+        {
+            "github_id": "7500590",
+            "login": "chargio",
+            "url_profile": "https://github.com/chargio"
+        }
+    ],
+    "meta": {
+        "current_page": 1,
+        "total_pages": 1,
+        "total_count": 1
+    }
+}
 =end
     def index
       logger.debug 'Providing all users'
@@ -53,9 +68,17 @@ module V1
   @apiGroup Users
   @apiParam {Integer} id User unique ID.
   @apiSuccess {Object} data
-  @apiSuccess {String} data.github_id ID of user in source control
-  @apiSuccess {String} data.login Login
-  @apiSuccess {String} data.url_profile Url of the profile in source control
+  @apiSuccess {String} data.user.github_id Github numeric ID
+  @apiSuccess {String} data.user.login Github login
+  @apiSuccess {String} data.user.url_profile Profile link
+  @apiSuccessExample {json} Success
+{
+    "data": {
+        "github_id": "7500590",
+        "login": "chargio",
+        "url_profile": "https://github.com/chargio"
+    }
+}
   @apiError (No Content 404) UserNotFound User has not been found
   @apiError (No Content 404) {Integer} UserNotFound.status 404
   @apiError (No Content 404) {String} UserNotFound.code user_not_found
@@ -63,6 +86,17 @@ module V1
   @apiError (No Content 404) {String} UserNotFound.Detail Additional detail on error
   @apiError (No Content 404) {Object} UserNotFound.extra
   @apiError (No Content 404) {String} UserNotFound.extra.username User ID
+
+  @apiErrorExample {json} User not found
+{
+    "status": 404,
+    "code": "user_not_found",
+    "title": "This user is not in the database",
+    "detail": "Maybe the id of user is wrong",
+    "extra_info": {
+        "username": "7500591"
+    }
+}
 =end
     def show
       return unless  check_params_required(:id)

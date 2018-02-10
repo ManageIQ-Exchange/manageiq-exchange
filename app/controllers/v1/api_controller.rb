@@ -11,8 +11,9 @@ module V1
 
 =begin
   @api {get} / Request version information
+  @api {get} /api/version Get API Version
   @apiVersion 1.0.0
-  @apiName GetApi
+  @apiName GetVersion
   @apiPermission none
   @apiGroup Api
   @apiSuccess {String} version Version of the API
@@ -23,6 +24,22 @@ module V1
   @apiSuccess {String} providers.server Server Address
   @apiSuccess {String} providers.version API Prefix
   @apiSuccess {Boolean} providers.verify Does it need verify?
+  @apiSuccessExample {json} Success
+{
+    "data": {
+        "version": "1.0",
+        "providers": {
+            "github.com": {
+                "type": "github",
+                "enabled": true,
+                "id_application": "ID_OF_APPLICATION",
+                "server": "api.github.com",
+                "version": "v3",
+                "verify": true
+            }
+        }
+    }
+}
 =end
     def version
       logger.debug 'Creating session, verifying code'
