@@ -124,7 +124,7 @@ class Spin < ApplicationRecord
     self.releases= go_json(releases),
     self.user= user,
     self.user_login= user.github_login
-    self.downloads_url = ''
+    self.downloads_count = 0
     true
   end
 
