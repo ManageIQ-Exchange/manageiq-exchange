@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180208112242) do
+ActiveRecord::Schema.define(version: 20180213215613) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,21 @@ ActiveRecord::Schema.define(version: 20180208112242) do
     t.string "github_token"
     t.string "provider"
     t.index ["user_id"], name: "index_authentication_tokens_on_user_id"
+  end
+
+  create_table "releases", force: :cascade do |t|
+    t.boolean "draft", default: false
+    t.string "tag"
+    t.text "name", default: ""
+    t.boolean "prerelease", default: false
+    t.string "zipball_url"
+    t.datetime "created_at", null: false
+    t.datetime "published_at"
+    t.jsonb "author", default: {}
+    t.bigint "spin_id"
+    t.datetime "updated_at", null: false
+    t.index ["spin_id"], name: "index_releases_on_spin_id"
+    t.index ["tag"], name: "index_releases_on_tag"
   end
 
   create_table "spin_candidates", force: :cascade do |t|
@@ -76,7 +91,6 @@ ActiveRecord::Schema.define(version: 20180208112242) do
     t.datetime "updated_at", null: false
     t.string "user_login"
     t.boolean "visible", default: false
-    t.jsonb "releases", default: []
     t.bigint "spin_candidate_id"
     t.integer "downloads_count", default: 0
     t.index ["published"], name: "index_spins_on_published"
@@ -129,6 +143,7 @@ ActiveRecord::Schema.define(version: 20180208112242) do
   end
 
   add_foreign_key "authentication_tokens", "users"
+  add_foreign_key "releases", "spins"
   add_foreign_key "spin_candidates", "users"
   add_foreign_key "spins", "spin_candidates"
   add_foreign_key "spins", "users"

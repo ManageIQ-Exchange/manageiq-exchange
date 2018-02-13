@@ -9,7 +9,7 @@ users:
     github_avatar_url: "avatar"
     github_company: "company"
 spins:
-  attributes: ["id","user_login", "name", "description", "watchers_count" ,"stargazers_count", "downloads_count", "full_name", "releases"]
+  attributes: ["id","user_login", "name", "description", "watchers_count" ,"stargazers_count", "downloads_count", "full_name", "user"]
   expand: ["readme", "license_name", "license_html_url", "license_key", "default_branch", "user_id", "clone_url", "forks_count", "open_issues_count", "metadata"]
   staff: ["created_at", "updated_at"]
   admin: ["visible", "published"]
@@ -23,3 +23,13 @@ spin_candidates:
   admin: []
   columns:
     id: "id"
+
+releases:
+  attributes: ["id","draft", "tag", "name", "prerelease" ,"created_at", "published_at", "author"]
+  expand: []
+  staff: []
+  admin: []
+  columns:
+    id: "id"
+
+

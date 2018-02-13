@@ -49,44 +49,25 @@ module V1
         render_error_exchange(:spin_not_found, :not_found)
         return
       end
-      return_response @spin.format_releases, :ok, {}
+      return_response @spin.releases, :ok, {}
     end
 
     def one_release
-      @spin = Spin.find_by(id: params[:spin_id], visible: true) || Spin.find_by(name: params[:spin_id], visible: true)
-      unless @spin
-        render_error_exchange(:spin_not_found, :not_found)
-        return
-      end
-      target_release = {}
-      @spin.format_releases.each do |release|
-        if release[:id].to_s ==  params[:release_id].to_s
-          target_release = release
-          break;
-        end
-      end
-      if target_release.empty?
+      @release = Release.find_by(id: params[:release_id], spin: params[:spin_id])
+      unless @release
         render_error_exchange(:release_not_found, :not_found)
         return
-      else
-        return_response target_release, :ok, {}
       end
+      return_response @release, :ok, {}
     end
 
     def download
-      @spin = Spin.find_by(id: params[:spin_id], visible: true) || Spin.find_by(name: params[:spin_id], visible: true)
-      unless @spin
-        render_error_exchange(:spin_not_found, :not_found)
+      @release = Release.find_by(id: params[:release_id], spin: params[:spin_id])
+      unless @release
+        render_error_exchange(:release_not_found, :not_found)
         return
       end
-      download_url = @spin.download_release(params[:release_id].to_s)
-      if download_url
-        @spin.downloads_count += 1
-        @spin.save
-        redirect_to download_url
-      else
-        render_error_exchange(:release_not_found, :not_found)
-      end
+      redirect_to @release.download_release
     end
   end
 end
