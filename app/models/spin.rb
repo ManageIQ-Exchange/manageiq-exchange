@@ -58,17 +58,16 @@ class Spin < ApplicationRecord
 
   def check(user)
     @spin_log = ""
-    byebug
     if update_values user
       if has_valid_readme? &&
           has_valid_metadata? &&
           has_valid_releases?
-        byebug
         if new_record?
           spin_candidate.update(validated: true, validation_log: "[OK] Spin is validated")
           return true
         else
           self.user = user
+          self.name = self.name.gsub(/(\[\"|\"\])/, '').split('", "').first
           if save
             refresh_releases(@releases)
             refresh_tags
@@ -100,6 +99,7 @@ class Spin < ApplicationRecord
       return false
     end
     # Store new values
+
     self.name= repo.name,
     self.readme = readme,
     self.full_name= repo.full_name,
@@ -191,29 +191,8 @@ class Spin < ApplicationRecord
     end
   end
 
-  def go_json(data)
-    releases = []
-    data.each do |one_release|
-      obj = {}
-      one_release.each do |k,v|
-        if k.to_s != "author"
-          obj[k.to_s] = v
-        else
-          author_json = {}
-          v.each do |kt,vt|
-            author_json[kt.to_s] = vt
-          end
-          obj[k.to_s] = author_json
-        end
-      end
-      releases.push(obj)
-    end
-    { "releases":releases }
-  end
-
   def refresh_releases(data)
      data.each do |rele|
-       byebug
        new_release = Release.find_by(id: rele["id"], spin: self) || Release.new(id: rele["id"], spin: self)
        new_release.draft        = rele["draft"],
        new_release.tag          = rele["tag_name"],
@@ -230,42 +209,5 @@ class Spin < ApplicationRecord
        }
        new_release.save
      end
-  end
-  def format_releases(id = nil, data = self.releases)
-    result = []
-    data.each do |rele|
-      if id && id == rele["id"].to_s
-        result = rele["zipball_url"]
-        break;
-      else
-        result = result.push(
-          {
-              id:  rele["id"],
-              draft: rele["draft"],
-              tag: rele["tag_name"],
-              name: rele["name"],
-              prerelease: rele["prerelease"],
-              created_at: rele["created_at"],
-              published_at: rele["published_at"],
-              zipball_url: rele["zipball_url"],
-              author:{
-                  login: rele["author"]["login"],
-                  id: rele["author"]["id"],
-                  url: rele["author"]["html_url"],
-                  avatar_url: rele["author"]["avatar_url"]
-              }
-          }
-        )
-      end
-    end
-    result
-  end
-
-  def download_release(release_id)
-    result = format_releases(release_id)
-    if result.empty?
-      return nil
-    end
-    result
   end
 end
