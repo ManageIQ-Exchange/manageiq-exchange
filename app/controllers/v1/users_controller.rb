@@ -85,7 +85,7 @@ module V1
   @apiError (No Content 404) {String} UserNotFound.title Error title
   @apiError (No Content 404) {String} UserNotFound.Detail Additional detail on error
   @apiError (No Content 404) {Object} UserNotFound.extra
-  @apiError (No Content 404) {String} UserNotFound.extra.username User ID
+  @apiError (No Content 404) {String} UserNotFound.extra.username User ID requested
 
   @apiErrorExample {json} User not found
 {
@@ -101,7 +101,7 @@ module V1
     def show
       return unless  check_params_required(:id)
       logger.debug "Looking for user with github_login #{params[:id]}"
-      @user = User.find_by(id: params[:id]) || User.find_by(github_login: params[:id])
+      @user = User.where(id: params[:id]).or(User.where(github_login: params[:id])).take
       if @user
         return_response @user, :ok
       else

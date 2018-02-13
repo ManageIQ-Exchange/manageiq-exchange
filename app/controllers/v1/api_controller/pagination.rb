@@ -4,6 +4,14 @@ module V1
     # Pagination request module
     #
     ##
+=begin
+  @apiDefine Pagination Pagination
+  @apiSuccess {Object} meta Meta
+  @apiSuccess {Integer} meta.pagination.current_page Current page in pagination
+  @apiSuccess {Integer} meta.pagination.total_pages Total number of pages
+  @apiSuccess {Integer} meta.pagination.total_count Total number of elements
+  @apiVersion 1.0.0
+=end
     module Pagination
       # Get the specific page collection with limit option.
       #

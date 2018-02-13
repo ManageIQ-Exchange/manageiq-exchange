@@ -4,13 +4,6 @@ module V1
     # Metadata request module
     #
     ##
-=begin
-  @apiDefine Pagination Pagination
-  @apiSuccess {Object} meta Metadata
-  @apiSuccess {Integer} meta.current_page Current page in pagination
-  @apiSuccess {Integer} meta.total_pages Total number of pages
-  @apiSuccess {Integer} meta.total_count Total number of elements
-=end
     module Metadata
       # Generate metadata information for request.
       #
