@@ -31,5 +31,10 @@ releases:
   admin: []
   columns:
     id: "id"
-
-
+tags:
+  attributes: ["id", "name"]
+  expand: []
+  staff: ["created_at","update_at"]
+  admin: []
+  columns:
+    id: "id"
