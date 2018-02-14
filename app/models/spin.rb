@@ -40,6 +40,7 @@ class Spin < ApplicationRecord
   belongs_to :user
   has_many :taggings, dependent: :destroy
   has_many :tags, through: :taggings
+  has_many :releases, dependent: :destroy
   belongs_to :spin_candidate
 
   # Check if the spin is from the user
@@ -65,7 +66,10 @@ class Spin < ApplicationRecord
           spin_candidate.update(validated: true, validation_log: "[OK] Spin is validated")
           return true
         else
+          self.user = user
+          self.name = self.name.gsub(/(\[\"|\"\])/, '').split('", "').first
           if save
+            refresh_releases(@releases)
             refresh_tags
             spin_candidate.update(validated: true, validation_log: "[OK] Spin is validated")
             return true
@@ -81,21 +85,21 @@ class Spin < ApplicationRecord
     client = Providers::BaseManager.new(user).get_connector
     meta = client.metadata(full_name)
     readme = client.readme(full_name)
-    releases = client.releases(full_name)
+    @releases = client.releases(full_name)
     repo = client.repo(full_name)
-
     metadata_raw, metadata_json = meta
 
     if meta.kind_of?(ErrorExchange) ||
        readme.kind_of?(ErrorExchange) ||
-       releases.kind_of?(ErrorExchange) ||
+       @releases.kind_of?(ErrorExchange) ||
        repo.kind_of?(ErrorExchange)
-      [meta, readme, releases, repo].each do |error|
+      [meta, readme, @releases, repo].each do |error|
         spin_log("#{error.as_json["title"]} \n #{error.as_json["detail"]}") if error.kind_of?(ErrorExchange)
       end
       return false
     end
     # Store new values
+
     self.name= repo.name,
     self.readme = readme,
     self.full_name= repo.full_name,
@@ -121,8 +125,6 @@ class Spin < ApplicationRecord
     self.min_miq_version= metadata_json['min_miq_version'].downcase.bytes[0] - 'a'.bytes[0],
     self.metadata = metadata_json
     self.metadata_raw = metadata_raw
-    self.releases= go_json(releases),
-    self.user= user,
     self.user_login= user.github_login
     self.downloads_count = 0
     true
@@ -139,7 +141,7 @@ class Spin < ApplicationRecord
   # A boolean representing if the spin has releases
   #
   def has_valid_releases?
-    (return true) unless releases.blank?
+    (return true) unless @releases.blank?
     spin_log('[ERROR] The Spin should have at least a release, please add it to the source control and refresh the Spin')
     false
   end
@@ -189,60 +191,23 @@ class Spin < ApplicationRecord
     end
   end
 
-  def go_json(data)
-    releases = []
-    data.each do |one_release|
-      obj = {}
-      one_release.each do |k,v|
-        if k.to_s != "author"
-          obj[k.to_s] = v
-        else
-          author_json = {}
-          v.each do |kt,vt|
-            author_json[kt.to_s] = vt
-          end
-          obj[k.to_s] = author_json
-        end
-      end
-      releases.push(obj)
-    end
-    { "releases":releases }
-  end
-
-  def format_releases(id = nil)
-    result = []
-    releases.first["releases"].each do |rele|
-      if id && id == rele["id"].to_s
-        result = rele["zipball_url"]
-        break;
-      else
-        result = result.push(
-          {
-              id:  rele["id"],
-              draft: rele["draft"],
-              tag: rele["tag_name"],
-              name: rele["name"],
-              prerelease: rele["prerelease"],
-              created_at: rele["created_at"],
-              published_at: rele["published_at"],
-              author:{
-                  login: rele["author"]["login"],
-                  id: rele["author"]["id"],
-                  url: rele["author"]["html_url"],
-                  avatar_url: rele["author"]["avatar_url"]
-              }
-          }
-        )
-      end
-    end
-    result
-  end
-
-  def download_release(release_id)
-    result = format_releases(release_id)
-    if result.empty?
-      return nil
-    end
-    result
+  def refresh_releases(data)
+     data.each do |rele|
+       new_release = Release.find_by(id: rele["id"], spin: self) || Release.new(id: rele["id"], spin: self)
+       new_release.draft        = rele["draft"],
+       new_release.tag          = rele["tag_name"],
+       new_release.name         = rele["name"],
+       new_release.prerelease   = rele["prerelease"],
+       new_release.created_at   = rele["created_at"],
+       new_release.published_at = rele["published_at"],
+       new_release.zipball_url  = rele["zipball_url"],
+       new_release.author       = {
+         login: rele["author"]["login"],
+         id: rele["author"]["id"],
+         url: rele["author"]["html_url"],
+         avatar_url: rele["author"]["avatar_url"]
+       }
+       new_release.save
+     end
   end
 end
