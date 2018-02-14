@@ -82,11 +82,11 @@ module V1
     def show
       return unless  check_params_required(:id)
       logger.debug 'Returning tag @tag.name'
-      @tag = Tag.find_by(name: params[:id])
+      @tag = Tag.find_by(name: params[:id]) || Tag.find_by(id: params[:id])
       if @tag
         return_response  @tag, :ok, {}
       else
-        render_error_exchange(:tag_not_found, :not_found, { tag_id: parans[:id]})
+        render_error_exchange(:tag_not_found, :not_found, { tag_id: params[:id]})
       end
     end
   end
