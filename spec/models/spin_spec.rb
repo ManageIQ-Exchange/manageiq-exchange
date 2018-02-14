@@ -65,21 +65,6 @@ RSpec.describe Spin, type: :model do
     expect(spin.has_valid_readme?).to be_falsey
   end
 
-  it 'has_valid_releases?' do
-    spin.releases = {'Release':'One'}
-    expect(spin.has_valid_releases?).to be_truthy
-  end
-
-  it 'has_valid_releases? is false with nil releases' do
-    spin.releases = nil
-    expect(spin.has_valid_releases?).to be_falsey
-  end
-
-  it 'has_valid_releases? is false with empty releases' do
-    spin.releases = {}
-    expect(spin.has_valid_releases?).to be_falsey
-  end
-
   it 'update_values' do
     spin.full_name = valid_repo
     VCR.use_cassette('providers/github/update_values',
