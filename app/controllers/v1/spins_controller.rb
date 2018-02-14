@@ -14,7 +14,6 @@ module V1
     # users/<user_id>/spins Get all spins of a user
     # spins?query=<value>  Look spins include value in the name
     def index
-      byebug
       @spins = Spin.where(visible:true)
       @spins = @spins.where("'name' ILIKE ?", "%#{params[:name]}%") if params[:name]
       @spins = @spins.joins(:user).where("'users.github_login' ILIKE ?", "%#{params[:author]}%") if params[:author]

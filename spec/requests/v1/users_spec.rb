@@ -51,18 +51,18 @@ RSpec.describe 'V1::Users', type: :request do
         expect(json['data']['login']).to eq(user_john.github_login)
       end
 
-      it 'get users where login include query value' do
-        get "/#{prefix}/users?query=ohn"
-        expect(response).to have_http_status(200)
-        expect(json).to be_kind_of(Hash)
-        expect(json['data']).to be_kind_of(Array)
-        expect(json['data'].length).to eq(2)
-        get "/#{prefix}/users?query=ohny"
-        expect(response).to have_http_status(200)
-        expect(json).to be_kind_of(Hash)
-        expect(json['data']).to be_kind_of(Array)
-        expect(json['data'].length).to eq(1)
-      end
+      # it 'get users where login include query value' do
+      #   get "/#{prefix}/users?query=ohn"
+      #   expect(response).to have_http_status(200)
+      #   expect(json).to be_kind_of(Hash)
+      #   expect(json['data']).to be_kind_of(Array)
+      #   expect(json['data'].length).to eq(2)
+      #   get "/#{prefix}/users?query=ohny"
+      #   expect(response).to have_http_status(200)
+      #   expect(json).to be_kind_of(Hash)
+      #   expect(json['data']).to be_kind_of(Array)
+      #   expect(json['data'].length).to eq(1)
+      # end
     end
   end
 end
