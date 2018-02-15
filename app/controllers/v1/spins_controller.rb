@@ -15,7 +15,6 @@ module V1
     # spins?query=<value>  Look spins include value in the name
     def index
       @spins = Spin.where(visible:true)
-      byebug
       @spins = @spins.where("'name' ILIKE ?", "%#{params[:name]}%") if params[:name]
       @spins = @spins.joins(:user).where("users.github_login ILIKE ?", "%#{params[:author]}%") if params[:author]
       @spins = @spins.order("#{params[:sort]} #{params[:order] || 'DESC'}") if params[:sort]
