@@ -8,7 +8,7 @@ module V1
 
       @top_tags = Tag.joins(:spins).group("name","id").order('count_id DESC').count("id")
       @top_contributors = User.joins(:spins).group("github_login","id").order('count_id DESC').count("id")
-      @newest_users = User.select("id","github_login","created_at").order('created_at DESC').limit(10)
+      @newest_spins = Spin.select("id","full_name","created_at").order('created_at DESC').limit(10)
 
       most_starred = []
       @spin_starred.each do |spin|
@@ -38,8 +38,8 @@ module V1
       end
 
       newest = []
-      @newest_users.each do |user|
-        newest = newest.push({ "name": user.github_login, "Added on": user.created_at, "id": user.id })
+      @newest_spins.each do |user|
+        newest = newest.push({ "name": user.full_name, "Added on": user.created_at, "id": user.id })
       end
 
       response = {
