@@ -106,7 +106,7 @@ class Spin < ApplicationRecord
     self.description= repo.description,
     self.clone_url= repo.clone_url,
     self.html_url= repo.html_url,
-    self.issues_url= repo.rels[:issues].href,
+    self.issues_url= "#{repo.html_url}/issues",
     self.forks_count= repo.forks_count,
     self.stargazers_count= repo.stargazers_count,
     self.watchers_count= repo.watchers,
@@ -126,7 +126,7 @@ class Spin < ApplicationRecord
     self.metadata = metadata_json
     self.metadata_raw = metadata_raw
     self.user_login= user.github_login
-    self.downloads_count = 0
+    self.downloads_count ||= 0
     true
   end
 
