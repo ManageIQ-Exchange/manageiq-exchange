@@ -116,7 +116,7 @@ class Spin < ApplicationRecord
   # Update Log
   def spin_log(log)
     @spin_log ||= ''
-    @spin_log = @spin_log + log + '\n'
+    @spin_log = @spin_log + log + "\n"
   end
 
   # Validate release
