@@ -77,7 +77,7 @@ class Spin < ApplicationRecord
         end
       end
     end
-    spin_candidate.update(validated: false, validation_log: @spinlog)
+    spin_candidate.update(validated: false, validation_log: @spin_log)
     return false
   end
 
