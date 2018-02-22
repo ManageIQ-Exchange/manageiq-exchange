@@ -78,20 +78,17 @@ module V1
       # Write result in log
       # Return true or false
       sc = SpinCandidate.find(params[:spin_candidate_id])
-      unless current_user == sc.user
-        render_error_exchange(:spin_candidate_not_owner, :not_allowed)
-        return
-      end
       if sc
-        render_error_exchange(:spin_not_owner, :not_allowed) unless @current_user == sc.user
-
-          # TODO test sc
-          spin = sc.spin || Spin.new(full_name: sc.full_name, user: sc.user, spin_candidate: sc)
-          if(spin.check current_user)
-            return_response sc, :ok, {}
-          else
-            render_error_exchange(:spin_candidate_not_validated, :not_found, {log: sc.validation_log})
-          end
+        unless current_user == sc.user
+          render_error_exchange(:spin_not_owner, :not_allowed)
+          return
+        end
+        spin = sc.spin || Spin.new(full_name: sc.full_name, user: sc.user, spin_candidate: sc)
+        if spin.check current_user
+          return_response sc, :ok, {}
+        else
+          render_error_exchange(:spin_candidate_not_validated, :not_found, {log: sc.validation_log})
+        end
       else
         render_error_exchange(:spin_candidate_not_found, :not_found)
       end
