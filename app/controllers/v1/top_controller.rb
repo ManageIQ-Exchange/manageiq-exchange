@@ -2,13 +2,13 @@ module V1
   class TopController < ApiController
     def index
 
-      @spin_starred = Spin.select('id','full_name','stargazers_count').order('stargazers_count DESC').limit(10)
-      @spin_watched = Spin.select('id','full_name','watchers_count').order('watchers_count DESC').limit(10)
-      @spin_downloaded= Spin.select('id','full_name','downloads_count').order('downloads_count DESC').limit(10)
+      @spin_starred = Spin.where(visible: true).select('id','full_name','stargazers_count').order('stargazers_count DESC').limit(10)
+      @spin_watched = Spin.where(visible: true).select('id','full_name','watchers_count').order('watchers_count DESC').limit(10)
+      @spin_downloaded= Spin.where(visible: true).select('id','full_name','downloads_count').order('downloads_count DESC').limit(10)
 
-      @top_tags = Tag.joins(:spins).group("name","id").order('count_id DESC').count("id")
-      @top_contributors = User.joins(:spins).group("github_login","id").order('count_id DESC').count("id")
-      @newest_spins = Spin.select("id","full_name","created_at").order('created_at DESC').limit(10)
+      @top_tags = Tag.joins(:spins).where(spins: { visible: true }).group("name","id").order('count_id DESC').count("id")
+      @top_contributors = User.joins(:spins).where(spins: { visible: true }).group("github_login","id").order('count_id DESC').count("id")
+      @newest_spins = Spin.where(visible: true).select("id","full_name","created_at").order('created_at DESC').limit(10)
 
       most_starred = []
       @spin_starred.each do |spin|
