@@ -20,7 +20,7 @@ module V1
       else
         @spins = Spin.where(visible: true)
       end
-      @spins = @spins.where("name ILIKE ?", "%#{params[:name]}%") if params[:name]
+      @spins = @spins.where("full_name ILIKE ?", "%#{params[:name]}%") if params[:name]
       @spins = @spins.joins(:user).where("users.github_login ILIKE ?", "%#{params[:author]}%") if params[:author]
       @spins = @spins.order("#{params[:sort]} #{params[:order] || 'DESC'}") if params[:sort]
       if @spins.count.positive?
